@@ -1,0 +1,122 @@
+{
+  "timestamp": "2025-07-31T10:08:04.554Z",
+  "page": "Dashboard/Bookings Page",
+  "summary": {
+    "total": 13,
+    "passed": 2,
+    "failed": 11,
+    "successRate": 15.384615384615385
+  },
+  "categories": {
+    "loading": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "layout": {
+      "passed": 1,
+      "failed": 1,
+      "total": 2
+    },
+    "bookingList": {
+      "passed": 0,
+      "failed": 3,
+      "total": 3
+    },
+    "searchFilter": {
+      "passed": 0,
+      "failed": 2,
+      "total": 2
+    },
+    "navigation": {
+      "passed": 0,
+      "failed": 3,
+      "total": 3
+    },
+    "responsive": {
+      "passed": 0,
+      "failed": 2,
+      "total": 2
+    }
+  },
+  "details": [
+    {
+      "name": "Dashboard Page Access",
+      "category": "loading",
+      "status": "PASSED",
+      "message": "Should be able to access dashboard after login"
+    },
+    {
+      "name": "Main Content Area",
+      "category": "layout",
+      "status": "FAILED",
+      "message": "Main content area should be present"
+    },
+    {
+      "name": "Navigation Elements",
+      "category": "layout",
+      "status": "PASSED",
+      "message": "Navigation elements should be present"
+    },
+    {
+      "name": "Booking List Container",
+      "category": "bookingList",
+      "status": "FAILED",
+      "message": "Booking list container should be present"
+    },
+    {
+      "name": "List Headers",
+      "category": "bookingList",
+      "status": "FAILED",
+      "message": "Booking list should have headers"
+    },
+    {
+      "name": "Booking Items Display",
+      "category": "bookingList",
+      "status": "FAILED",
+      "message": "Booking items should be displayed (or empty state shown)"
+    },
+    {
+      "name": "Search Input Field",
+      "category": "searchFilter",
+      "status": "FAILED",
+      "message": "Search input field should be present"
+    },
+    {
+      "name": "Filter Options",
+      "category": "searchFilter",
+      "status": "FAILED",
+      "message": "Filter options should be available"
+    },
+    {
+      "name": "Create New Booking Button",
+      "category": "navigation",
+      "status": "FAILED",
+      "message": "Create new booking button should be present"
+    },
+    {
+      "name": "Navigation Links",
+      "category": "navigation",
+      "status": "FAILED",
+      "message": "Navigation links to other pages should be present"
+    },
+    {
+      "name": "User Menu/Profile",
+      "category": "navigation",
+      "status": "FAILED",
+      "message": "User menu or profile section should be present"
+    },
+    {
+      "name": "Mobile Responsiveness",
+      "category": "responsive",
+      "status": "FAILED",
+      "message": "Dashboard should be responsive on mobile"
+    },
+    {
+      "name": "Tablet Responsiveness",
+      "category": "responsive",
+      "status": "FAILED",
+      "message": "Dashboard should be responsive on tablet"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "performance": [
+    {
+      "name": "Frontend",
+      "url": "http://localhost:3000",
+      "loadTime": 14345,
+      "domContentLoaded": 0.10000038146972656,
+      "firstContentfulPaint": 9764,
+      "largestContentfulPaint": 0,
+      "cumulativeLayoutShift": 0,
+      "totalBlockingTime": 0,
+      "resourceCount": 169,
+      "transferSize": 0,
+      "errors": []
+    },
+    {
+      "name": "Backend",
+      "url": "http://localhost:3001",
+      "loadTime": 19989,
+      "domContentLoaded": 0.20000076293945312,
+      "firstContentfulPaint": 7084,
+      "largestContentfulPaint": 0,
+      "cumulativeLayoutShift": 0,
+      "totalBlockingTime": 0,
+      "resourceCount": 103,
+      "transferSize": 0,
+      "errors": []
+    }
+  ],
+  "accessibility": [
+    {
+      "name": "Frontend",
+      "url": "http://localhost:3000",
+      "hasAltText": true,
+      "hasAriaLabels": true,
+      "hasHeadingStructure": false,
+      "hasKeyboardNavigation": false,
+      "hasColorContrast": true,
+      "hasScreenReaderSupport": false,
+      "arabicScreenReaderSupport": false,
+      "focusManagement": false,
+      "semanticHTML": true,
+      "errors": []
+    },
+    {
+      "name": "Backend",
+      "url": "http://localhost:3001",
+      "hasAltText": true,
+      "hasAriaLabels": true,
+      "hasHeadingStructure": false,
+      "hasKeyboardNavigation": false,
+      "hasColorContrast": true,
+      "hasScreenReaderSupport": false,
+      "arabicScreenReaderSupport": false,
+      "focusManagement": false,
+      "semanticHTML": true,
+      "errors": []
+    }
+  ],
+  "summary": {}
+}

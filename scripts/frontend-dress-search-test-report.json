@@ -1,0 +1,163 @@
+{
+  "timestamp": "2025-07-31T10:35:52.783Z",
+  "page": "Frontend Dress Search Page",
+  "summary": {
+    "total": 19,
+    "passed": 5,
+    "failed": 14,
+    "successRate": 26.31578947368421
+  },
+  "categories": {
+    "loading": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "layout": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "searchForm": {
+      "passed": 0,
+      "failed": 5,
+      "total": 5
+    },
+    "searchResults": {
+      "passed": 0,
+      "failed": 4,
+      "total": 4
+    },
+    "pagination": {
+      "passed": 0,
+      "failed": 3,
+      "total": 3
+    },
+    "sorting": {
+      "passed": 0,
+      "failed": 2,
+      "total": 2
+    },
+    "responsive": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    }
+  },
+  "details": [
+    {
+      "name": "Search Page Loading",
+      "category": "loading",
+      "status": "PASSED",
+      "message": "Search page should load completely"
+    },
+    {
+      "name": "Search Content Present",
+      "category": "layout",
+      "status": "PASSED",
+      "message": "Search page content should be present"
+    },
+    {
+      "name": "Search Page Title",
+      "category": "layout",
+      "status": "PASSED",
+      "message": "Search page should have a title"
+    },
+    {
+      "name": "Filters Button Present",
+      "category": "searchForm",
+      "status": "FAILED",
+      "message": "Filters button should be present"
+    },
+    {
+      "name": "Supplier Filter",
+      "category": "searchForm",
+      "status": "FAILED",
+      "message": "Supplier filter should be available"
+    },
+    {
+      "name": "Dress Type Filter",
+      "category": "searchForm",
+      "status": "FAILED",
+      "message": "Dress type filter should be available"
+    },
+    {
+      "name": "Size Filter",
+      "category": "searchForm",
+      "status": "FAILED",
+      "message": "Size filter should be available"
+    },
+    {
+      "name": "Material Filter",
+      "category": "searchForm",
+      "status": "FAILED",
+      "message": "Material filter should be available"
+    },
+    {
+      "name": "Results Container",
+      "category": "searchResults",
+      "status": "FAILED",
+      "message": "Search results container should be present"
+    },
+    {
+      "name": "Dress Items or Empty State",
+      "category": "searchResults",
+      "status": "FAILED",
+      "message": "Dress items or empty state should be displayed"
+    },
+    {
+      "name": "Dress Images",
+      "category": "searchResults",
+      "status": "FAILED",
+      "message": "Dress items should have images (if dresses exist)"
+    },
+    {
+      "name": "Dress Information Display",
+      "category": "searchResults",
+      "status": "FAILED",
+      "message": "Dress items should display information or show empty state"
+    },
+    {
+      "name": "Pagination Controls",
+      "category": "pagination",
+      "status": "FAILED",
+      "message": "Pagination controls should be present (if needed)"
+    },
+    {
+      "name": "DataGrid Pagination",
+      "category": "pagination",
+      "status": "FAILED",
+      "message": "DataGrid pagination should be present (if using DataGrid)"
+    },
+    {
+      "name": "Results Information",
+      "category": "pagination",
+      "status": "FAILED",
+      "message": "Results information or empty state should be displayed"
+    },
+    {
+      "name": "DataGrid Sort Options",
+      "category": "sorting",
+      "status": "FAILED",
+      "message": "DataGrid sorting options should be available (if using DataGrid)"
+    },
+    {
+      "name": "Sort Functionality",
+      "category": "sorting",
+      "status": "FAILED",
+      "message": "Sort functionality should be available"
+    },
+    {
+      "name": "Mobile Responsiveness",
+      "category": "responsive",
+      "status": "PASSED",
+      "message": "Search page should be responsive on mobile"
+    },
+    {
+      "name": "Tablet Responsiveness",
+      "category": "responsive",
+      "status": "PASSED",
+      "message": "Search page should be responsive on tablet"
+    }
+  ]
+}

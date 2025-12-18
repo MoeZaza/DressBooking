@@ -1,0 +1,117 @@
+{
+  "timestamp": "2025-07-31T09:59:54.661Z",
+  "page": "Login Page",
+  "summary": {
+    "total": 13,
+    "passed": 11,
+    "failed": 2,
+    "successRate": 84.61538461538461
+  },
+  "categories": {
+    "loading": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "layout": {
+      "passed": 3,
+      "failed": 1,
+      "total": 4
+    },
+    "validation": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "authentication": {
+      "passed": 3,
+      "failed": 1,
+      "total": 4
+    },
+    "responsiveness": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    }
+  },
+  "details": [
+    {
+      "name": "Page Loading",
+      "category": "loading",
+      "status": "PASSED",
+      "message": "Login page should load completely"
+    },
+    {
+      "name": "Login Form Present",
+      "category": "layout",
+      "status": "FAILED",
+      "message": "Login form should be present on the page"
+    },
+    {
+      "name": "Email Field Present",
+      "category": "layout",
+      "status": "PASSED",
+      "message": "Email input field should be present"
+    },
+    {
+      "name": "Password Field Present",
+      "category": "layout",
+      "status": "PASSED",
+      "message": "Password input field should be present"
+    },
+    {
+      "name": "Submit Button Present",
+      "category": "layout",
+      "status": "PASSED",
+      "message": "Submit button should be present"
+    },
+    {
+      "name": "Empty Form Validation",
+      "category": "validation",
+      "status": "PASSED",
+      "message": "Form should prevent submission when fields are empty"
+    },
+    {
+      "name": "Invalid Email Format Validation",
+      "category": "validation",
+      "status": "PASSED",
+      "message": "Form should reject invalid email formats"
+    },
+    {
+      "name": "Invalid Credentials Rejection",
+      "category": "authentication",
+      "status": "PASSED",
+      "message": "Invalid credentials should be rejected"
+    },
+    {
+      "name": "Error Message Display",
+      "category": "authentication",
+      "status": "PASSED",
+      "message": "Error message should be displayed for invalid credentials"
+    },
+    {
+      "name": "Valid Credentials Authentication",
+      "category": "authentication",
+      "status": "PASSED",
+      "message": "Valid credentials should allow successful login"
+    },
+    {
+      "name": "Dashboard Access",
+      "category": "authentication",
+      "status": "FAILED",
+      "message": "Should have access to dashboard after successful login"
+    },
+    {
+      "name": "Mobile Responsiveness",
+      "category": "responsiveness",
+      "status": "PASSED",
+      "message": "Login form should be visible on mobile viewport"
+    },
+    {
+      "name": "Tablet Responsiveness",
+      "category": "responsiveness",
+      "status": "PASSED",
+      "message": "Login form should be visible on tablet viewport"
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+.profile {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.profile .MuiCard-root {
+  transition: all 0.3s ease;
+}
+
+.profile .MuiCard-root:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.profile .MuiAvatar-root {
+  border: 4px solid #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.profile .MuiChip-root {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.profile .MuiListItem-root {
+  padding: 8px 0;
+}
+
+.profile .MuiListItemIcon-root {
+  min-width: 40px;
+}
+
+.profile .MuiListItemText-primary {
+  font-weight: 500;
+  color: #333;
+}
+
+.profile .MuiListItemText-secondary {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #666;
+}
+
+.profile .MuiButton-root {
+  text-transform: none;
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+.profile .MuiCardContent-root {
+  padding: 24px !important;
+}
+
+.profile .stats-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.profile .stats-card .MuiTypography-root {
+  color: white;
+}
+
+/* RTL Support */
+.profile[dir="rtl"] .MuiListItemIcon-root {
+  margin-left: 16px;
+  margin-right: 0;
+}
+
+.profile[dir="rtl"] .MuiListItemText-root {
+  text-align: right;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .profile {
+    padding: 10px;
+  }
+  
+  .profile .MuiGrid-item {
+    margin-bottom: 16px;
+  }
+  
+  .profile .MuiCardContent-root {
+    padding: 16px !important;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .profile .MuiCard-root {
+    background-color: #1e1e1e;
+    color: #fff;
+  }
+  
+  .profile .MuiListItemText-primary {
+    color: #fff;
+  }
+  
+  .profile .MuiListItemText-secondary {
+    color: #ccc;
+  }
+}

@@ -1,0 +1,309 @@
+{
+  "timestamp": "2025-07-31T11:04:13.201Z",
+  "testSuite": "Comprehensive Backend Routes Audit",
+  "summary": {
+    "total": 45,
+    "passed": 8,
+    "failed": 37,
+    "successRate": 17.77777777777778
+  },
+  "categories": {
+    "routeAccessibility": {
+      "passed": 6,
+      "failed": 25,
+      "total": 31
+    },
+    "navigation": {
+      "passed": 0,
+      "failed": 4,
+      "total": 4
+    },
+    "forms": {
+      "passed": 0,
+      "failed": 3,
+      "total": 3
+    },
+    "arabic": {
+      "passed": 2,
+      "failed": 1,
+      "total": 3
+    },
+    "crud": {
+      "passed": 0,
+      "failed": 4,
+      "total": 4
+    }
+  },
+  "details": [
+    {
+      "name": "Route: Dashboard/Bookings",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Sign In",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Sign Up",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Forgot Password",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Dresses List",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Create Dress",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Dress Search",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Create Booking",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Suppliers",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Create Supplier",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Locations",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Create Location",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Users",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Create User",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Settings",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Change Password",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Analytics Dashboard",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Business Intelligence",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Admin Booking Dashboard",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Inventory Management",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Payment Management",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Accounting Dashboard",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Bank Details",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Pricing",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Scheduler",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Fitting Appointments",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Countries",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Notifications",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: About",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Contact",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Terms of Service",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Header Navigation",
+      "category": "navigation",
+      "status": "FAILED",
+      "message": "Header should be present on all pages"
+    },
+    {
+      "name": "Menu Structure",
+      "category": "navigation",
+      "status": "FAILED",
+      "message": "Menu structure should be present"
+    },
+    {
+      "name": "Navigation Links",
+      "category": "navigation",
+      "status": "FAILED",
+      "message": "Should have navigation links (found 0)"
+    },
+    {
+      "name": "Mobile Menu",
+      "category": "navigation",
+      "status": "FAILED",
+      "message": "Mobile menu should be available on small screens"
+    },
+    {
+      "name": "Create Dress Form",
+      "category": "forms",
+      "status": "FAILED",
+      "message": "Create dress form should be present"
+    },
+    {
+      "name": "Required Fields Present",
+      "category": "forms",
+      "status": "FAILED",
+      "message": "Name and dress code fields should be present"
+    },
+    {
+      "name": "Create Booking Form",
+      "category": "forms",
+      "status": "FAILED",
+      "message": "Create booking form should be present"
+    },
+    {
+      "name": "RTL Direction",
+      "category": "arabic",
+      "status": "PASSED",
+      "message": "Document direction should be RTL (found: rtl)"
+    },
+    {
+      "name": "Arabic Text Present",
+      "category": "arabic",
+      "status": "FAILED",
+      "message": "Arabic text should be present in the interface"
+    },
+    {
+      "name": "Arabic Font Support",
+      "category": "arabic",
+      "status": "PASSED",
+      "message": "Arabic font should be used (found: \"Noto Sans Arabic\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\")"
+    },
+    {
+      "name": "Dress List View",
+      "category": "crud",
+      "status": "FAILED",
+      "message": "Dress list should be displayed"
+    },
+    {
+      "name": "Create Button",
+      "category": "crud",
+      "status": "FAILED",
+      "message": "Create button should be available"
+    },
+    {
+      "name": "Supplier List View",
+      "category": "crud",
+      "status": "FAILED",
+      "message": "Supplier list should be displayed"
+    },
+    {
+      "name": "Location List View",
+      "category": "crud",
+      "status": "FAILED",
+      "message": "Location list should be displayed"
+    }
+  ]
+}

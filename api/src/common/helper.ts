@@ -1,0 +1,426 @@
+import { constants } from 'node:fs'
+import asyncFs from 'node:fs/promises'
+import fs from 'fs'
+import path from 'node:path'
+import mongoose from 'mongoose'
+import validator from 'validator'
+import Stripe from 'stripe'
+import { nanoid } from 'nanoid'
+import axios from 'axios'
+import * as bookcarsTypes from ':bookcars-types'
+import * as env from '../config/env.config'
+
+/**
+ * Convert string to boolean.
+ *
+ * @export
+ * @param {string} input
+ * @returns {boolean}
+ */
+export const StringToBoolean = (input: string): boolean => {
+  try {
+    return Boolean(JSON.parse(input.toLowerCase()))
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Check if a file or a folder exists.
+ *
+ * @export
+ * @async
+ * @param {string} filePath
+ * @returns {Promise<boolean>}
+ */
+export const pathExists = async (filePath: string): Promise<boolean> => {
+  try {
+    await asyncFs.access(filePath, constants.F_OK)
+    return true
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Create a folder recursively.
+ *
+ * @export
+ * @async
+ * @param {string} folder
+ * @param {boolean} recursive
+ * @returns {Promise<void>}
+ */
+export const mkdir = async (folder: string) => {
+  await asyncFs.mkdir(folder, { recursive: true })
+}
+
+/**
+ * Removes a start line terminator character from a string.
+ *
+ * @export
+ * @param {string} str
+ * @param {string} char
+ * @returns {string}
+ */
+export const trimStart = (str: string, char: string): string => {
+  let res = str
+  while (res.charAt(0) === char) {
+    res = res.substring(1, res.length)
+  }
+  return res
+}
+
+/**
+ * Removes a leading and trailing line terminator character from a string.
+ *
+ * @export
+ * @param {string} str
+ * @param {string} char
+ * @returns {string}
+ */
+export const trimEnd = (str: string, char: string): string => {
+  let res = str
+  while (res.charAt(res.length - 1) === char) {
+    res = res.substring(0, res.length - 1)
+  }
+  return res
+}
+
+/**
+ * Removes a stating, leading and trailing line terminator character from a string.
+ *
+ * @export
+ * @param {string} str
+ * @param {string} char
+ * @returns {string}
+ */
+export const trim = (str: string, char: string): string => {
+  let res = trimStart(str, char)
+  res = trimEnd(res, char)
+  return res
+}
+
+/**
+ * Join two url parts.
+ *
+ * @export
+ * @param {string} part1
+ * @param {string} part2
+ * @returns {string}
+ */
+export const joinURL = (part1: string, part2: string): string => {
+  const p1 = trimEnd(part1, '/')
+  let p2 = part2
+
+  if (part2.charAt(0) === '/') {
+    p2 = part2.substring(1)
+  }
+
+  return `${p1}/${p2}`
+}
+
+/**
+ * Get filename without extension.
+ *
+ * @export
+ * @param {string} filename
+ * @returns {string}
+ */
+export const getFilenameWithoutExtension = (filename: string): string => path.parse(filename).name
+
+/**
+ * Clone an object or an array.
+ *
+ * @param {*} obj
+ * @returns {*}
+ */
+export const clone = (obj: any) => (Array.isArray(obj) ? Array.from(obj) : ({ ...obj }))
+
+/**
+ * Check ObjectId.
+ *
+ * @param {?string} id
+ * @returns {boolean}
+ */
+export const isValidObjectId = (id?: string) => mongoose.isValidObjectId(id)
+
+/**
+ * Check email.
+ *
+ * @param {string} email
+ * @returns {boolean}
+ */
+export const isValidEmail = (email?: string) => !!email && validator.isEmail(email)
+
+/**
+ * Generate user token.
+ *
+ * @returns {string}
+ */
+export const generateToken = () => `${nanoid()}-${Date.now()}`
+
+/**
+ * The IETF language tag of the locale Checkout is displayed in.
+ *
+ * @param {string} locale
+ * @returns {Stripe.Checkout.SessionCreateParams.Locale}
+ */
+export const getStripeLocale = (locale: string): Stripe.Checkout.SessionCreateParams.Locale => {
+  const locales = [
+    'bg',
+    'cs',
+    'da',
+    'de',
+    'el',
+    'en',
+    'en-GB',
+    'es',
+    'es-419',
+    'et',
+    'fi',
+    'fil',
+    'fr',
+    'fr-CA',
+    'hr',
+    'hu',
+    'id',
+    'it',
+    'ja',
+    'ko',
+    'lt',
+    'lv',
+    'ms',
+    'mt',
+    'nb',
+    'nl',
+    'pl',
+    'pt',
+    'pt-BR',
+    'ro',
+    'ru',
+    'sk',
+    'sl',
+    'sv',
+    'th',
+    'tr',
+    'vi',
+    'zh',
+    'zh-HK',
+    'zh-TW',
+  ]
+
+  if (locales.includes(locale)) {
+    return locale as Stripe.Checkout.SessionCreateParams.Locale
+  }
+
+  return 'auto'
+}
+
+/**
+ * Parse JWT token.
+ *
+ * @param {string} token
+ * @returns {any}
+ */
+export const parseJwt = (token: string) => JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
+
+/**
+ * Validate JWT token structure.
+ *
+ * @param {string} token
+ * @returns {Promise<boolean>}
+ */
+export const validateAccessToken = async (socialSignInType: bookcarsTypes.SocialSignInType, token: string, email: string): Promise<boolean> => {
+  if (socialSignInType === bookcarsTypes.SocialSignInType.Facebook) {
+    try {
+      parseJwt(token)
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  if (socialSignInType === bookcarsTypes.SocialSignInType.Apple) {
+    try {
+      const res = parseJwt(token)
+      return res.email === email
+    } catch {
+      return false
+    }
+  }
+
+  if (socialSignInType === bookcarsTypes.SocialSignInType.Google) {
+    try {
+      const res = await axios.get(
+        'https://www.googleapis.com/oauth2/v3/tokeninfo',
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      )
+      return res.data.email === email
+    } catch {
+      return false
+    }
+  }
+
+  return false
+}
+
+/**
+ * Format PayPal price.
+ *
+ * Example:
+ * 1          1.00
+ * 1.2        1.20
+ * 1.341      1.34
+ * 1.345      1.34
+ * 1.378      1.37
+ *
+ * @param {number} price
+ * @returns {string}
+ */
+export const formatPayPalPrice = (price: number) => (Math.floor(price * 100) / 100).toFixed(2)
+
+/**
+ * Generate a unique filename for a dress image.
+ *
+ * @param {string} originalname
+ * @returns {string}
+ */
+export const generateUniqueFilename = (originalname: string): string => {
+  const timestamp = new Date().getTime()
+  const ext = path.extname(originalname)
+  return `dress_${timestamp}${ext}`
+}
+
+/**
+ * Move a dress image from temp to permanent storage.
+ *
+ * @param {string} filename
+ * @returns {Promise<void>}
+ */
+export const moveDressImage = async (filename: string): Promise<void> => {
+  const tempPath = path.join(env.CDN_TEMP_DRESSES, filename)
+  const destPath = path.join(env.CDN_DRESSES, filename)
+
+  if (fs.existsSync(tempPath)) {
+    await fs.promises.copyFile(tempPath, destPath)
+    await fs.promises.unlink(tempPath)
+  }
+}
+
+/**
+ * Delete a dress image.
+ *
+ * @param {string} filename
+ * @returns {Promise<void>}
+ */
+export const deleteDressImage = async (filename: string): Promise<void> => {
+  const imagePath = path.join(env.CDN_DRESSES, filename)
+
+  if (fs.existsSync(imagePath)) {
+    await fs.promises.unlink(imagePath)
+  }
+}
+
+/**
+ * Move multiple dress images from temp to permanent storage.
+ *
+ * @param {string[]} filenames
+ * @returns {Promise<string[]>} - Array of successfully moved filenames
+ */
+export const moveDressImages = async (filenames: string[]): Promise<string[]> => {
+  const movedFiles: string[] = []
+
+  for (const filename of filenames) {
+    try {
+      await moveDressImage(filename)
+      movedFiles.push(filename)
+    } catch (error) {
+      console.error(`Failed to move image ${filename}:`, error)
+    }
+  }
+
+  return movedFiles
+}
+
+/**
+ * Delete multiple dress images.
+ *
+ * @param {string[]} filenames
+ * @returns {Promise<string[]>} - Array of successfully deleted filenames
+ */
+export const deleteDressImages = async (filenames: string[]): Promise<string[]> => {
+  const deletedFiles: string[] = []
+
+  for (const filename of filenames) {
+    try {
+      await deleteDressImage(filename)
+      deletedFiles.push(filename)
+    } catch (error) {
+      console.error(`Failed to delete image ${filename}:`, error)
+    }
+  }
+
+  return deletedFiles
+}
+
+/**
+ * Generate unique filenames for multiple files.
+ *
+ * @param {string[]} originalNames
+ * @returns {string[]}
+ */
+export const generateUniqueFilenames = (originalNames: string[]): string[] => {
+  return originalNames.map(name => generateUniqueFilename(name))
+}
+
+/**
+ * Get the primary image from an images array (first image).
+ *
+ * @param {string[]} images
+ * @returns {string | null}
+ */
+export const getPrimaryImage = (images: string[]): string | null => {
+  return images && images.length > 0 ? images[0] : null
+}
+
+/**
+ * Validate image file extensions.
+ *
+ * @param {string[]} filenames
+ * @returns {boolean}
+ */
+export const validateImageExtensions = (filenames: string[]): boolean => {
+  const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
+
+  return filenames.every(filename => {
+    const ext = path.extname(filename).toLowerCase()
+    return allowedExtensions.includes(ext)
+  })
+}
+
+/**
+ * Convert relative CDN path to full HTTP URL.
+ *
+ * @param {string} relativePath - Relative path from CDN root
+ * @param {string} cdnType - Type of CDN (users, dresses, locations, etc.)
+ * @returns {string} Full HTTP URL
+ */
+export const getCdnUrl = (relativePath: string, cdnType: string): string => {
+  if (!relativePath) {
+    return ''
+  }
+  
+  // If already a full URL, return as is
+  if (relativePath.startsWith('http://') || relativePath.startsWith('https://')) {
+    return relativePath
+  }
+  
+  // Get CDN host from environment
+  const cdnHost = process.env.BC_CDN_HOST || 'http://localhost:4002/api/cdn'
+  
+  // Return full URL
+  return `${cdnHost}/${cdnType}/${relativePath}`
+}

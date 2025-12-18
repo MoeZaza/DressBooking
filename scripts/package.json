@@ -1,0 +1,23 @@
+{
+  "name": "bookdress-mock-data-script",
+  "version": "1.0.0",
+  "description": "Standalone script to add mock data to BookDress MongoDB Atlas database",
+  "main": "add-mock-data.js",
+  "scripts": {
+    "start": "node add-mock-data.js",
+    "add-data": "node add-mock-data.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "mongodb": "^6.3.0",
+    "node-fetch": "^2.7.0"
+  },
+  "keywords": [
+    "bookdress",
+    "mongodb",
+    "mock-data",
+    "atlas"
+  ],
+  "author": "BookDress Team",
+  "license": "MIT"
+}

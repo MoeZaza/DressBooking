@@ -1,0 +1,24 @@
+import LocalizedStrings from 'localized-strings'
+import * as langHelper from '@/common/langHelper'
+
+const strings = new LocalizedStrings({
+  fr: {
+    CREATE_USER_HEADING: 'Nouvelle utilisateur',
+    BIRTH_DATE: 'Date de naissance',
+  },
+  en: {
+    CREATE_USER_HEADING: 'New user',
+    BIRTH_DATE: 'Birth date',
+  },
+  es: {
+    CREATE_USER_HEADING: 'Nuevo usuario',
+    BIRTH_DATE: 'Fecha de nacimiento',
+  },
+  ar: {
+    CREATE_USER_HEADING: 'مستخدم جديد',
+    BIRTH_DATE: 'تاريخ الميلاد',
+  },
+})
+
+langHelper.setLanguage(strings)
+export { strings }

@@ -1,0 +1,188 @@
+{
+  "timestamp": "2025-07-31T11:23:36.769Z",
+  "testSuite": "Final Integration and End-to-End Testing",
+  "summary": {
+    "total": 24,
+    "passed": 14,
+    "failed": 10,
+    "successRate": 58.333333333333336
+  },
+  "categories": {
+    "integration": {
+      "passed": 1,
+      "failed": 2,
+      "total": 3
+    },
+    "customerJourney": {
+      "passed": 3,
+      "failed": 2,
+      "total": 5
+    },
+    "adminWorkflow": {
+      "passed": 1,
+      "failed": 4,
+      "total": 5
+    },
+    "arabicConsistency": {
+      "passed": 5,
+      "failed": 0,
+      "total": 5
+    },
+    "errorHandling": {
+      "passed": 2,
+      "failed": 1,
+      "total": 3
+    },
+    "performance": {
+      "passed": 2,
+      "failed": 1,
+      "total": 3
+    }
+  },
+  "details": [
+    {
+      "name": "Frontend Application Loads",
+      "category": "integration",
+      "status": "PASSED",
+      "message": "Frontend application should load successfully"
+    },
+    {
+      "name": "Backend Application Loads",
+      "category": "integration",
+      "status": "FAILED",
+      "message": "Backend application should load successfully"
+    },
+    {
+      "name": "Cross-Application Accessibility",
+      "category": "integration",
+      "status": "FAILED",
+      "message": "Both applications should be accessible simultaneously"
+    },
+    {
+      "name": "Customer Journey - Homepage Visit",
+      "category": "customerJourney",
+      "status": "PASSED",
+      "message": "Customer should be able to visit homepage"
+    },
+    {
+      "name": "Customer Journey - Browse Dress Types",
+      "category": "customerJourney",
+      "status": "PASSED",
+      "message": "Customer should be able to browse dress types"
+    },
+    {
+      "name": "Customer Journey - Search Page Access",
+      "category": "customerJourney",
+      "status": "FAILED",
+      "message": "Customer should be able to access search page"
+    },
+    {
+      "name": "Customer Journey - Dress Details View",
+      "category": "customerJourney",
+      "status": "FAILED",
+      "message": "Customer should be able to view dress details"
+    },
+    {
+      "name": "Customer Journey - Authentication Access",
+      "category": "customerJourney",
+      "status": "PASSED",
+      "message": "Customer should be able to access authentication"
+    },
+    {
+      "name": "Admin Workflow - Backend Access",
+      "category": "adminWorkflow",
+      "status": "FAILED",
+      "message": "Admin should be able to access backend"
+    },
+    {
+      "name": "Admin Workflow - Dress Management Access",
+      "category": "adminWorkflow",
+      "status": "PASSED",
+      "message": "Admin should be able to access dress management"
+    },
+    {
+      "name": "Admin Workflow - Create Dress Form",
+      "category": "adminWorkflow",
+      "status": "FAILED",
+      "message": "Admin should be able to access create dress form"
+    },
+    {
+      "name": "Admin Workflow - Booking Management",
+      "category": "adminWorkflow",
+      "status": "FAILED",
+      "message": "Admin should be able to access booking management"
+    },
+    {
+      "name": "Admin Workflow - Analytics Access",
+      "category": "adminWorkflow",
+      "status": "FAILED",
+      "message": "Admin should be able to access analytics"
+    },
+    {
+      "name": "Frontend Arabic RTL",
+      "category": "arabicConsistency",
+      "status": "PASSED",
+      "message": "Frontend should have RTL direction"
+    },
+    {
+      "name": "Frontend Arabic Font",
+      "category": "arabicConsistency",
+      "status": "PASSED",
+      "message": "Frontend should use Arabic font"
+    },
+    {
+      "name": "Backend Arabic RTL",
+      "category": "arabicConsistency",
+      "status": "PASSED",
+      "message": "Backend should have RTL direction"
+    },
+    {
+      "name": "Backend Arabic Font",
+      "category": "arabicConsistency",
+      "status": "PASSED",
+      "message": "Backend should use Arabic font"
+    },
+    {
+      "name": "Arabic Language Consistency",
+      "category": "arabicConsistency",
+      "status": "PASSED",
+      "message": "Arabic language support should be consistent across applications"
+    },
+    {
+      "name": "Frontend 404 Handling",
+      "category": "errorHandling",
+      "status": "PASSED",
+      "message": "Frontend should handle 404 errors gracefully"
+    },
+    {
+      "name": "Backend 404 Handling",
+      "category": "errorHandling",
+      "status": "PASSED",
+      "message": "Backend should handle 404 errors gracefully"
+    },
+    {
+      "name": "Network Error Recovery",
+      "category": "errorHandling",
+      "status": "FAILED",
+      "message": "Applications should recover from network errors"
+    },
+    {
+      "name": "Frontend Load Performance",
+      "category": "performance",
+      "status": "PASSED",
+      "message": "Frontend should load within 10 seconds (loaded in 8725ms)"
+    },
+    {
+      "name": "Backend Load Performance",
+      "category": "performance",
+      "status": "FAILED",
+      "message": "Backend should load within 10 seconds (loaded in 10906ms)"
+    },
+    {
+      "name": "Navigation Performance",
+      "category": "performance",
+      "status": "PASSED",
+      "message": "Navigation should be fast (completed in 14195ms)"
+    }
+  ]
+}

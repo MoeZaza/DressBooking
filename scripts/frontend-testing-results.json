@@ -1,0 +1,198 @@
+{
+  "pages": [
+    {
+      "name": "Home Page",
+      "path": "/",
+      "accessible": true,
+      "hasExpectedElements": false,
+      "hasContent": true,
+      "hasArabicText": true,
+      "hasRTLLayout": true,
+      "loadTime": 1987,
+      "errors": [],
+      "foundElements": [
+        ".dress-types"
+      ],
+      "missingElements": [
+        ".hero",
+        ".search-form"
+      ]
+    },
+    {
+      "name": "Search Page",
+      "path": "/search",
+      "accessible": true,
+      "hasExpectedElements": false,
+      "hasContent": false,
+      "hasArabicText": false,
+      "hasRTLLayout": true,
+      "loadTime": 824,
+      "errors": [],
+      "foundElements": [],
+      "missingElements": [
+        ".search",
+        ".col-1",
+        ".col-2"
+      ]
+    },
+    {
+      "name": "About Page",
+      "path": "/about",
+      "accessible": true,
+      "hasExpectedElements": false,
+      "hasContent": false,
+      "hasArabicText": false,
+      "hasRTLLayout": true,
+      "loadTime": 1193,
+      "errors": [],
+      "foundElements": [],
+      "missingElements": [
+        ".about",
+        ".content"
+      ]
+    },
+    {
+      "name": "Contact Page",
+      "path": "/contact",
+      "accessible": true,
+      "hasExpectedElements": true,
+      "hasContent": true,
+      "hasArabicText": true,
+      "hasRTLLayout": true,
+      "loadTime": 1171,
+      "errors": [],
+      "foundElements": [
+        ".contact",
+        ".contact-form"
+      ],
+      "missingElements": []
+    },
+    {
+      "name": "FAQ Page",
+      "path": "/faq",
+      "accessible": true,
+      "hasExpectedElements": true,
+      "hasContent": true,
+      "hasArabicText": true,
+      "hasRTLLayout": true,
+      "loadTime": 918,
+      "errors": [],
+      "foundElements": [
+        ".faq",
+        ".faq-list"
+      ],
+      "missingElements": []
+    },
+    {
+      "name": "Locations Page",
+      "path": "/locations",
+      "accessible": true,
+      "hasExpectedElements": false,
+      "hasContent": false,
+      "hasArabicText": false,
+      "hasRTLLayout": true,
+      "loadTime": 752,
+      "errors": [],
+      "foundElements": [],
+      "missingElements": [
+        ".locations",
+        ".location-list"
+      ]
+    },
+    {
+      "name": "Sign In Page",
+      "path": "/sign-in",
+      "accessible": true,
+      "hasExpectedElements": false,
+      "hasContent": false,
+      "hasArabicText": false,
+      "hasRTLLayout": true,
+      "loadTime": 743,
+      "errors": [],
+      "foundElements": [],
+      "missingElements": [
+        ".sign-in",
+        ".sign-in-form"
+      ]
+    },
+    {
+      "name": "Sign Up Page",
+      "path": "/sign-up",
+      "accessible": true,
+      "hasExpectedElements": false,
+      "hasContent": false,
+      "hasArabicText": false,
+      "hasRTLLayout": true,
+      "loadTime": 820,
+      "errors": [],
+      "foundElements": [],
+      "missingElements": [
+        ".sign-up",
+        ".sign-up-form"
+      ]
+    },
+    {
+      "name": "Terms of Service",
+      "path": "/tos",
+      "accessible": true,
+      "hasExpectedElements": true,
+      "hasContent": true,
+      "hasArabicText": true,
+      "hasRTLLayout": true,
+      "loadTime": 967,
+      "errors": [],
+      "foundElements": [
+        ".tos",
+        ".content"
+      ],
+      "missingElements": []
+    },
+    {
+      "name": "Privacy Policy",
+      "path": "/privacy",
+      "accessible": true,
+      "hasExpectedElements": true,
+      "hasContent": true,
+      "hasArabicText": true,
+      "hasRTLLayout": true,
+      "loadTime": 981,
+      "errors": [],
+      "foundElements": [
+        ".privacy",
+        ".content"
+      ],
+      "missingElements": []
+    },
+    {
+      "name": "Forgot Password",
+      "path": "/forgot-password",
+      "accessible": true,
+      "hasExpectedElements": false,
+      "hasContent": false,
+      "hasArabicText": false,
+      "hasRTLLayout": true,
+      "loadTime": 735,
+      "errors": [],
+      "foundElements": [],
+      "missingElements": [
+        ".forgot-password",
+        ".forgot-password-form"
+      ]
+    }
+  ],
+  "interactive": {
+    "searchForm": false,
+    "navigation": false,
+    "languageSwitch": false,
+    "responsiveMenu": false,
+    "errors": []
+  },
+  "summary": {
+    "totalPages": 15,
+    "accessiblePages": 11,
+    "pagesWithContent": 5,
+    "pagesWithArabic": 5,
+    "averageLoadTime": 1008,
+    "totalErrors": 0
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "securityHeaders": [
+    {
+      "name": "Frontend",
+      "url": "http://localhost:3000",
+      "hasCSP": false,
+      "hasXFrameOptions": false,
+      "hasXContentTypeOptions": false,
+      "hasReferrerPolicy": false,
+      "hasPermissionsPolicy": false,
+      "hasHSTS": false,
+      "headers": {
+        "vary": "Origin",
+        "content-type": "text/html",
+        "cache-control": "no-cache",
+        "etag": "W/\"4ab-U6kKIrhlMdrpv333h8p6wFqTqz8\"",
+        "date": "Thu, 31 Jul 2025 20:02:28 GMT",
+        "connection": "keep-alive",
+        "keep-alive": "timeout=5",
+        "content-length": "1195"
+      },
+      "errors": []
+    },
+    {
+      "name": "Backend",
+      "url": "http://localhost:3001",
+      "hasCSP": false,
+      "hasXFrameOptions": false,
+      "hasXContentTypeOptions": false,
+      "hasReferrerPolicy": false,
+      "hasPermissionsPolicy": false,
+      "hasHSTS": false,
+      "headers": {
+        "vary": "Origin",
+        "content-type": "text/html",
+        "cache-control": "no-cache",
+        "etag": "W/\"400-hbCEm2lzNoVLLBexNZvIh3l40DM\"",
+        "date": "Thu, 31 Jul 2025 20:02:28 GMT",
+        "connection": "keep-alive",
+        "keep-alive": "timeout=5",
+        "content-length": "1024"
+      },
+      "errors": []
+    }
+  ],
+  "xssProtection": [
+    {
+      "name": "Frontend",
+      "url": "http://localhost:3000",
+      "inputSanitized": false,
+      "outputEscaped": false,
+      "scriptInjectionBlocked": false,
+      "errors": []
+    },
+    {
+      "name": "Backend",
+      "url": "http://localhost:3001",
+      "inputSanitized": false,
+      "outputEscaped": false,
+      "scriptInjectionBlocked": false,
+      "errors": []
+    }
+  ],
+  "authentication": {
+    "frontendLoginExists": true,
+    "backendLoginExists": true,
+    "passwordProtected": false,
+    "sessionManagement": false,
+    "logoutFunctionality": false,
+    "errors": []
+  },
+  "inputValidation": {
+    "emailValidation": true,
+    "phoneValidation": false,
+    "requiredFieldValidation": false,
+    "lengthValidation": false,
+    "sqlInjectionProtection": true,
+    "errors": []
+  },
+  "dataProtection": {
+    "passwordsHashed": false,
+    "sensitiveDataEncrypted": false,
+    "noPasswordsInLogs": true,
+    "secureDataTransmission": false,
+    "errors": []
+  },
+  "summary": {
+    "securityHeadersScore": 0,
+    "xssProtectionScore": 0,
+    "authenticationScore": 66.66666666666666,
+    "overallSecurityScore": 22
+  }
+}

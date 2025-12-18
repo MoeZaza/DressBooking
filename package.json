@@ -1,0 +1,50 @@
+{
+  "name": "bookdress",
+  "version": "1.0.0",
+  "description": "BookDress - Dress Rental Booking System",
+  "keywords": [
+    "react",
+    "mongodb",
+    "stripe",
+    "paypal",
+    "dress-rental",
+    "dress-rental-system",
+    "booking-system",
+    "bookdress",
+    "fashion",
+    "rental"
+  ],
+  "author": "Moe Zaza",
+  "license": "MIT",
+  "type": "module",
+  "main": "pre-commit.js",
+  "scripts": {
+    "pre-commit": "node pre-commit.js",
+    "prepare": "husky",
+    "install:all": "npm i && cd api && npm i && cd ../backend && npm i && cd ../frontend && npm i && cd ../packages/bookcars-types && npm i && cd ../bookcars-helper && npm i && cd ../currency-converter && npm i && cd ../disable-react-devtools && npm i && cd ../reactjs-social-login && npm i",
+    "build:packages": "cd packages/bookcars-types && npm run build && cd ../bookcars-helper && npm run build && cd ../currency-converter && npm run build && cd ../disable-react-devtools && npm run build && cd ../reactjs-social-login && npm run build",
+    "build:all": "npm run build:packages && cd api && npm run build && cd ../backend && npm run build && cd ../frontend && npm run build",
+    "dev:api": "cd api && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:all": "start-dev-atlas.bat",
+    "start:all": "node scripts/start-all.js",
+    "stop:all": "node scripts/stop-all.js",
+    "restart:all": "npm run stop:all && npm run start:all",
+    "status:all": "node scripts/status-all.js",
+    "test:all": "cd api && npm test && cd ../backend && npm run test:run && cd ../frontend && npm test",
+    "lint:all": "cd api && npm run lint && cd ../backend && npm run lint && cd ../frontend && npm run lint"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.1",
+    "chalk": "^5.4.1",
+    "husky": "^9.1.7",
+    "p-limit": "^6.2.0",
+    "playwright": "^1.54.1",
+    "puppeteer": "^24.15.0"
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "node-fetch": "^3.3.2"
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "timestamp": "2025-07-31T10:11:12.462Z",
+  "page": "Create Dress Page",
+  "summary": {
+    "total": 10,
+    "passed": 1,
+    "failed": 9,
+    "successRate": 10
+  },
+  "categories": {
+    "loading": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "layout": {
+      "passed": 0,
+      "failed": 1,
+      "total": 1
+    },
+    "requiredFields": {
+      "passed": 0,
+      "failed": 3,
+      "total": 3
+    },
+    "validation": {
+      "passed": 0,
+      "failed": 1,
+      "total": 1
+    },
+    "dropdowns": {
+      "passed": 0,
+      "failed": 4,
+      "total": 4
+    }
+  },
+  "details": [
+    {
+      "name": "Page Loading",
+      "category": "loading",
+      "status": "PASSED",
+      "message": "Create dress page should load completely"
+    },
+    {
+      "name": "Create Dress Form Present",
+      "category": "layout",
+      "status": "FAILED",
+      "message": "Create dress form should be present"
+    },
+    {
+      "name": "Name Field Present",
+      "category": "requiredFields",
+      "status": "FAILED",
+      "message": "Name field should be present"
+    },
+    {
+      "name": "Dress Code Field Present",
+      "category": "requiredFields",
+      "status": "FAILED",
+      "message": "Dress code field should be present"
+    },
+    {
+      "name": "Required Field Indicators",
+      "category": "requiredFields",
+      "status": "FAILED",
+      "message": "Required fields should have visual indicators"
+    },
+    {
+      "name": "Form Validation Test",
+      "category": "validation",
+      "status": "FAILED",
+      "message": "Form validation test failed: Node is either not clickable or not an Element"
+    },
+    {
+      "name": "Type Dropdown Present",
+      "category": "dropdowns",
+      "status": "FAILED",
+      "message": "Type dropdown should be present"
+    },
+    {
+      "name": "Size Dropdown Present",
+      "category": "dropdowns",
+      "status": "FAILED",
+      "message": "Size dropdown should be present"
+    },
+    {
+      "name": "Style Dropdown Present",
+      "category": "dropdowns",
+      "status": "FAILED",
+      "message": "Style dropdown should be present"
+    },
+    {
+      "name": "Location Dropdown Present",
+      "category": "dropdowns",
+      "status": "FAILED",
+      "message": "Location dropdown should be present"
+    }
+  ]
+}

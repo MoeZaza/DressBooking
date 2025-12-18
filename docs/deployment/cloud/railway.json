@@ -1,0 +1,45 @@
+{
+  "name": "bookdress-api",
+  "description": "BookDress Wedding Dress Rental API",
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "cd api && npm install && npm run build",
+    "startCommand": "cd api && npm start"
+  },
+  "deploy": {
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  },
+  "environment": {
+    "NODE_ENV": "production",
+    "BC_PORT": "${{PORT}}",
+    "BC_HTTPS": "true",
+    "BC_DB_URI": "${{MONGODB_URI}}",
+    "BC_COOKIE_SECRET": "${{COOKIE_SECRET}}",
+    "BC_JWT_SECRET": "${{JWT_SECRET}}",
+    "BC_SMTP_HOST": "${{SMTP_HOST}}",
+    "BC_SMTP_PORT": "${{SMTP_PORT}}",
+    "BC_SMTP_USER": "${{SMTP_USER}}",
+    "BC_SMTP_PASS": "${{SMTP_PASS}}",
+    "BC_SMTP_FROM": "${{SMTP_FROM}}",
+    "BC_BACKEND_HOST": "${{RAILWAY_STATIC_URL}}",
+    "BC_FRONTEND_HOST": "${{FRONTEND_URL}}",
+    "BC_DEFAULT_LANGUAGE": "ar",
+    "BC_TIMEZONE": "Asia/Jerusalem",
+    "BC_IPINFO_DEFAULT_COUNTRY": "IL",
+    "BC_WEBSITE_NAME": "BookDress",
+    "BC_ADMIN_EMAIL": "${{ADMIN_EMAIL}}",
+    "BC_STRIPE_SECRET_KEY": "${{STRIPE_SECRET_KEY}}",
+    "BC_PAYPAL_CLIENT_ID": "${{PAYPAL_CLIENT_ID}}",
+    "BC_PAYPAL_CLIENT_SECRET": "${{PAYPAL_CLIENT_SECRET}}",
+    "BC_PAYPAL_SANDBOX": "false"
+  },
+  "healthcheck": {
+    "path": "/api/status",
+    "timeout": 30
+  },
+  "resources": {
+    "memory": "1GB",
+    "cpu": "1vCPU"
+  }
+}

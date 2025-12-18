@@ -1,0 +1,63 @@
+services:
+  - type: web
+    name: bookdress-api
+    env: node
+    plan: starter
+    buildCommand: cd api && npm install && npm run build
+    startCommand: cd api && npm start
+    healthCheckPath: /api/status
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: BC_PORT
+        value: 4002
+      - key: BC_HTTPS
+        value: true
+      - key: BC_DB_URI
+        fromDatabase:
+          name: bookdress-db
+          property: connectionString
+      - key: BC_COOKIE_SECRET
+        generateValue: true
+      - key: BC_JWT_SECRET
+        generateValue: true
+      - key: BC_SMTP_HOST
+        sync: false
+      - key: BC_SMTP_PORT
+        value: 587
+      - key: BC_SMTP_USER
+        sync: false
+      - key: BC_SMTP_PASS
+        sync: false
+      - key: BC_SMTP_FROM
+        sync: false
+      - key: BC_BACKEND_HOST
+        fromService:
+          type: web
+          name: bookdress-api
+          property: host
+      - key: BC_FRONTEND_HOST
+        sync: false
+      - key: BC_DEFAULT_LANGUAGE
+        value: ar
+      - key: BC_TIMEZONE
+        value: Asia/Jerusalem
+      - key: BC_IPINFO_DEFAULT_COUNTRY
+        value: IL
+      - key: BC_WEBSITE_NAME
+        value: BookDress
+      - key: BC_ADMIN_EMAIL
+        sync: false
+      - key: BC_STRIPE_SECRET_KEY
+        sync: false
+      - key: BC_PAYPAL_CLIENT_ID
+        sync: false
+      - key: BC_PAYPAL_CLIENT_SECRET
+        sync: false
+      - key: BC_PAYPAL_SANDBOX
+        value: false
+
+databases:
+  - name: bookdress-db
+    databaseName: bookdress
+    user: bookdress

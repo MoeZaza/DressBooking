@@ -1,0 +1,159 @@
+import React, { useRef, useState } from 'react'
+import { useForm, useWatch } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { IconButton, TextField, FormControl, Button } from '@mui/material'
+import { Search as SearchIcon, Clear as ClearIcon } from '@mui/icons-material'
+import * as bookcarsTypes from ':bookcars-types'
+import * as bookcarsHelper from ':bookcars-helper'
+import { strings as commonStrings } from '@/lang/common'
+import { strings } from '@/lang/booking-filter'
+import LocationSelectList from './LocationSelectList'
+import DatePicker from './DatePicker'
+import Accordion from '@/components/Accordion'
+
+import '@/assets/css/booking-filter.css'
+
+const schema = z.object({
+  from: z.date().optional(),
+  to: z.date().optional(),
+  location: z.string().optional(),
+  keyword: z.string().optional(),
+})
+
+type FormFields = z.infer<typeof schema>
+
+interface BookingFilterProps {
+  collapse?: boolean
+  className?: string
+  language?: string
+  onSubmit?: (filter: bookcarsTypes.Filter | null) => void
+}
+
+const BookingFilter = ({
+  collapse,
+  className,
+  language,
+  onSubmit
+}: BookingFilterProps) => {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const { control, register, handleSubmit, setValue } = useForm<FormFields>({
+    resolver: zodResolver(schema),
+    mode: 'onChange',
+  })
+
+  const { from, to, keyword } = useWatch({ control })
+
+  const [minDate, setMinDate] = useState<Date | undefined>(undefined)
+
+  const handleFormSubmit = (data: FormFields) => {
+    let filter: bookcarsTypes.Filter | null = {
+      from: data.from,
+      to: data.to,
+      location: data.location,
+      keyword: data.keyword,
+    }
+
+    if (
+      !data.from &&
+      !data.to &&
+      !data.location &&
+      !data.keyword
+    ) {
+      filter = null
+    }
+
+    if (onSubmit) {
+      onSubmit(bookcarsHelper.clone(filter))
+    }
+  }
+
+  return (
+    <Accordion
+      title={commonStrings.SEARCH}
+      collapse={collapse}
+      className={`${className ? `${className} ` : ''}booking-filter`}
+    >
+      <form autoComplete="off" onSubmit={handleSubmit(handleFormSubmit)}>
+        <input autoComplete="false" name="hidden" type="text" style={{ display: 'none' }} />
+        <FormControl fullWidth margin="dense">
+          <DatePicker
+            {...register('from')}
+            label={commonStrings.FROM}
+            value={from}
+            onChange={(date) => {
+              if (date) {
+                if (to && to.getTime() <= date.getTime()) {
+                  setValue('to', undefined)
+                }
+
+                const _minDate = new Date(date)
+                _minDate.setDate(date.getDate() + 1)
+                setMinDate(_minDate)
+              } else {
+                setMinDate(undefined)
+              }
+
+              setValue('from', date || undefined)
+            }}
+            language={language}
+            variant="standard"
+
+          />
+        </FormControl>
+        <FormControl fullWidth margin="dense">
+          <DatePicker
+            {...register('to')}
+            label={commonStrings.TO}
+            minDate={minDate}
+            value={to}
+            onChange={(date) => setValue('to', date || undefined)}
+            language={language}
+            variant="standard"
+          />
+        </FormControl>
+        <FormControl fullWidth margin="dense">
+          <LocationSelectList
+            label={strings.LOCATION}
+            variant="standard"
+            onChange={(locations) => setValue('location', locations.length > 0 ? locations[0]._id : '')}
+            init
+          />
+        </FormControl>
+        <FormControl fullWidth margin="dense">
+          <TextField
+            {...register('keyword')}
+            inputRef={inputRef}
+            variant="standard"
+            value={keyword || ''}
+            onChange={(e) => setValue('keyword', e.target.value)}
+            placeholder={commonStrings.SEARCH_PLACEHOLDER}
+            slotProps={{
+              input: {
+                endAdornment: keyword ? (
+                  <IconButton
+                    size="small"
+                    onClick={() => {
+                      setValue('keyword', '')
+                      inputRef.current?.focus()
+                    }}
+                  >
+                    <ClearIcon className="d-adornment-icon" />
+                  </IconButton>
+                ) : (
+                  <SearchIcon className="d-adornment-icon" />
+                ),
+              }
+            }}
+            className="bf-search"
+          />
+        </FormControl>
+        <Button type="submit" variant="contained" className="btn-primary btn-search" fullWidth>
+          {commonStrings.SEARCH}
+        </Button>
+      </form>
+    </Accordion>
+  )
+}
+
+export default BookingFilter

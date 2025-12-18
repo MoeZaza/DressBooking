@@ -1,0 +1,30 @@
+{
+  "analysis": {
+    "pageAccessible": true,
+    "hasSearchForm": false,
+    "hasLocationField": false,
+    "hasDateFields": false,
+    "hasFilterOptions": false,
+    "hasSearchResults": false,
+    "hasPagination": false,
+    "hasDataGrid": false,
+    "searchFormElements": [],
+    "filterElements": [],
+    "resultElements": [],
+    "errors": []
+  },
+  "testing": {
+    "canSelectLocation": false,
+    "canSelectDates": false,
+    "canApplyFilters": false,
+    "searchResultsLoad": true,
+    "paginationWorks": false,
+    "errors": []
+  },
+  "fixes": [],
+  "summary": {
+    "issuesFound": 10,
+    "issuesFixed": 0,
+    "functionalityScore": 9
+  }
+}

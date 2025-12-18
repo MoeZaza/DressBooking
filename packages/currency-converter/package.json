@@ -1,0 +1,22 @@
+{
+  "name": "currency-converter",
+  "version": "1.0.0",
+  "description": "Currency Converter Utility for BookDress",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "rimraf ./tsconfig.tsbuildinfo ./index.js ./index.d.ts ./check.js ./check.d.ts && tsc --build --verbose",
+    "check": "npm run build && node check.js"
+  },
+  "author": "Moe Zaza",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/runtime": "^7.27.1",
+    "easy-currencies": "^1.8.3",
+    "typescript": "^5.9.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "rimraf": "^6.0.1"
+  }
+}

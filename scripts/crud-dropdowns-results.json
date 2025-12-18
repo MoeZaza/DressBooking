@@ -1,0 +1,67 @@
+{
+  "crud": {
+    "dresses": {
+      "create": false,
+      "read": true,
+      "update": false,
+      "delete": false
+    },
+    "bookings": {
+      "create": false,
+      "read": false,
+      "update": false,
+      "delete": false
+    },
+    "locations": {
+      "create": false,
+      "read": true,
+      "update": false,
+      "delete": false
+    },
+    "suppliers": {
+      "create": false,
+      "read": true,
+      "update": false,
+      "delete": false
+    },
+    "customers": {
+      "create": false,
+      "read": false,
+      "update": false,
+      "delete": false
+    }
+  },
+  "dropdowns": {
+    "locations": {
+      "available": true,
+      "count": 1
+    },
+    "suppliers": {
+      "available": true,
+      "count": 0
+    },
+    "dresses": {
+      "available": true,
+      "count": 15
+    },
+    "countries": {
+      "available": true,
+      "count": 1
+    },
+    "dressTypes": {
+      "available": false,
+      "count": 0
+    }
+  },
+  "integrity": {
+    "dressesHaveSuppliers": true,
+    "bookingsHaveDresses": false,
+    "locationsHaveCountries": false,
+    "suppliersHaveLocations": false
+  },
+  "summary": {
+    "crudOperationsWorking": 3,
+    "dropdownsPopulated": 4,
+    "dataIntegrityChecks": 1
+  }
+}

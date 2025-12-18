@@ -1,0 +1,225 @@
+services:
+  # MongoDB Atlas is used instead of local MongoDB
+  # mongo and mongo-express services removed
+
+  bc-dev-api:
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile.dev
+    restart: always
+    ports:
+      - 4002:4002
+    # No dependency on local mongo since using MongoDB Atlas
+    environment:
+      # Basic Configuration
+      - TZ="Asia/Jerusalem"
+      - BC_DEFAULT_LANGUAGE=ar
+      - BC_BASE_CURRENCY=ILS
+      - BC_TIMEZONE="Asia/Jerusalem"
+      - BC_WEBSITE_NAME=BookDress
+      - BC_IPINFO_DEFAULT_COUNTRY=PS
+
+      # Database Configuration (MongoDB Atlas)
+      - BC_DB_URI=mongodb+srv://user:Mybookmodr100@cluster0.ey9u2ce.mongodb.net/bookdress?retryWrites=true&w=majority&appName=Cluster0
+      - BC_DB_SSL=false
+
+      # CDN Configuration
+      - BC_CDN_HOST=http://localhost:4002/api/cdn
+
+      # Development Security Configuration (Relaxed)
+      - NODE_ENV=development
+      - BC_HTTPS=false
+      - BC_COOKIE_SECRET=dev_cookie_secret_for_development_only
+      - BC_JWT_SECRET=dev_jwt_secret_for_development_only
+      - BC_JWT_EXPIRE_AT=86400
+
+      # Security Headers & CSP (Relaxed for development)
+      - BC_CSP_REPORT_URI="/api/security/csp-report"
+      - BC_CSP_REPORT_ONLY=true
+      - BC_HSTS_MAX_AGE=0
+      - BC_HSTS_INCLUDE_SUBDOMAINS=false
+      - BC_HSTS_PRELOAD=false
+
+      # Enhanced Security Configuration (Development - Disabled by default)
+      - SECURITY_LEVEL=${SECURITY_LEVEL:-disabled}
+      - ENABLE_THREAT_BLOCKING=${ENABLE_THREAT_BLOCKING:-false}
+      - CSP_ENFORCEMENT=${CSP_ENFORCEMENT:-false}
+      - RATE_LIMIT_STRICT=${RATE_LIMIT_STRICT:-false}
+      - ENABLE_SECURITY_MONITORING=${ENABLE_SECURITY_MONITORING:-false}
+      - SECURITY_LOG_LEVEL=${SECURITY_LOG_LEVEL:-debug}
+
+      # Database Security Configuration (Disabled by default)
+      - BC_ENABLE_DATABASE_SECURITY=false
+      - BC_DB_QUERY_SANITIZATION=false
+      - BC_DB_AUDIT_LOGGING=false
+      - BC_DB_FIELD_ENCRYPTION=false
+      - XSS_PROTECTION_LEVEL=standard
+      - INPUT_VALIDATION_LEVEL=standard
+      - THREAT_DETECTION_ENABLED=true
+      - SECURITY_TESTING=${SECURITY_TESTING:-false}
+
+      # Rate Limiting (Higher limits for development)
+      - BC_RATE_LIMIT_WINDOW_MS=900000
+      - BC_RATE_LIMIT_MAX_REQUESTS=1000
+      - BC_AUTH_RATE_LIMIT_MAX=50
+      - BC_PAYMENT_RATE_LIMIT_MAX=100
+
+      # Security Monitoring (Enabled but non-blocking)
+      - BC_ENABLE_SECURITY_LOGGING=true
+      - BC_ENABLE_THREAT_DETECTION=true
+      - BC_BLOCK_SUSPICIOUS_REQUESTS=false
+
+      # IP Blocking (Disabled for development)
+      - BC_ENABLE_IP_BLOCKING=false
+      - BC_IP_BLOCK_THRESHOLD=1000
+      - BC_IP_BLOCK_DURATION=60
+
+      # Admin Security (Allow all local IPs)
+      - BC_ADMIN_IP_WHITELIST="127.0.0.1,::1,192.168.0.0/16,10.0.0.0/8,172.16.0.0/12"
+      - BC_TRUSTED_PROXIES="127.0.0.1,::1"
+
+      # CORS Configuration (Allow localhost)
+      - BC_FRONTEND_HOST="http://localhost:3000"
+      - BC_BACKEND_HOST="http://localhost:3001"
+
+    volumes:
+      - cdn:/var/www/cdn/bookdress
+      - ./api:/bookdress/api
+      - /bookdress/api/node_modules
+      - api_logs:/bookdress/api/logs
+    healthcheck:
+      test: ["CMD", "sh", "-c", "curl -f http://localhost:4002/api/security/health || exit 1"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 90s
+
+  bc-dev-backend:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile.dev
+    restart: always
+    depends_on:
+      bc-dev-api:
+        condition: service_healthy
+    ports:
+      - 3001:3001
+    volumes:
+      - ./backend:/bookdress/backend
+      - /bookdress/backend/node_modules
+    environment:
+      - TZ="Asia/Jerusalem"
+      - BC_DEFAULT_LANGUAGE=ar
+      - BC_BASE_CURRENCY=ILS
+      - BC_TIMEZONE="Asia/Jerusalem"
+      - BC_WEBSITE_NAME=BookDress
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+
+      # Backend Security Configuration (Development)
+      - SECURITY_LEVEL=${SECURITY_LEVEL:-standard}
+      - ENABLE_THREAT_BLOCKING=${ENABLE_THREAT_BLOCKING:-false}
+      - CSP_ENFORCEMENT=${CSP_ENFORCEMENT:-false}
+      - RATE_LIMIT_STRICT=${RATE_LIMIT_STRICT:-false}
+      - ENABLE_SECURITY_MONITORING=${ENABLE_SECURITY_MONITORING:-true}
+      - SECURITY_LOG_LEVEL=${SECURITY_LOG_LEVEL:-debug}
+
+  bc-dev-frontend:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile.dev
+    restart: always
+    depends_on:
+      bc-dev-api:
+        condition: service_healthy
+    ports:
+      - 3000:3000
+      - 3443:443
+    volumes:
+      - ./frontend:/bookdress/frontend
+      - /bookdress/frontend/node_modules
+    environment:
+      - TZ="Asia/Jerusalem"
+      - BC_DEFAULT_LANGUAGE=ar
+      - BC_BASE_CURRENCY=ILS
+      - BC_TIMEZONE="Asia/Jerusalem"
+      - BC_WEBSITE_NAME=BookDress
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+
+      # Frontend Security Configuration (Development)
+      - REACT_APP_SECURITY_LEVEL=${SECURITY_LEVEL:-standard}
+      - REACT_APP_CSP_ENFORCEMENT=${CSP_ENFORCEMENT:-false}
+      - REACT_APP_ENABLE_SECURITY_MONITORING=${ENABLE_SECURITY_MONITORING:-true}
+      - REACT_APP_XSS_PROTECTION_LEVEL=standard
+      - REACT_APP_INPUT_VALIDATION_LEVEL=standard
+      - REACT_APP_SECURITY_MONITOR_URL="http://localhost:4003"
+
+  # bc-dev-security-monitor:
+  #   build:
+  #     context: ./security-monitor
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - bc-dev-api
+  #   environment:
+  #     - NODE_ENV=development
+  #     - PORT=4003
+  #     - TZ="Asia/Jerusalem"
+
+  #     # Security Monitor Configuration (Development)
+  #     - SECURITY_LEVEL=${SECURITY_LEVEL:-standard}
+  #     - ENABLE_REAL_TIME_MONITORING=${ENABLE_SECURITY_MONITORING:-true}
+  #     - LOG_LEVEL=${SECURITY_LOG_LEVEL:-debug}
+  #     - ALERT_THRESHOLD_CRITICAL=10
+  #     - ALERT_THRESHOLD_HIGH=50
+  #     - DATA_RETENTION_DAYS=7
+  #     - BC_ENABLE_DATABASE_SECURITY=${BC_ENABLE_DATABASE_SECURITY:-false}
+  #   ports:
+  #     - "4003:4003"
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./security-monitor:/app
+  #     - /app/node_modules
+  #   profiles:
+  #     - security
+  #     - full
+
+  # # Database initialization service
+  # db-init:
+  #   build:
+  #     context: .
+  #     dockerfile: ./api/Dockerfile.dev
+  #   depends_on:
+  #     mongo:
+  #       condition: service_healthy
+  #     bc-dev-api:
+  #       condition: service_healthy
+  #   environment:
+  #     - BC_DB_HOST=mongo
+  #     - BC_DB_PORT=27017
+  #     - BC_DB_NAME=bookdress
+  #     - BC_DB_USERNAME=admin
+  #     - BC_DB_PASSWORD=admin
+  #     - BC_DB_URI="mongodb://admin:admin@mongo:27017/bookdress?authSource=admin&appName=bookdress"
+  #     - BC_ENABLE_DATABASE_SECURITY=false
+  #     - BC_DB_QUERY_SANITIZATION=false
+  #     - BC_DB_AUDIT_LOGGING=false
+  #     - BC_DB_FIELD_ENCRYPTION=false
+  #   command: >
+  #     sh -c "
+  #       echo 'Waiting for API to be ready...' &&
+  #       sleep 45 &&
+  #       echo 'Checking API health...' &&
+  #       until curl -f http://bc-dev-api:4002/api/security/health; do
+  #         echo 'Waiting for API to be healthy...'
+  #         sleep 10
+  #       done &&
+  #       echo 'API is healthy, initializing database...' &&
+  #       npm run db:init &&
+  #       echo 'Database initialization completed!'
+  #     "
+  #   restart: "no"
+
+volumes:
+  cdn:
+  api_logs:

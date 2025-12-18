@@ -1,0 +1,182 @@
+import React, { lazy, Suspense, useEffect, useState } from 'react'
+import { createBrowserRouter, RouterProvider, Outlet, useLocation } from 'react-router-dom'
+import { NotificationProvider } from '@/context/NotificationContext'
+import { UserProvider } from '@/context/UserContext'
+import { RecaptchaProvider } from '@/context/RecaptchaContext'
+import { LanguageProvider } from '@/context/LanguageContext'
+import ScrollToTop from '@/components/ScrollToTop'
+import NProgressIndicator from '@/components/NProgressIndicator'
+import { initializeBundleOptimizations, monitorBundlePerformance } from '@/utils/bundleOptimization'
+import performanceMonitor from '@/services/performanceMonitor'
+import { errorRecoveryService } from '@/services/ErrorRecoveryService'
+
+const Header = lazy(() => import('@/components/Header'))
+const SignIn = lazy(() => import('@/pages/SignIn'))
+const Activate = lazy(() => import('@/pages/Activate'))
+const ForgotPassword = lazy(() => import('@/pages/ForgotPassword'))
+const ResetPassword = lazy(() => import('@/pages/ResetPassword'))
+const SignUp = lazy(() => import('@/pages/SignUp'))
+const Suppliers = lazy(() => import('@/pages/Suppliers'))
+const Supplier = lazy(() => import('@/pages/Supplier'))
+const CreateSupplier = lazy(() => import('@/pages/CreateSupplier'))
+const UpdateSupplier = lazy(() => import('@/pages/UpdateSupplier'))
+const Locations = lazy(() => import('@/pages/Locations'))
+const CreateLocation = lazy(() => import('@/pages/CreateLocation'))
+const UpdateLocation = lazy(() => import('@/pages/UpdateLocation'))
+
+const Dresses = lazy(() => import('@/pages/Dresses'))
+const Dress = lazy(() => import('@/pages/Dress'))
+const CreateDress = lazy(() => import('@/pages/CreateDress'))
+const UpdateDress = lazy(() => import('@/pages/UpdateDress'))
+const DressSearch = lazy(() => import('@/pages/DressSearch'))
+const Bookings = lazy(() => import('@/pages/Bookings'))
+const CreateBooking = lazy(() => import('@/pages/CreateBooking'))
+const UpdateBooking = lazy(() => import('@/pages/UpdateBooking'))
+
+
+const Users = lazy(() => import('@/pages/Users'))
+const User = lazy(() => import('@/pages/User'))
+const CreateUser = lazy(() => import('@/pages/CreateUser'))
+const UpdateUser = lazy(() => import('@/pages/UpdateUser'))
+const Settings = lazy(() => import('@/pages/Settings'))
+const Profile = lazy(() => import('@/pages/Profile'))
+const Notifications = lazy(() => import('@/pages/Notifications'))
+const ToS = lazy(() => import('@/pages/ToS'))
+const About = lazy(() => import('@/pages/About'))
+const ChangePassword = lazy(() => import('@/pages/ChangePassword'))
+const Contact = lazy(() => import('@/pages/Contact'))
+const NoMatch = lazy(() => import('@/pages/NoMatch'))
+const Countries = lazy(() => import('@/pages/Countries'))
+const CreateCountry = lazy(() => import('@/pages/CreateCountry'))
+const UpdateCountry = lazy(() => import('@/pages/UpdateCountry'))
+const Scheduler = lazy(() => import('@/pages/Scheduler'))
+const FittingAppointments = lazy(() => import('@/pages/FittingAppointments'))
+const BankDetails = lazy(() => import('@/pages/BankDetails'))
+const Pricing = lazy(() => import('@/pages/Pricing'))
+const AnalyticsDashboard = lazy(() => import('@/components/AnalyticsDashboard'))
+const InventoryManagement = lazy(() => import('@/components/InventoryManagement'))
+const BusinessIntelligence = lazy(() => import('@/components/BusinessIntelligence'))
+const AdminBookingDashboard = lazy(() => import('@/pages/AdminBookingDashboard'))
+const PaymentManagement = lazy(() => import('@/pages/PaymentManagement'))
+const ExpenseManagement = lazy(() => import('@/pages/ExpenseManagement'))
+const AccountingDashboard = lazy(() => import('@/pages/AccountingDashboard'))
+const CustomerManagement = lazy(() => import('@/pages/CustomerManagement'))
+const AccessorySettings = lazy(() => import('@/pages/AccessorySettings'))
+const AdminDashboard = lazy(() => import('@/pages/AdminDashboard'))
+
+const AppLayout = () => {
+  const location = useLocation()
+  const [refreshKey, setRefreshKey] = useState(0) // refreshKey to check user and notifications when navigating between routes
+
+  useEffect(() => {
+    setRefreshKey((prev) => prev + 1)
+  }, [location.pathname])
+
+  return (
+    <LanguageProvider>
+      <UserProvider refreshKey={refreshKey}>
+        <NotificationProvider refreshKey={refreshKey}>
+          <RecaptchaProvider>
+            <ScrollToTop />
+            <div className="app">
+              <Suspense fallback={<NProgressIndicator />}>
+                <Header />
+                <Outlet />
+              </Suspense>
+            </div>
+          </RecaptchaProvider>
+        </NotificationProvider>
+      </UserProvider>
+    </LanguageProvider>
+  )
+}
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <AppLayout />,
+    children: [
+      { index: true, element: <Bookings /> },
+      { path: 'dashboard', element: <AdminDashboard /> },
+      { path: 'sign-in', element: <SignIn /> },
+      { path: 'activate', element: <Activate /> },
+      { path: 'forgot-password', element: <ForgotPassword /> },
+      { path: 'reset-password', element: <ResetPassword /> },
+      { path: 'sign-up', element: <SignUp /> },
+      { path: 'suppliers', element: <Suppliers /> },
+      { path: 'supplier', element: <Supplier /> },
+      { path: 'create-supplier', element: <CreateSupplier /> },
+      { path: 'update-supplier', element: <UpdateSupplier /> },
+      { path: 'locations', element: <Locations /> },
+      { path: 'create-location', element: <CreateLocation /> },
+      { path: 'update-location', element: <UpdateLocation /> },
+
+      { path: 'dresses', element: <Dresses /> },
+      { path: 'dress', element: <Dress /> },
+      { path: 'create-dress', element: <CreateDress /> },
+      { path: 'update-dress', element: <UpdateDress /> },
+      { path: 'dress-search', element: <DressSearch /> },
+      { path: 'create-booking', element: <CreateBooking /> },
+      { path: 'update-booking', element: <UpdateBooking /> },
+
+
+      { path: 'users', element: <Users /> },
+      { path: 'user', element: <User /> },
+      { path: 'create-user', element: <CreateUser /> },
+      { path: 'update-user', element: <UpdateUser /> },
+      { path: 'settings', element: <Settings /> },
+      { path: 'profile', element: <Profile /> },
+      { path: 'notifications', element: <Notifications /> },
+      { path: 'change-password', element: <ChangePassword /> },
+      { path: 'about', element: <About /> },
+      { path: 'tos', element: <ToS /> },
+      { path: 'contact', element: <Contact /> },
+      { path: 'countries', element: <Countries /> },
+      { path: 'create-country', element: <CreateCountry /> },
+      { path: 'update-country', element: <UpdateCountry /> },
+      { path: 'scheduler', element: <Scheduler /> },
+      { path: 'fitting-appointments', element: <FittingAppointments /> },
+      { path: 'bank-details', element: <BankDetails /> },
+      { path: 'pricing', element: <Pricing /> },
+      { path: 'analytics-dashboard', element: <AnalyticsDashboard /> },
+      { path: 'inventory-management', element: <InventoryManagement /> },
+      { path: 'business-intelligence', element: <BusinessIntelligence /> },
+      { path: 'admin-booking-dashboard', element: <AdminBookingDashboard /> },
+      { path: 'payment-management', element: <PaymentManagement /> },
+      { path: 'expense-management', element: <ExpenseManagement /> },
+      { path: 'accounting-dashboard', element: <AccountingDashboard /> },
+      { path: 'customer-management', element: <CustomerManagement /> },
+      { path: 'accessory-settings', element: <AccessorySettings /> },
+      { path: '*', element: <NoMatch /> }
+    ]
+  }
+])
+
+const App = () => {
+  useEffect(() => {
+    // Initialize bundle optimizations
+    initializeBundleOptimizations()
+
+    // Start performance monitoring
+    monitorBundlePerformance()
+
+    // Enable automated issue resolution
+    errorRecoveryService.enableAutoResolution()
+
+    // Performance monitor is automatically initialized on import
+    console.log('🚀 App initialized with performance monitoring and automated issue resolution')
+
+    // Log initial performance metrics
+    setTimeout(() => {
+      console.log('📊 Initial Performance Metrics:', {
+        averagePageLoad: performanceMonitor.getAveragePageLoadTime(),
+        averageApiResponse: performanceMonitor.getAverageApiResponseTime(),
+        memoryUsage: performanceMonitor.getCurrentMemoryUsage()
+      })
+    }, 5000)
+  }, [])
+
+  return <RouterProvider router={router} />
+}
+
+export default App

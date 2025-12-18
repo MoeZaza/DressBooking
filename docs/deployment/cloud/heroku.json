@@ -1,0 +1,72 @@
+{
+  "name": "bookdress-api",
+  "description": "BookDress Wedding Dress Rental API",
+  "keywords": ["nodejs", "express", "mongodb", "wedding", "dress", "rental"],
+  "website": "https://bookdress.com",
+  "repository": "https://github.com/yourusername/bookdress",
+  "logo": "https://bookdress.com/logo.png",
+  "success_url": "/api/status",
+  "scripts": {
+    "postdeploy": "cd api && npm run script:init-admin"
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "addons": [
+    {
+      "plan": "mongolab:sandbox"
+    },
+    {
+      "plan": "sendgrid:starter"
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "env": {
+    "NODE_ENV": {
+      "value": "production"
+    },
+    "BC_HTTPS": {
+      "value": "true"
+    },
+    "BC_DEFAULT_LANGUAGE": {
+      "value": "ar"
+    },
+    "BC_TIMEZONE": {
+      "value": "Asia/Jerusalem"
+    },
+    "BC_IPINFO_DEFAULT_COUNTRY": {
+      "value": "IL"
+    },
+    "BC_WEBSITE_NAME": {
+      "value": "BookDress"
+    },
+    "BC_COOKIE_SECRET": {
+      "generator": "secret"
+    },
+    "BC_JWT_SECRET": {
+      "generator": "secret"
+    },
+    "BC_DB_URI": {
+      "value": "mongodb://heroku_app:password@host:port/database"
+    },
+    "BC_SMTP_HOST": {
+      "value": "smtp.sendgrid.net"
+    },
+    "BC_SMTP_PORT": {
+      "value": "587"
+    },
+    "BC_SMTP_USER": {
+      "value": "apikey"
+    },
+    "BC_PAYPAL_SANDBOX": {
+      "value": "false"
+    }
+  }
+}

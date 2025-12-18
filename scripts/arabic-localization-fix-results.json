@@ -1,0 +1,54 @@
+{
+  "frontend": {
+    "before": {
+      "htmlLang": "en",
+      "htmlDir": "rtl",
+      "bodyDir": "rtl",
+      "localStorage": {
+        "frontendLang": null,
+        "backendLang": null,
+        "userLang": null
+      },
+      "hasArabicText": false,
+      "currentUrl": "http://localhost:3000/",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/138.0.0.0 Safari/537.36",
+      "documentReady": "complete"
+    },
+    "after": {
+      "htmlLang": "en",
+      "htmlDir": "rtl",
+      "bodyDir": "rtl",
+      "hasArabicText": false,
+      "hasRTLClass": false
+    },
+    "languageSwitching": false
+  },
+  "backend": {
+    "before": {
+      "htmlLang": "en",
+      "htmlDir": "rtl",
+      "bodyDir": "rtl",
+      "localStorage": {
+        "frontendLang": null,
+        "backendLang": null,
+        "userLang": null
+      },
+      "hasArabicText": false,
+      "currentUrl": "http://localhost:3001/",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/138.0.0.0 Safari/537.36",
+      "documentReady": "complete"
+    },
+    "after": {
+      "htmlLang": "en",
+      "htmlDir": "rtl",
+      "bodyDir": "rtl",
+      "hasArabicText": false,
+      "hasRTLClass": false
+    },
+    "languageSwitching": false
+  },
+  "fixes": [
+    "Forced Arabic language for Frontend",
+    "Forced Arabic language for Backend"
+  ]
+}

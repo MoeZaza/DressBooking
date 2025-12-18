@@ -1,0 +1,19 @@
+{
+  "name": "bookcars-helper",
+  "version": "1.0.0",
+  "description": "BookDress Helper Utilities",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "rimraf ./tsconfig.tsbuildinfo ./index.js ./index.d.ts && tsc --build --verbose"
+  },
+  "author": "Moe Zaza",
+  "license": "ISC",
+  "devDependencies": {
+    "rimraf": "^5.0.5",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.26.0"
+  }
+}

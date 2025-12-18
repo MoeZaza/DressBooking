@@ -1,0 +1,46 @@
+[
+  {
+    "name": "Frontend Dresses",
+    "avgTime": 678,
+    "minTime": 216,
+    "maxTime": 931,
+    "times": [
+      887,
+      931,
+      216
+    ]
+  },
+  {
+    "name": "Locations",
+    "avgTime": 200,
+    "minTime": 199,
+    "maxTime": 202,
+    "times": [
+      202,
+      200,
+      199
+    ]
+  },
+  {
+    "name": "Frontend Suppliers",
+    "avgTime": 213,
+    "minTime": 103,
+    "maxTime": 428,
+    "times": [
+      107,
+      103,
+      428
+    ]
+  },
+  {
+    "name": "Countries",
+    "avgTime": 104,
+    "minTime": 102,
+    "maxTime": 107,
+    "times": [
+      107,
+      104,
+      102
+    ]
+  }
+]

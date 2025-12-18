@@ -1,0 +1,116 @@
+/* Signin */
+div.signin {
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 auto;
+  justify-content: center;
+  margin: 45px 0;
+  transform: translate3d(0, 0, 0);
+}
+
+.signin-form-title {
+  text-align: center;
+  text-transform: capitalize;
+  margin-top: 35px;
+  color: #121212;
+}
+
+.signin-buttons {
+  float: right;
+  margin-top: 20px;
+}
+
+.form-error {
+  clear: both;
+  height: 65px;
+  padding-top: 10px;
+  text-align: center;
+}
+
+div.signin div.stay-connected {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+
+div.signin div.stay-connected input[type='checkbox'] {
+  margin-right: 5px;
+}
+
+div.signin div.stay-connected label {
+  cursor: pointer;
+  color: rgb(0 0 0 / 60%);
+  user-select: none;
+}
+
+div.signin div.forgot-password {
+  margin-top: 15px;
+}
+
+/* Device width is less than or equal to 960px */
+
+@media only screen and (width <=960px) {
+  .signin-form {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 350px;
+    border: 1px solid rgb(0 0 0 / 12%);
+    padding: 15px;
+  }
+
+  /* Improve touch targets for mobile */
+  .signin-form input {
+    min-height: 44px;
+    padding: 12px;
+  }
+
+  .signin-form button {
+    min-height: 44px;
+    padding: 12px 24px;
+  }
+
+  .signin-buttons {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .signin-buttons button {
+    width: 100%;
+  }
+}
+
+/* Extra small devices (phones, 320px to 479px) */
+@media only screen and (max-width: 479px) {
+  .signin-form {
+    width: calc(100vw - 40px);
+    max-width: 320px;
+    padding: 20px;
+    margin: 0 20px;
+  }
+
+  .signin-form input {
+    min-height: 48px;
+    padding: 14px;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+
+  .signin-form button {
+    min-height: 48px;
+    padding: 14px 24px;
+    font-size: 16px;
+  }
+}
+
+/* Device width is greater than or equal to 960px */
+
+@media only screen and (width >=960px) {
+  .signin-form {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 380px;
+    border: 1px solid rgb(0 0 0 / 12%);
+    padding: 15px;
+  }
+}

@@ -1,0 +1,255 @@
+{
+  "timestamp": "2025-07-31T11:09:33.390Z",
+  "testSuite": "Comprehensive Frontend Routes Audit",
+  "summary": {
+    "total": 36,
+    "passed": 29,
+    "failed": 7,
+    "successRate": 80.55555555555556
+  },
+  "categories": {
+    "routeAccessibility": {
+      "passed": 15,
+      "failed": 5,
+      "total": 20
+    },
+    "navigation": {
+      "passed": 5,
+      "failed": 0,
+      "total": 5
+    },
+    "search": {
+      "passed": 4,
+      "failed": 1,
+      "total": 5
+    },
+    "arabic": {
+      "passed": 2,
+      "failed": 1,
+      "total": 3
+    },
+    "forms": {
+      "passed": 3,
+      "failed": 0,
+      "total": 3
+    }
+  },
+  "details": [
+    {
+      "name": "Route: Home",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Search",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: About",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Contact",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Locations",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: FAQ",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Sign In",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Sign Up",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Forgot Password",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: My Bookings",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Settings",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Notifications",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Change Password",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: My Appointments",
+      "category": "routeAccessibility",
+      "status": "FAILED",
+      "message": "Route failed to load or has no content"
+    },
+    {
+      "name": "Route: Dresses",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Suppliers",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Dress Analytics",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Terms of Service",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Privacy Policy",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Route: Cookie Policy",
+      "category": "routeAccessibility",
+      "status": "PASSED",
+      "message": "Route is accessible and has content"
+    },
+    {
+      "name": "Header Present",
+      "category": "navigation",
+      "status": "PASSED",
+      "message": "Header should be present on all pages"
+    },
+    {
+      "name": "Footer Present",
+      "category": "navigation",
+      "status": "PASSED",
+      "message": "Footer should be present on all pages"
+    },
+    {
+      "name": "Navigation Menu",
+      "category": "navigation",
+      "status": "PASSED",
+      "message": "Navigation menu should be present"
+    },
+    {
+      "name": "Logo/Brand",
+      "category": "navigation",
+      "status": "PASSED",
+      "message": "Logo or brand should be present"
+    },
+    {
+      "name": "Mobile Responsiveness",
+      "category": "navigation",
+      "status": "PASSED",
+      "message": "Site should be responsive on mobile"
+    },
+    {
+      "name": "Home Search Form",
+      "category": "search",
+      "status": "PASSED",
+      "message": "Search form should be present on home page"
+    },
+    {
+      "name": "Search Input Fields",
+      "category": "search",
+      "status": "PASSED",
+      "message": "Search input fields should be available"
+    },
+    {
+      "name": "Search Button",
+      "category": "search",
+      "status": "PASSED",
+      "message": "Search button should be present"
+    },
+    {
+      "name": "Dress Type Navigation",
+      "category": "search",
+      "status": "PASSED",
+      "message": "Dress type navigation should be available"
+    },
+    {
+      "name": "Search Page Content",
+      "category": "search",
+      "status": "FAILED",
+      "message": "Search page should have content structure"
+    },
+    {
+      "name": "RTL Direction",
+      "category": "arabic",
+      "status": "PASSED",
+      "message": "Document direction should be RTL (found: rtl)"
+    },
+    {
+      "name": "Arabic Text Present",
+      "category": "arabic",
+      "status": "FAILED",
+      "message": "Arabic text should be present in the interface"
+    },
+    {
+      "name": "Arabic Font Support",
+      "category": "arabic",
+      "status": "PASSED",
+      "message": "Arabic font should be used (found: \"Noto Sans Arabic\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\")"
+    },
+    {
+      "name": "Sign In Form",
+      "category": "forms",
+      "status": "PASSED",
+      "message": "Sign in form should be present"
+    },
+    {
+      "name": "Sign Up Form",
+      "category": "forms",
+      "status": "PASSED",
+      "message": "Sign up form should be present"
+    },
+    {
+      "name": "Contact Form",
+      "category": "forms",
+      "status": "PASSED",
+      "message": "Contact form should be present"
+    }
+  ]
+}

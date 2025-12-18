@@ -1,0 +1,181 @@
+{
+  "timestamp": "2025-07-31T10:43:21.049Z",
+  "testSuite": "Comprehensive Frontend Testing",
+  "summary": {
+    "total": 22,
+    "passed": 18,
+    "failed": 4,
+    "successRate": 81.81818181818183
+  },
+  "categories": {
+    "corePages": {
+      "passed": 3,
+      "failed": 0,
+      "total": 3
+    },
+    "navigation": {
+      "passed": 4,
+      "failed": 0,
+      "total": 4
+    },
+    "search": {
+      "passed": 4,
+      "failed": 0,
+      "total": 4
+    },
+    "authentication": {
+      "passed": 1,
+      "failed": 2,
+      "total": 3
+    },
+    "responsive": {
+      "passed": 3,
+      "failed": 0,
+      "total": 3
+    },
+    "errorHandling": {
+      "passed": 1,
+      "failed": 1,
+      "total": 2
+    },
+    "performance": {
+      "passed": 2,
+      "failed": 1,
+      "total": 3
+    }
+  },
+  "details": [
+    {
+      "name": "Home Page Loading",
+      "category": "corePages",
+      "status": "PASSED",
+      "message": "Home page should load successfully"
+    },
+    {
+      "name": "Search Page Loading",
+      "category": "corePages",
+      "status": "PASSED",
+      "message": "Search page should load successfully"
+    },
+    {
+      "name": "About Page Loading",
+      "category": "corePages",
+      "status": "PASSED",
+      "message": "About page should load successfully"
+    },
+    {
+      "name": "Header Present",
+      "category": "navigation",
+      "status": "PASSED",
+      "message": "Header should be present on all pages"
+    },
+    {
+      "name": "Logo Present",
+      "category": "navigation",
+      "status": "PASSED",
+      "message": "Logo should be present in header"
+    },
+    {
+      "name": "Footer Present",
+      "category": "navigation",
+      "status": "PASSED",
+      "message": "Footer should be present"
+    },
+    {
+      "name": "Navigation Menu",
+      "category": "navigation",
+      "status": "PASSED",
+      "message": "Navigation menu should be present"
+    },
+    {
+      "name": "Search Form Present",
+      "category": "search",
+      "status": "PASSED",
+      "message": "Search form should be present on home page"
+    },
+    {
+      "name": "Search Inputs",
+      "category": "search",
+      "status": "PASSED",
+      "message": "Search inputs should be available"
+    },
+    {
+      "name": "Search Button",
+      "category": "search",
+      "status": "PASSED",
+      "message": "Search button should be present"
+    },
+    {
+      "name": "Dress Type Navigation",
+      "category": "search",
+      "status": "PASSED",
+      "message": "Dress type navigation should be available"
+    },
+    {
+      "name": "Sign In Page",
+      "category": "authentication",
+      "status": "FAILED",
+      "message": "Sign in page should load successfully"
+    },
+    {
+      "name": "Sign Up Page",
+      "category": "authentication",
+      "status": "FAILED",
+      "message": "Sign up page should load successfully"
+    },
+    {
+      "name": "Forgot Password Page",
+      "category": "authentication",
+      "status": "PASSED",
+      "message": "Forgot password page should load successfully"
+    },
+    {
+      "name": "Mobile Responsiveness",
+      "category": "responsive",
+      "status": "PASSED",
+      "message": "Site should be responsive on mobile devices"
+    },
+    {
+      "name": "Tablet Responsiveness",
+      "category": "responsive",
+      "status": "PASSED",
+      "message": "Site should be responsive on tablet devices"
+    },
+    {
+      "name": "Desktop Responsiveness",
+      "category": "responsive",
+      "status": "PASSED",
+      "message": "Site should work well on desktop devices"
+    },
+    {
+      "name": "404 Error Page",
+      "category": "errorHandling",
+      "status": "PASSED",
+      "message": "404 error page should be displayed for non-existent pages"
+    },
+    {
+      "name": "Invalid Dress ID Handling",
+      "category": "errorHandling",
+      "status": "FAILED",
+      "message": "Invalid dress ID should be handled gracefully"
+    },
+    {
+      "name": "Page Load Time",
+      "category": "performance",
+      "status": "FAILED",
+      "message": "Page should load in reasonable time (6007ms)"
+    },
+    {
+      "name": "Images Loading",
+      "category": "performance",
+      "status": "PASSED",
+      "message": "Images should load properly"
+    },
+    {
+      "name": "No JavaScript Errors",
+      "category": "performance",
+      "status": "PASSED",
+      "message": "No JavaScript errors should occur (0 errors found)"
+    }
+  ]
+}

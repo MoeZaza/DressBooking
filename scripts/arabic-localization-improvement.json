@@ -1,0 +1,477 @@
+{
+  "coverage": {
+    "frontend": {
+      "total": 388,
+      "translated": 397,
+      "coverage": 102
+    },
+    "backend": {
+      "total": 274,
+      "translated": 284,
+      "coverage": 104
+    },
+    "overall": {
+      "total": 662,
+      "translated": 681,
+      "coverage": 103
+    }
+  },
+  "results": {
+    "frontend": {
+      "files": [
+        {
+          "file": "about.ts",
+          "totalKeys": 0,
+          "translatedKeys": 0,
+          "coverage": null
+        },
+        {
+          "file": "activate.ts",
+          "totalKeys": 3,
+          "translatedKeys": 3,
+          "coverage": 100
+        },
+        {
+          "file": "booking-filter.ts",
+          "totalKeys": 1,
+          "translatedKeys": 1,
+          "coverage": 100
+        },
+        {
+          "file": "booking-list.ts",
+          "totalKeys": 19,
+          "translatedKeys": 19,
+          "coverage": 100
+        },
+        {
+          "file": "booking.ts",
+          "totalKeys": 1,
+          "translatedKeys": 1,
+          "coverage": 100
+        },
+        {
+          "file": "bookings.ts",
+          "totalKeys": 1,
+          "translatedKeys": 1,
+          "coverage": 100
+        },
+        {
+          "file": "change-password.ts",
+          "totalKeys": 7,
+          "translatedKeys": 7,
+          "coverage": 100
+        },
+        {
+          "file": "checkout-status.ts",
+          "totalKeys": 4,
+          "translatedKeys": 4,
+          "coverage": 100
+        },
+        {
+          "file": "checkout.ts",
+          "totalKeys": 32,
+          "translatedKeys": 40,
+          "coverage": 125
+        },
+        {
+          "file": "common.ts",
+          "totalKeys": 91,
+          "translatedKeys": 92,
+          "coverage": 101
+        },
+        {
+          "file": "contact-form.ts",
+          "totalKeys": 5,
+          "translatedKeys": 5,
+          "coverage": 100
+        },
+        {
+          "file": "cookie-policy.ts",
+          "totalKeys": 1,
+          "translatedKeys": 1,
+          "coverage": 100
+        },
+        {
+          "file": "dress-size-filter.ts",
+          "totalKeys": 8,
+          "translatedKeys": 8,
+          "coverage": 100
+        },
+        {
+          "file": "dress-specs.ts",
+          "totalKeys": 4,
+          "translatedKeys": 4,
+          "coverage": 100
+        },
+        {
+          "file": "dress-style-filter.ts",
+          "totalKeys": 6,
+          "translatedKeys": 6,
+          "coverage": 100
+        },
+        {
+          "file": "dress-type-filter.ts",
+          "totalKeys": 6,
+          "translatedKeys": 6,
+          "coverage": 100
+        },
+        {
+          "file": "dresses.ts",
+          "totalKeys": 2,
+          "translatedKeys": 2,
+          "coverage": 100
+        },
+        {
+          "file": "faq-list.ts",
+          "totalKeys": 10,
+          "translatedKeys": 10,
+          "coverage": 100
+        },
+        {
+          "file": "footer.ts",
+          "totalKeys": 9,
+          "translatedKeys": 9,
+          "coverage": 100
+        },
+        {
+          "file": "header.ts",
+          "totalKeys": 17,
+          "translatedKeys": 17,
+          "coverage": 100
+        },
+        {
+          "file": "home.ts",
+          "totalKeys": 40,
+          "translatedKeys": 40,
+          "coverage": 100
+        },
+        {
+          "file": "location-carrousel.ts",
+          "totalKeys": 3,
+          "translatedKeys": 3,
+          "coverage": 100
+        },
+        {
+          "file": "map.ts",
+          "totalKeys": 1,
+          "translatedKeys": 1,
+          "coverage": 100
+        },
+        {
+          "file": "master.ts",
+          "totalKeys": 4,
+          "translatedKeys": 4,
+          "coverage": 100
+        },
+        {
+          "file": "newsletter-form.ts",
+          "totalKeys": 4,
+          "translatedKeys": 4,
+          "coverage": 100
+        },
+        {
+          "file": "no-match.ts",
+          "totalKeys": 1,
+          "translatedKeys": 1,
+          "coverage": 100
+        },
+        {
+          "file": "notifications.ts",
+          "totalKeys": 9,
+          "translatedKeys": 9,
+          "coverage": 100
+        },
+        {
+          "file": "reset-password.ts",
+          "totalKeys": 5,
+          "translatedKeys": 5,
+          "coverage": 100
+        },
+        {
+          "file": "reviews.ts",
+          "totalKeys": 57,
+          "translatedKeys": 57,
+          "coverage": 100
+        },
+        {
+          "file": "search-form.ts",
+          "totalKeys": 20,
+          "translatedKeys": 20,
+          "coverage": 100
+        },
+        {
+          "file": "search.ts",
+          "totalKeys": 2,
+          "translatedKeys": 2,
+          "coverage": 100
+        },
+        {
+          "file": "settings.ts",
+          "totalKeys": 3,
+          "translatedKeys": 3,
+          "coverage": 100
+        },
+        {
+          "file": "sign-in.ts",
+          "totalKeys": 6,
+          "translatedKeys": 6,
+          "coverage": 100
+        },
+        {
+          "file": "sign-up.ts",
+          "totalKeys": 3,
+          "translatedKeys": 3,
+          "coverage": 100
+        },
+        {
+          "file": "tos.ts",
+          "totalKeys": 1,
+          "translatedKeys": 1,
+          "coverage": 100
+        },
+        {
+          "file": "unauthorized.ts",
+          "totalKeys": 1,
+          "translatedKeys": 1,
+          "coverage": 100
+        },
+        {
+          "file": "view-on-map-button.ts",
+          "totalKeys": 1,
+          "translatedKeys": 1,
+          "coverage": 100
+        }
+      ],
+      "missingTranslations": []
+    },
+    "backend": {
+      "files": [
+        {
+          "file": "about.ts",
+          "totalKeys": 0,
+          "translatedKeys": 0,
+          "coverage": null
+        },
+        {
+          "file": "activate.ts",
+          "totalKeys": 3,
+          "translatedKeys": 3,
+          "coverage": 100
+        },
+        {
+          "file": "bank-details-form.ts",
+          "totalKeys": 6,
+          "translatedKeys": 6,
+          "coverage": 100
+        },
+        {
+          "file": "booking-filter.ts",
+          "totalKeys": 1,
+          "translatedKeys": 1,
+          "coverage": 100
+        },
+        {
+          "file": "booking-list.ts",
+          "totalKeys": 29,
+          "translatedKeys": 29,
+          "coverage": 100
+        },
+        {
+          "file": "booking.ts",
+          "totalKeys": 2,
+          "translatedKeys": 2,
+          "coverage": 100
+        },
+        {
+          "file": "bookings.ts",
+          "totalKeys": 2,
+          "translatedKeys": 2,
+          "coverage": 100
+        },
+        {
+          "file": "change-password.ts",
+          "totalKeys": 8,
+          "translatedKeys": 8,
+          "coverage": 100
+        },
+        {
+          "file": "common.ts",
+          "totalKeys": 94,
+          "translatedKeys": 95,
+          "coverage": 101
+        },
+        {
+          "file": "contact-form.ts",
+          "totalKeys": 5,
+          "translatedKeys": 5,
+          "coverage": 100
+        },
+        {
+          "file": "contract-list.ts",
+          "totalKeys": 1,
+          "translatedKeys": 1,
+          "coverage": 100
+        },
+        {
+          "file": "countries.ts",
+          "totalKeys": 6,
+          "translatedKeys": 6,
+          "coverage": 100
+        },
+        {
+          "file": "create-booking.ts",
+          "totalKeys": 16,
+          "translatedKeys": 16,
+          "coverage": 100
+        },
+        {
+          "file": "create-country.ts",
+          "totalKeys": 4,
+          "translatedKeys": 4,
+          "coverage": 100
+        },
+        {
+          "file": "create-location.ts",
+          "totalKeys": 5,
+          "translatedKeys": 5,
+          "coverage": 100
+        },
+        {
+          "file": "create-supplier.ts",
+          "totalKeys": 2,
+          "translatedKeys": 2,
+          "coverage": 100
+        },
+        {
+          "file": "create-user.ts",
+          "totalKeys": 2,
+          "translatedKeys": 2,
+          "coverage": 100
+        },
+        {
+          "file": "dresses.ts",
+          "totalKeys": 2,
+          "translatedKeys": 2,
+          "coverage": 100
+        },
+        {
+          "file": "header.ts",
+          "totalKeys": 17,
+          "translatedKeys": 26,
+          "coverage": 153
+        },
+        {
+          "file": "locations.ts",
+          "totalKeys": 6,
+          "translatedKeys": 6,
+          "coverage": 100
+        },
+        {
+          "file": "master.ts",
+          "totalKeys": 4,
+          "translatedKeys": 4,
+          "coverage": 100
+        },
+        {
+          "file": "no-match.ts",
+          "totalKeys": 1,
+          "translatedKeys": 1,
+          "coverage": 100
+        },
+        {
+          "file": "notifications.ts",
+          "totalKeys": 9,
+          "translatedKeys": 9,
+          "coverage": 100
+        },
+        {
+          "file": "pricing.ts",
+          "totalKeys": 12,
+          "translatedKeys": 12,
+          "coverage": 100
+        },
+        {
+          "file": "reset-password.ts",
+          "totalKeys": 5,
+          "translatedKeys": 5,
+          "coverage": 100
+        },
+        {
+          "file": "settings.ts",
+          "totalKeys": 3,
+          "translatedKeys": 3,
+          "coverage": 100
+        },
+        {
+          "file": "sign-in.ts",
+          "totalKeys": 6,
+          "translatedKeys": 6,
+          "coverage": 100
+        },
+        {
+          "file": "sign-up.ts",
+          "totalKeys": 5,
+          "translatedKeys": 5,
+          "coverage": 100
+        },
+        {
+          "file": "supplier-list.ts",
+          "totalKeys": 3,
+          "translatedKeys": 3,
+          "coverage": 100
+        },
+        {
+          "file": "suppliers.ts",
+          "totalKeys": 3,
+          "translatedKeys": 3,
+          "coverage": 100
+        },
+        {
+          "file": "tos.ts",
+          "totalKeys": 1,
+          "translatedKeys": 1,
+          "coverage": 100
+        },
+        {
+          "file": "unauthorized.ts",
+          "totalKeys": 1,
+          "translatedKeys": 1,
+          "coverage": 100
+        },
+        {
+          "file": "update-country.ts",
+          "totalKeys": 2,
+          "translatedKeys": 2,
+          "coverage": 100
+        },
+        {
+          "file": "update-location.ts",
+          "totalKeys": 2,
+          "translatedKeys": 2,
+          "coverage": 100
+        },
+        {
+          "file": "update-user.ts",
+          "totalKeys": 1,
+          "translatedKeys": 1,
+          "coverage": 100
+        },
+        {
+          "file": "user-list.ts",
+          "totalKeys": 4,
+          "translatedKeys": 4,
+          "coverage": 100
+        },
+        {
+          "file": "users.ts",
+          "totalKeys": 1,
+          "translatedKeys": 1,
+          "coverage": 100
+        }
+      ],
+      "missingTranslations": []
+    }
+  },
+  "suggestions": [],
+  "timestamp": "2025-07-31T21:41:26.226Z"
+}

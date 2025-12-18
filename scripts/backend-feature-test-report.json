@@ -1,0 +1,182 @@
+{
+  "timestamp": "2025-07-31T11:14:16.461Z",
+  "testSuite": "Comprehensive Backend Feature Testing",
+  "summary": {
+    "total": 23,
+    "passed": 7,
+    "failed": 16,
+    "successRate": 30.434782608695656
+  },
+  "categories": {
+    "authentication": {
+      "passed": 3,
+      "failed": 1,
+      "total": 4
+    },
+    "dressCRUD": {
+      "passed": 1,
+      "failed": 5,
+      "total": 6
+    },
+    "bookingCRUD": {
+      "passed": 1,
+      "failed": 3,
+      "total": 4
+    },
+    "searchFilter": {
+      "passed": 0,
+      "failed": 3,
+      "total": 3
+    },
+    "arabic": {
+      "passed": 2,
+      "failed": 2,
+      "total": 4
+    },
+    "errorHandling": {
+      "passed": 0,
+      "failed": 2,
+      "total": 2
+    }
+  },
+  "details": [
+    {
+      "name": "Sign In Form Elements",
+      "category": "authentication",
+      "status": "PASSED",
+      "message": "All sign in form elements should be present"
+    },
+    {
+      "name": "Empty Form Validation",
+      "category": "authentication",
+      "status": "PASSED",
+      "message": "Form should prevent empty submission"
+    },
+    {
+      "name": "Invalid Credentials Handling",
+      "category": "authentication",
+      "status": "PASSED",
+      "message": "Invalid credentials should be rejected"
+    },
+    {
+      "name": "Successful Login",
+      "category": "authentication",
+      "status": "FAILED",
+      "message": "Valid credentials should allow login"
+    },
+    {
+      "name": "Dress List Display",
+      "category": "dressCRUD",
+      "status": "FAILED",
+      "message": "Dress list should be displayed"
+    },
+    {
+      "name": "Create Dress Button",
+      "category": "dressCRUD",
+      "status": "FAILED",
+      "message": "Create dress button should be available"
+    },
+    {
+      "name": "Create Dress Form",
+      "category": "dressCRUD",
+      "status": "PASSED",
+      "message": "Create dress form should be present"
+    },
+    {
+      "name": "Required Fields Present",
+      "category": "dressCRUD",
+      "status": "FAILED",
+      "message": "Name and dress code fields should be present"
+    },
+    {
+      "name": "Form Field Types",
+      "category": "dressCRUD",
+      "status": "FAILED",
+      "message": "All dress form fields should be present"
+    },
+    {
+      "name": "Image Upload Field",
+      "category": "dressCRUD",
+      "status": "FAILED",
+      "message": "Image upload field should be available"
+    },
+    {
+      "name": "Bookings Dashboard",
+      "category": "bookingCRUD",
+      "status": "FAILED",
+      "message": "Bookings dashboard should be displayed"
+    },
+    {
+      "name": "Create Booking Button",
+      "category": "bookingCRUD",
+      "status": "FAILED",
+      "message": "Create booking button should be available"
+    },
+    {
+      "name": "Create Booking Form",
+      "category": "bookingCRUD",
+      "status": "PASSED",
+      "message": "Create booking form should be present"
+    },
+    {
+      "name": "Booking Form Fields",
+      "category": "bookingCRUD",
+      "status": "FAILED",
+      "message": "All booking form fields should be present"
+    },
+    {
+      "name": "Dress Search Page",
+      "category": "searchFilter",
+      "status": "FAILED",
+      "message": "Dress search page should be accessible"
+    },
+    {
+      "name": "Search Form Fields",
+      "category": "searchFilter",
+      "status": "FAILED",
+      "message": "Search form fields should be present"
+    },
+    {
+      "name": "List Filters",
+      "category": "searchFilter",
+      "status": "FAILED",
+      "message": "Filters should be available on list pages"
+    },
+    {
+      "name": "RTL Direction",
+      "category": "arabic",
+      "status": "PASSED",
+      "message": "Document should have RTL direction (found: rtl)"
+    },
+    {
+      "name": "Arabic Text Present",
+      "category": "arabic",
+      "status": "FAILED",
+      "message": "Arabic text should be present in the interface"
+    },
+    {
+      "name": "Arabic Font Support",
+      "category": "arabic",
+      "status": "PASSED",
+      "message": "Arabic font should be used (found: \"Noto Sans Arabic\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\")"
+    },
+    {
+      "name": "Arabic Form Labels",
+      "category": "arabic",
+      "status": "FAILED",
+      "message": "Form labels should be in Arabic"
+    },
+    {
+      "name": "404 Error Page",
+      "category": "errorHandling",
+      "status": "FAILED",
+      "message": "404 error page should be displayed for non-existent routes"
+    },
+    {
+      "name": "Network Error Handling",
+      "category": "errorHandling",
+      "status": "FAILED",
+      "message": "Network errors should be handled gracefully"
+    }
+  ]
+}

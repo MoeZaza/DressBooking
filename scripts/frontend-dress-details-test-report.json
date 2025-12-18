@@ -1,0 +1,157 @@
+{
+  "timestamp": "2025-07-31T10:40:23.364Z",
+  "page": "Frontend Dress Details Page",
+  "summary": {
+    "total": 18,
+    "passed": 4,
+    "failed": 14,
+    "successRate": 22.22222222222222
+  },
+  "categories": {
+    "loading": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "layout": {
+      "passed": 1,
+      "failed": 1,
+      "total": 2
+    },
+    "dressInfo": {
+      "passed": 2,
+      "failed": 2,
+      "total": 4
+    },
+    "imageGallery": {
+      "passed": 0,
+      "failed": 3,
+      "total": 3
+    },
+    "bookingForm": {
+      "passed": 0,
+      "failed": 3,
+      "total": 3
+    },
+    "relatedDresses": {
+      "passed": 0,
+      "failed": 3,
+      "total": 3
+    },
+    "responsive": {
+      "passed": 0,
+      "failed": 2,
+      "total": 2
+    }
+  },
+  "details": [
+    {
+      "name": "Dress Details Page Loading",
+      "category": "loading",
+      "status": "PASSED",
+      "message": "Dress details page should load completely"
+    },
+    {
+      "name": "Page Content Present",
+      "category": "layout",
+      "status": "FAILED",
+      "message": "Page content should be present (dress details or error page)"
+    },
+    {
+      "name": "Page Title",
+      "category": "layout",
+      "status": "PASSED",
+      "message": "Page should have a title"
+    },
+    {
+      "name": "Dress Container",
+      "category": "dressInfo",
+      "status": "FAILED",
+      "message": "Dress container should be present"
+    },
+    {
+      "name": "Dress Name",
+      "category": "dressInfo",
+      "status": "PASSED",
+      "message": "Dress name should be displayed"
+    },
+    {
+      "name": "Dress Details",
+      "category": "dressInfo",
+      "status": "PASSED",
+      "message": "Dress details should be displayed"
+    },
+    {
+      "name": "Pricing Information",
+      "category": "dressInfo",
+      "status": "FAILED",
+      "message": "Pricing information should be displayed"
+    },
+    {
+      "name": "Dress Images",
+      "category": "imageGallery",
+      "status": "FAILED",
+      "message": "Dress images should be present"
+    },
+    {
+      "name": "Image Gallery",
+      "category": "imageGallery",
+      "status": "FAILED",
+      "message": "Image gallery should be present"
+    },
+    {
+      "name": "Multiple Images or Gallery Navigation",
+      "category": "imageGallery",
+      "status": "FAILED",
+      "message": "Multiple images or gallery navigation should be available"
+    },
+    {
+      "name": "Booking Form or Button",
+      "category": "bookingForm",
+      "status": "FAILED",
+      "message": "Booking form or button should be present"
+    },
+    {
+      "name": "Date Inputs",
+      "category": "bookingForm",
+      "status": "FAILED",
+      "message": "Date inputs should be available for booking"
+    },
+    {
+      "name": "Booking Text",
+      "category": "bookingForm",
+      "status": "FAILED",
+      "message": "Booking-related text should be present"
+    },
+    {
+      "name": "Related Dresses Section",
+      "category": "relatedDresses",
+      "status": "FAILED",
+      "message": "Related dresses section should be present"
+    },
+    {
+      "name": "Related Dress Items",
+      "category": "relatedDresses",
+      "status": "FAILED",
+      "message": "Related dress items should be displayed"
+    },
+    {
+      "name": "Navigation Links",
+      "category": "relatedDresses",
+      "status": "FAILED",
+      "message": "Navigation links should be available"
+    },
+    {
+      "name": "Mobile Responsiveness",
+      "category": "responsive",
+      "status": "FAILED",
+      "message": "Dress details page should be responsive on mobile"
+    },
+    {
+      "name": "Tablet Responsiveness",
+      "category": "responsive",
+      "status": "FAILED",
+      "message": "Dress details page should be responsive on tablet"
+    }
+  ]
+}

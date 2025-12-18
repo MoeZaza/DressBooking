@@ -1,0 +1,31 @@
+{
+  "frontend": {
+    "totalChars": 3114,
+    "arabicCharCount": 2407,
+    "arabicPercentage": 77,
+    "hasArabicText": true,
+    "hasArabicNavigation": true,
+    "hasArabicButtons": true,
+    "hasArabicLabels": true,
+    "sampleText": "\n  BookDressILSالتسجيلتسجيل الدخولILSأفضل عروض تأجير الفساتيناحجز فستانك اليوم!الموقع *الموقع *تاريخ بداية الإيجار *04/08/2025 10:00تاريخ بداية الإيجار *تاريخ نهاية الإيجار *07/08/2025 10:00تاريخ نهاية الإيجار *نوع الفستان​نوع الفستانمقاس الفستان​مقاس الفستانطراز الفستان​طراز الفستانالبحث عن الفساتي",
+    "htmlLang": "ar",
+    "htmlDir": "rtl"
+  },
+  "backend": {
+    "totalChars": 0,
+    "arabicCharCount": 0,
+    "arabicPercentage": 0,
+    "hasArabicText": false,
+    "hasArabicNavigation": false,
+    "hasArabicButtons": false,
+    "hasArabicLabels": false,
+    "sampleText": "\n  \n  \n\n\n\n",
+    "htmlLang": "en",
+    "htmlDir": ""
+  },
+  "overall": {
+    "percentage": 77,
+    "totalArabicChars": 2407,
+    "totalChars": 3114
+  }
+}

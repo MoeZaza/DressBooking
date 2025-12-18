@@ -1,0 +1,227 @@
+/* Modern Search Form Styling */
+form.home-search-form {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+form.home-search-form .search-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+form.home-search-form .search-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+/* Prominent keyword search styling */
+form.home-search-form .keyword-row {
+  margin-bottom: 8px;
+}
+
+form.home-search-form .keyword-row .MuiTextField-root {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 12px;
+}
+
+form.home-search-form .keyword-row .MuiOutlinedInput-root {
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+form.home-search-form .keyword-row .MuiOutlinedInput-root:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+form.home-search-form .keyword-row .MuiInputBase-input::placeholder {
+  color: #666;
+  opacity: 0.8;
+}
+
+form.home-search-form .primary-row {
+  flex-wrap: wrap;
+}
+
+form.home-search-form .location-field {
+  flex: 1;
+  min-width: 280px;
+}
+
+form.home-search-form .date-fields {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  min-width: 320px;
+}
+
+form.home-search-form .date-field {
+  flex: 1;
+}
+
+form.home-search-form .filters-row {
+  flex-wrap: wrap;
+}
+
+form.home-search-form .filter-field {
+  flex: 1;
+  min-width: 160px;
+}
+
+form.home-search-form .search-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+form.home-search-form .btn-search,
+form.home-search-form .btn-cancel {
+  font-size: 16px;
+  font-weight: 600;
+  height: 48px;
+  min-width: 160px;
+  border-radius: 8px;
+  text-transform: none;
+  transition: all 0.2s ease;
+}
+
+form.home-search-form .btn-search {
+  color: #fff;
+  background: linear-gradient(135deg, #F7B644 0%, #e09f2d 100%);
+  border: none;
+  box-shadow: 0 4px 12px rgba(247, 182, 68, 0.3);
+}
+
+form.home-search-form .btn-search:hover {
+  background: linear-gradient(135deg, #e09f2d 0%, #d18f1a 100%);
+  box-shadow: 0 6px 16px rgba(247, 182, 68, 0.4);
+  transform: translateY(-1px);
+}
+
+form.home-search-form .btn-cancel {
+  color: #666;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+}
+
+form.home-search-form .btn-cancel:hover {
+  background: #e8e8e8;
+  border-color: #ccc;
+}
+
+
+
+/* Responsive Design for Modern Search Form */
+
+/* Mobile devices (up to 768px) */
+@media only screen and (max-width: 768px) {
+  form.home-search-form .search-form-container {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  form.home-search-form .search-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  form.home-search-form .date-fields {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  form.home-search-form .location-field,
+  form.home-search-form .date-field,
+  form.home-search-form .filter-field {
+    min-width: unset;
+    width: 100%;
+  }
+
+  form.home-search-form .btn-search,
+  form.home-search-form .btn-cancel {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+/* Tablet devices (769px to 1024px) */
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  form.home-search-form .search-form-container {
+    padding: 20px;
+  }
+
+  form.home-search-form .date-fields {
+    min-width: 280px;
+  }
+
+  form.home-search-form .filter-field {
+    min-width: 140px;
+  }
+
+  form.home-search-form .search-actions {
+    justify-content: flex-end;
+  }
+
+  form.home-search-form .btn-search,
+  form.home-search-form .btn-cancel {
+    min-width: 140px;
+  }
+}
+
+/* Desktop devices (1025px and up) */
+@media only screen and (min-width: 1025px) {
+  form.home-search-form .search-form-container {
+    padding: 24px;
+  }
+
+  form.home-search-form .primary-row {
+    flex-wrap: nowrap;
+  }
+
+  form.home-search-form .filters-row {
+    flex-wrap: nowrap;
+  }
+
+  form.home-search-form .location-field {
+    min-width: 300px;
+  }
+
+  form.home-search-form .date-fields {
+    min-width: 360px;
+  }
+
+  form.home-search-form .filter-field {
+    min-width: 180px;
+  }
+
+  form.home-search-form .search-actions {
+    justify-content: flex-end;
+  }
+}
+
+/* Additional styling for form elements */
+form.home-search-form .MuiFormControl-root {
+  margin-bottom: 0;
+}
+
+form.home-search-form .MuiOutlinedInput-root {
+  border-radius: 8px;
+}
+
+form.home-search-form .MuiInputLabel-root {
+  font-weight: 500;
+}
+
+form.home-search-form .MuiFormHelperText-root {
+  margin-left: 0;
+  margin-top: 4px;
+}

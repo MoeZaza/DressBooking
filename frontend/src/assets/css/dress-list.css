@@ -1,0 +1,346 @@
+section.dress-list {
+  width: 100%;
+  max-width: 1000px;
+}
+
+section.dress-list div.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+section.dress-list div.title div.bookdress {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.2em;
+}
+
+section.dress-list div.title div.bookdress span.title-bookdress {
+  font-weight: 700;
+  margin: 0 5px;
+}
+
+section.dress-list div.title div.dress-count {
+  font-size: 0.9em;
+  color: #777;
+}
+
+section.dress-list div.empty-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+section.dress-list article {
+  margin-bottom: 20px;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+section.dress-list article div.dress {
+  position: relative;
+  width: 100%;
+}
+
+section.dress-list article div.dress img.dress-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+section.dress-list article div.dress-footer {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+section.dress-list article div.dress-footer-row1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+section.dress-list article div.dress-footer-row1 div.rating {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+section.dress-list article div.dress-footer-row1 div.rating span.value {
+  font-weight: 500;
+  margin-right: 5px;
+}
+
+section.dress-list article div.dress-footer-row1 div.rating img {
+  width: 16px;
+  height: 16px;
+}
+
+section.dress-list article div.dress-footer-row1 div.rating span.rentals {
+  margin-left: 5px;
+  font-size: 0.8em;
+  color: #666;
+}
+
+section.dress-list article div.dress-footer h2 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+section.dress-list article div.dress-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+section.dress-list article div.dress-footer ul li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+
+section.dress-list article div.dress-footer ul li img {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
+section.dress-list article div.dress-footer ul li span {
+  font-size: 0.9em;
+}
+
+section.dress-list article div.action {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+section.dress-list article div.action button {
+  margin-left: 5px;
+}
+
+section.dress-list div.pager {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Mobile First Responsive Dress List Design */
+
+/* Extra Small devices (phones, 320px and up) */
+@media only screen and (max-width: 479px) {
+  section.dress-list {
+    width: 100%;
+    max-width: 320px;
+    padding: 0 8px;
+  }
+
+  section.dress-list article {
+    margin-bottom: 15px;
+  }
+
+  section.dress-list article div.dress img.dress-img {
+    height: 180px;
+  }
+
+  section.dress-list article div.dress-footer {
+    padding: 12px;
+  }
+
+  section.dress-list article div.dress-footer h2 {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+  }
+
+  section.dress-list article div.dress-footer ul {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  section.dress-list article div.dress-footer ul li {
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+
+  section.dress-list article div.action {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  section.dress-list article div.action button {
+    margin-left: 0;
+    width: 100%;
+    min-height: 44px; /* Touch-friendly size */
+  }
+
+  section.dress-list div.title div.bookdress {
+    font-size: 1.1em;
+  }
+
+  section.dress-list div.title div.dress-count {
+    font-size: 0.85em;
+  }
+}
+
+/* Small devices (phones, 480px and up) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  section.dress-list {
+    width: 100%;
+    max-width: 460px;
+    padding: 0 10px;
+  }
+
+  section.dress-list article {
+    margin-bottom: 18px;
+  }
+
+  section.dress-list article div.dress img.dress-img {
+    height: 190px;
+  }
+
+  section.dress-list article div.dress-footer {
+    padding: 14px;
+  }
+
+  section.dress-list article div.dress-footer h2 {
+    font-size: 1.15em;
+    margin-bottom: 10px;
+  }
+
+  section.dress-list article div.dress-footer ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  section.dress-list article div.dress-footer ul li {
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+
+  section.dress-list article div.action {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  section.dress-list article div.action button {
+    margin-left: 0;
+    flex: 1;
+    min-height: 44px; /* Touch-friendly size */
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+  section.dress-list {
+    width: 100%;
+    max-width: 700px;
+    padding: 0 15px;
+  }
+
+  section.dress-list article {
+    margin-bottom: 20px;
+  }
+
+  section.dress-list article div.dress img.dress-img {
+    height: 200px;
+  }
+
+  section.dress-list article div.dress-footer {
+    padding: 16px;
+  }
+
+  section.dress-list article div.dress-footer h2 {
+    font-size: 1.2em;
+    margin-bottom: 12px;
+  }
+
+  section.dress-list article div.dress-footer ul {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  section.dress-list article div.dress-footer ul li {
+    margin-right: 0;
+    margin-bottom: 0;
+    flex: 0 1 calc(50% - 6px);
+  }
+
+  section.dress-list article div.action {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  section.dress-list article div.action button {
+    margin-left: 0;
+    min-height: 44px; /* Touch-friendly size */
+    flex: 0 1 auto;
+  }
+}
+
+/* Legacy mobile breakpoint for backward compatibility */
+@media only screen and (max-width: 960px) {
+  section.dress-list {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  section.dress-list article div.dress-footer ul {
+    flex-direction: column;
+  }
+
+  section.dress-list article div.dress-footer ul li {
+    margin-right: 0;
+  }
+}
+
+/* Large devices (desktops, 960px and up) */
+@media only screen and (min-width: 960px) {
+  section.dress-list {
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  section.dress-list article div.dress img.dress-img {
+    height: 200px;
+  }
+
+  section.dress-list article div.dress-footer {
+    padding: 15px;
+  }
+
+  section.dress-list article div.dress-footer ul {
+    flex-wrap: wrap;
+  }
+
+  section.dress-list article div.dress-footer ul li {
+    margin-right: 15px;
+    margin-bottom: 10px;
+  }
+
+  section.dress-list article div.action {
+    flex-direction: row;
+  }
+
+  section.dress-list article div.action button {
+    margin-left: 5px;
+    min-height: 36px;
+  }
+}

@@ -1,0 +1,15 @@
+[Unit]
+Description=BookDress API
+Wants=mongod.service
+After=mongod.service
+
+[Service]
+ExecStart=/usr/bin/npm start
+WorkingDirectory=/opt/bookdress/api
+Type=simple
+Restart=always
+StandardOutput=append:/var/log/bookdress.log
+StandardError=append:/var/log/bookdress.log
+
+[Install]
+WantedBy=multi-user.target

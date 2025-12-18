@@ -1,0 +1,68 @@
+import LocalizedStrings from 'localized-strings'
+import * as langHelper from '@/common/langHelper'
+
+const strings = new LocalizedStrings({
+  fr: {
+    NEW_BOOKING: 'Nouvelle réservation',
+    DRESS: 'Robe',
+    CUSTOMER: 'Client',
+    PRICE: 'Prix',
+    STATUS: 'Statut',
+    PAYMENT_STATUS: 'Statut de paiement',
+    PAID_AMOUNT: 'Montant payé',
+    REMAINING: 'Restant',
+    FULLY_PAID: 'Entièrement payé',
+    PARTIALLY_PAID: 'Partiellement payé',
+    PENDING: 'En attente',
+    REFUNDED: 'Remboursé',
+    DRESS_CODE: 'Code de robe',
+  },
+  en: {
+    NEW_BOOKING: 'New Booking',
+    DRESS: 'Dress',
+    CUSTOMER: 'Customer',
+    PRICE: 'Price',
+    STATUS: 'Status',
+    PAYMENT_STATUS: 'Payment Status',
+    PAID_AMOUNT: 'Paid Amount',
+    REMAINING: 'Remaining',
+    FULLY_PAID: 'Fully Paid',
+    PARTIALLY_PAID: 'Partially Paid',
+    PENDING: 'Pending',
+    REFUNDED: 'Refunded',
+    DRESS_CODE: 'Dress Code',
+  },
+  es: {
+    NEW_BOOKING: 'Nueva reserva',
+    DRESS: 'Vestido',
+    CUSTOMER: 'Cliente',
+    PRICE: 'Precio',
+    STATUS: 'Estado',
+    PAYMENT_STATUS: 'Estado de pago',
+    PAID_AMOUNT: 'Cantidad pagada',
+    REMAINING: 'Restante',
+    FULLY_PAID: 'Totalmente pagado',
+    PARTIALLY_PAID: 'Parcialmente pagado',
+    PENDING: 'Pendiente',
+    REFUNDED: 'Reembolsado',
+    DRESS_CODE: 'Código de vestido',
+  },
+  ar: {
+    NEW_BOOKING: 'حجز جديد',
+    DRESS: 'الفستان',
+    CUSTOMER: 'الزبون',
+    PRICE: 'السعر',
+    STATUS: 'الحالة',
+    PAYMENT_STATUS: 'حالة الدفع',
+    PAID_AMOUNT: 'المبلغ المدفوع',
+    REMAINING: 'المتبقي',
+    FULLY_PAID: 'مدفوع بالكامل',
+    PARTIALLY_PAID: 'مدفوع جزئياً',
+    PENDING: 'معلق',
+    REFUNDED: 'مسترد',
+    DRESS_CODE: 'كود الفستان',
+  },
+})
+
+langHelper.setLanguage(strings)
+export { strings }

@@ -1,0 +1,68 @@
+{
+  "apiAnalysis": [
+    {
+      "name": "Frontend Dresses",
+      "url": "/api/frontend-dresses/1/10",
+      "method": "POST",
+      "status": 200,
+      "responseTime": 1505,
+      "dataSize": 8940,
+      "recordCount": 10,
+      "hasData": true
+    },
+    {
+      "name": "Locations",
+      "url": "/api/locations/1/10/en",
+      "method": "GET",
+      "status": 200,
+      "responseTime": 232,
+      "dataSize": 490,
+      "recordCount": 1,
+      "hasData": true
+    },
+    {
+      "name": "Frontend Suppliers",
+      "url": "/api/frontend-suppliers",
+      "method": "POST",
+      "status": 200,
+      "responseTime": 144,
+      "dataSize": 2,
+      "recordCount": 0,
+      "hasData": true
+    },
+    {
+      "name": "Countries",
+      "url": "/api/countries/1/10/en",
+      "method": "GET",
+      "status": 200,
+      "responseTime": 136,
+      "dataSize": 33,
+      "recordCount": 1,
+      "hasData": true
+    },
+    {
+      "name": "Bookings",
+      "url": "/api/bookings/1/10/en",
+      "method": "POST",
+      "status": 400,
+      "responseTime": 114,
+      "dataSize": 87,
+      "recordCount": 0,
+      "hasData": true
+    }
+  ],
+  "apiOptimizations": [
+    "Added compression middleware",
+    "Added caching middleware",
+    "Created database query optimizations"
+  ],
+  "bundleOptimizations": [
+    "Created bundle analyzer configuration",
+    "Created performance recommendations"
+  ],
+  "summary": {
+    "totalOptimizations": 5,
+    "estimatedImprovement": "50-70%",
+    "targetLoadTime": "< 3000ms"
+  }
+}

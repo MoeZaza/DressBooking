@@ -1,0 +1,109 @@
+{
+  "timestamp": "2025-07-31T10:12:45.444Z",
+  "summary": {
+    "total": 11,
+    "passed": 9,
+    "failed": 2,
+    "successRate": 81.81818181818183
+  },
+  "categories": {
+    "infrastructure": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "authentication": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "coreData": {
+      "passed": 3,
+      "failed": 0,
+      "total": 3
+    },
+    "businessLogic": {
+      "passed": 0,
+      "failed": 2,
+      "total": 2
+    },
+    "errorHandling": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "performance": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    }
+  },
+  "details": [
+    {
+      "name": "API Server Health",
+      "category": "infrastructure",
+      "status": "PASSED",
+      "message": "API server should be healthy and responding"
+    },
+    {
+      "name": "Database Connection",
+      "category": "infrastructure",
+      "status": "PASSED",
+      "message": "Database should be accessible"
+    },
+    {
+      "name": "Admin Authentication",
+      "category": "authentication",
+      "status": "PASSED",
+      "message": "Admin should be able to login"
+    },
+    {
+      "name": "Locations Data Retrieval",
+      "category": "coreData",
+      "status": "PASSED",
+      "message": "Locations API should return data"
+    },
+    {
+      "name": "Dresses Data Retrieval",
+      "category": "coreData",
+      "status": "PASSED",
+      "message": "Dresses API should return data"
+    },
+    {
+      "name": "Suppliers Data Retrieval",
+      "category": "coreData",
+      "status": "PASSED",
+      "message": "Suppliers API should return data"
+    },
+    {
+      "name": "Booking Calendar",
+      "category": "businessLogic",
+      "status": "FAILED",
+      "message": "Booking calendar should work"
+    },
+    {
+      "name": "Business Intelligence",
+      "category": "businessLogic",
+      "status": "FAILED",
+      "message": "Business intelligence should be accessible"
+    },
+    {
+      "name": "Invalid Endpoint Handling",
+      "category": "errorHandling",
+      "status": "PASSED",
+      "message": "Invalid endpoints should return 404"
+    },
+    {
+      "name": "Malformed Request Handling",
+      "category": "errorHandling",
+      "status": "PASSED",
+      "message": "Malformed requests should be handled gracefully"
+    },
+    {
+      "name": "Concurrent Request Handling",
+      "category": "performance",
+      "status": "PASSED",
+      "message": "Should handle 5 concurrent requests in under 5 seconds (took 23ms)"
+    }
+  ]
+}

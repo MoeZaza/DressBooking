@@ -1,0 +1,143 @@
+{
+  "frontend": {
+    "homePageTest": {
+      "passed": false,
+      "details": [
+        "Header: ❌",
+        "Search Form: ❌",
+        "Footer: ❌",
+        "Main Content: ❌",
+        "Buttons: 0",
+        "Links: 0"
+      ]
+    },
+    "searchFunctionality": {
+      "passed": false,
+      "details": [
+        "Search Form: ❌",
+        "Location Field: ❌",
+        "Filters: ❌",
+        "Results Area: ❌",
+        "Data Grid: ❌",
+        "Pagination: ❌"
+      ]
+    },
+    "navigationTest": {
+      "passed": false,
+      "details": [
+        "Navigation Links: 0",
+        "Working Links: 0",
+        "Logo: ❌",
+        "Menu: ❌",
+        "User Menu: ❌"
+      ]
+    },
+    "responsiveDesign": {
+      "passed": false,
+      "details": [
+        "Mobile Optimized: ✅",
+        "Hamburger Menu: ✅",
+        "Content Fits Screen: ❌",
+        "Responsive Images: ❌"
+      ]
+    },
+    "arabicLocalization": {
+      "passed": false,
+      "details": [
+        "HTML Lang: ar",
+        "HTML Dir: rtl",
+        "Arabic Percentage: 8%",
+        "Arabic Navigation: ✅",
+        "Arabic Buttons: ✅",
+        "Arabic Labels: ✅"
+      ]
+    },
+    "userInteraction": {
+      "passed": true,
+      "details": [
+        "Total Buttons: 28",
+        "Clickable Buttons: 3",
+        "Interaction Success: ✅"
+      ]
+    }
+  },
+  "backend": {
+    "accessibilityTest": {
+      "passed": false,
+      "details": [
+        "Login Form: ❌",
+        "Input Fields: 0",
+        "Submit Button: ❌",
+        "Arabic Text: ✅",
+        "RTL Layout: ✅",
+        "Title: BookDress Rental Service"
+      ]
+    },
+    "authenticationTest": {
+      "passed": false,
+      "details": [
+        "No login form detected"
+      ]
+    },
+    "dashboardTest": {
+      "passed": false,
+      "details": [
+        "Navigation: ❌",
+        "Main Content: ❌",
+        "Data Tables: 0",
+        "Cards: 0",
+        "Buttons: 1",
+        "Links: 0"
+      ]
+    },
+    "crudOperations": {
+      "passed": false,
+      "details": []
+    },
+    "arabicLocalization": {
+      "passed": false,
+      "details": []
+    },
+    "dataLoading": {
+      "passed": false,
+      "details": []
+    }
+  },
+  "api": {
+    "connectivity": {
+      "passed": true,
+      "details": [
+        "4/4 endpoints accessible"
+      ]
+    },
+    "endpoints": {
+      "passed": true,
+      "details": [
+        "Frontend Dresses: ✅ (1110ms)",
+        "Locations: ✅ (417ms)",
+        "Countries: ✅ (136ms)",
+        "Frontend Suppliers: ✅ (142ms)"
+      ]
+    },
+    "performance": {
+      "passed": true,
+      "details": [
+        "Average Response Time: 451ms",
+        "Performance Target: ✅ (< 1000ms)"
+      ]
+    },
+    "dataIntegrity": {
+      "passed": true,
+      "details": [
+        "Endpoints with data: 4",
+        "Data integrity: ✅"
+      ]
+    }
+  },
+  "summary": {
+    "totalTests": 16,
+    "passedTests": 5,
+    "failedTests": 11,
+    "overallScore": 31
+  }
+}

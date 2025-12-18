@@ -1,0 +1,114 @@
+[
+  {
+    "name": "Desktop Chrome",
+    "frontend": {
+      "accessible": true,
+      "arabicText": false,
+      "rtlLayout": true,
+      "responsive": false
+    },
+    "backend": {
+      "accessible": true,
+      "arabicText": false,
+      "rtlLayout": true,
+      "responsive": false
+    },
+    "errors": []
+  },
+  {
+    "name": "Desktop Firefox",
+    "frontend": {
+      "accessible": true,
+      "arabicText": false,
+      "rtlLayout": true,
+      "responsive": false
+    },
+    "backend": {
+      "accessible": true,
+      "arabicText": false,
+      "rtlLayout": true,
+      "responsive": false
+    },
+    "errors": []
+  },
+  {
+    "name": "Desktop Safari",
+    "frontend": {
+      "accessible": true,
+      "arabicText": false,
+      "rtlLayout": true,
+      "responsive": false
+    },
+    "backend": {
+      "accessible": true,
+      "arabicText": false,
+      "rtlLayout": true,
+      "responsive": false
+    },
+    "errors": []
+  },
+  {
+    "name": "Mobile Chrome",
+    "frontend": {
+      "accessible": true,
+      "arabicText": false,
+      "rtlLayout": true,
+      "responsive": false
+    },
+    "backend": {
+      "accessible": true,
+      "arabicText": false,
+      "rtlLayout": true,
+      "responsive": false
+    },
+    "errors": []
+  },
+  {
+    "name": "Mobile Safari",
+    "frontend": {
+      "accessible": true,
+      "arabicText": false,
+      "rtlLayout": true,
+      "responsive": false
+    },
+    "backend": {
+      "accessible": true,
+      "arabicText": false,
+      "rtlLayout": true,
+      "responsive": false
+    },
+    "errors": []
+  },
+  {
+    "name": "Tablet iPad",
+    "frontend": {
+      "accessible": true,
+      "arabicText": false,
+      "rtlLayout": true,
+      "responsive": false
+    },
+    "backend": {
+      "accessible": true,
+      "arabicText": false,
+      "rtlLayout": true,
+      "responsive": false
+    },
+    "errors": []
+  },
+  {
+    "name": "Android Mobile",
+    "frontend": {
+      "accessible": true,
+      "arabicText": false,
+      "rtlLayout": true,
+      "responsive": false
+    },
+    "backend": {
+      "accessible": true,
+      "arabicText": false,
+      "rtlLayout": true,
+      "responsive": false
+    },
+    "errors": []
+  }
+]

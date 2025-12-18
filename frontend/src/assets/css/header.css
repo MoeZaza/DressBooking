@@ -1,0 +1,255 @@
+/* Header */
+.header {
+  /* position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0; 
+  z-index: 1400; */
+  transform: translate3d(0, 0, 0);
+}
+
+.menu {
+  z-index: 1401 !important;
+}
+
+.menu div.language,
+.btn div.language {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.menu div.language .flag {
+  width: 24px;
+  margin-right: 10px;
+}
+
+.menu .menu-lnk {
+  color: #1a1a1a;
+}
+
+.side-menu li {
+  cursor: pointer;
+}
+
+.side-menu li:hover {
+  background-color: #f1f1f1;
+}
+
+.header-action {
+  margin-right: 20px;
+}
+
+.header-desktop {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.header-mobile {
+  display: none;
+}
+
+.header .btn {
+  background-color: transparent !important;
+  color: #121212 !important;
+  text-transform: none !important;
+}
+
+.header .btn:hover {
+  background-color: rgba(0, 0, 0, 0.07) !important;
+}
+
+.header .btn-auth span.btn-auth-txt {
+  white-space: nowrap;
+}
+
+.header .logo {
+  text-decoration: none;
+  text-transform: none;
+  background: transparent;
+  font-size: 18px;
+  font-weight: 500;
+  color: #121212;
+}
+
+/* Mobile First Responsive Header Design */
+
+/* Extra Small devices (phones, 320px and up) */
+@media only screen and (max-width: 479px) {
+  .header {
+    min-height: 56px;
+    padding: 0 8px;
+  }
+
+  .header .btn {
+    padding: 0 4px;
+    min-width: 0;
+    font-size: 14px;
+  }
+
+  .header .btn-auth span.btn-auth-txt {
+    display: none; /* Hide text on very small screens */
+  }
+
+  .header .logo {
+    font-size: 16px;
+  }
+
+  .header-desktop {
+    display: none;
+  }
+
+  .header-mobile {
+    display: flex;
+    margin-right: -8px;
+  }
+
+  .toolbar {
+    min-height: 56px !important;
+    padding: 0 8px;
+  }
+
+  .menu div.language .flag {
+    width: 20px;
+    margin-right: 6px;
+  }
+}
+
+/* Small devices (phones, 480px and up) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  .header {
+    min-height: 56px;
+    padding: 0 12px;
+  }
+
+  .header .btn {
+    padding: 0 6px;
+    min-width: 0;
+    font-size: 14px;
+  }
+
+  .header .logo {
+    font-size: 17px;
+  }
+
+  .header-desktop {
+    display: none;
+  }
+
+  .header-mobile {
+    display: flex;
+    margin-right: -10px;
+  }
+
+  .toolbar {
+    min-height: 56px !important;
+    padding: 0 12px;
+  }
+
+  .menu div.language .flag {
+    width: 22px;
+    margin-right: 8px;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+  .header {
+    min-height: 60px;
+    padding: 0 16px;
+  }
+
+  .header .btn {
+    padding: 0 12px;
+    min-width: 64px;
+    font-size: 15px;
+    min-height: 44px; /* Touch-friendly size */
+  }
+
+  .header .logo {
+    font-size: 18px;
+  }
+
+  .header-desktop {
+    display: none;
+  }
+
+  .header-mobile {
+    display: flex;
+    margin-right: -12px;
+  }
+
+  .toolbar {
+    min-height: 60px !important;
+    padding: 0 16px;
+  }
+
+  .menu div.language .flag {
+    width: 24px;
+    margin-right: 10px;
+  }
+}
+
+/* Legacy mobile breakpoint for backward compatibility */
+@media only screen and (max-width: 960px) {
+  .header {
+    min-height: 56px;
+  }
+
+  .header .btn {
+    padding: 0 8px;
+    min-width: 0;
+  }
+
+  .header-desktop {
+    display: none;
+  }
+
+  .header-mobile {
+    display: flex;
+    margin-right: -13px;
+  }
+
+  .toolbar {
+    min-height: 56px !important;
+  }
+}
+
+/* Large devices (desktops, 960px and up) */
+@media only screen and (min-width: 960px) {
+  .header {
+    min-height: 64px;
+    padding: 0 20px;
+  }
+
+  .header .btn {
+    padding: 0 16px;
+    min-width: 64px;
+    font-size: 16px;
+    min-height: 36px;
+  }
+
+  .header .logo {
+    font-size: 18px;
+  }
+
+  .header-desktop {
+    display: flex;
+  }
+
+  .header-mobile {
+    display: none;
+  }
+
+  .toolbar {
+    min-height: 64px !important;
+    padding: 0 20px;
+  }
+
+  .menu div.language .flag {
+    width: 24px;
+    margin-right: 10px;
+  }
+}

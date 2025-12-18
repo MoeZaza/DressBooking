@@ -1,0 +1,117 @@
+{
+  "connectivity": {
+    "frontend": {
+      "accessible": true,
+      "loadTime": 301
+    },
+    "backend": {
+      "accessible": true,
+      "loadTime": 343
+    },
+    "api": {
+      "accessible": true,
+      "loadTime": 773
+    },
+    "database": {
+      "connected": {
+        "docs": [
+          {
+            "_id": "6889d6eba22f2fceae5c9ed8",
+            "name": "Designer Emerald Gown",
+            "supplier": {
+              "_id": "6889d6eaa22f2fceae5c9eca",
+              "fullName": "Layla Boutique",
+              "avatar": "layla-boutique-avatar.png"
+            },
+            "locations": [
+              {
+                "_id": "6889d6e9a22f2fceae5c9ec0"
+              }
+            ],
+            "price": 1200,
+            "discountedPrice": null,
+            "deposit": 240,
+            "available": true,
+            "fullyBooked": false,
+            "comingSoon": false,
+            "type": "designer",
+            "size": "xl",
+            "style": "designer",
+            "customizable": false,
+            "images": [
+              "dress_6_main.jpg",
+              "dress_6_detail.jpg"
+            ],
+            "color": "Emerald Green",
+            "length": 175,
+            "material": "velvet",
+            "cancellation": 48,
+            "amendments": 20,
+            "range": "designer",
+            "accessories": [
+              "jewelry",
+              "shoes"
+            ],
+            "rating": 3.5747384048321034,
+            "rentals": 47,
+            "designerName": "Zuhair Murad",
+            "dressCode": "DC0006",
+            "fittingRequired": true,
+            "alterationNotes": "Standard alterations available",
+            "careInstructions": "Dry clean only",
+            "occasionTags": [
+              "gala",
+              "red-carpet"
+            ],
+            "season": "winter",
+            "neckline": "halter",
+            "sleeves": "sleeveless",
+            "silhouette": "column",
+            "image": "dress_6_main.jpg",
+            "bookingCount": 7,
+            "totalRevenue": 0,
+            "createdAt": "2025-07-30T08:25:15.557Z",
+            "updatedAt": "2025-07-30T08:25:15.557Z"
+          }
+        ],
+        "totalDocs": 15,
+        "limit": 1,
+        "totalPages": 15,
+        "page": 1,
+        "pagingCounter": 1,
+        "hasPrevPage": false,
+        "hasNextPage": true,
+        "prevPage": null,
+        "nextPage": 2
+      }
+    }
+  },
+  "customerWorkflow": {
+    "canAccessHomePage": true,
+    "canUseSearchForm": false,
+    "canViewDresses": false,
+    "canViewDressDetails": false,
+    "searchResultsLoad": false,
+    "errors": []
+  },
+  "supplierWorkflow": {
+    "canAccessBackend": true,
+    "canViewLoginForm": false,
+    "canViewDashboard": false,
+    "canManageDresses": false,
+    "errors": []
+  },
+  "dataFlow": {
+    "dressesFromAPI": true,
+    "locationsFromAPI": false,
+    "suppliersFromAPI": true,
+    "dataConsistency": false,
+    "errors": []
+  },
+  "summary": {
+    "systemsOnline": 4,
+    "workflowsWorking": 2,
+    "dataFlowsWorking": 2,
+    "overallIntegrationScore": 67
+  }
+}

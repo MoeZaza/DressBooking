@@ -1,0 +1,149 @@
+{
+  "pages": [
+    {
+      "name": "Frontend Home",
+      "url": "http://localhost:3000/",
+      "accessible": true,
+      "hasRTLLayout": true,
+      "arabicTextPercentage": 0,
+      "totalTextElements": 1,
+      "arabicTextElements": 0,
+      "englishTextElements": 1,
+      "mixedTextElements": 0,
+      "missingArabicElements": [],
+      "formInputsWithArabicPlaceholders": 0,
+      "totalFormInputs": 0,
+      "errors": []
+    },
+    {
+      "name": "Frontend Search",
+      "url": "http://localhost:3000/search",
+      "accessible": true,
+      "hasRTLLayout": true,
+      "arabicTextPercentage": 0,
+      "totalTextElements": 1,
+      "arabicTextElements": 0,
+      "englishTextElements": 1,
+      "mixedTextElements": 0,
+      "missingArabicElements": [],
+      "formInputsWithArabicPlaceholders": 0,
+      "totalFormInputs": 0,
+      "errors": []
+    },
+    {
+      "name": "Frontend About",
+      "url": "http://localhost:3000/about",
+      "accessible": true,
+      "hasRTLLayout": true,
+      "arabicTextPercentage": 0,
+      "totalTextElements": 1,
+      "arabicTextElements": 0,
+      "englishTextElements": 1,
+      "mixedTextElements": 0,
+      "missingArabicElements": [],
+      "formInputsWithArabicPlaceholders": 0,
+      "totalFormInputs": 0,
+      "errors": []
+    },
+    {
+      "name": "Frontend Contact",
+      "url": "http://localhost:3000/contact",
+      "accessible": true,
+      "hasRTLLayout": true,
+      "arabicTextPercentage": 67,
+      "totalTextElements": 49,
+      "arabicTextElements": 33,
+      "englishTextElements": 15,
+      "mixedTextElements": 1,
+      "missingArabicElements": [
+        {
+          "tag": "button",
+          "class": "MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary logo css-1ojqgkm-MuiButtonBase-root-MuiButton-root",
+          "text": "BookDress"
+        },
+        {
+          "tag": "button",
+          "class": "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation btn bold css-1kyygtz-MuiButtonBase-root-MuiButton-root",
+          "text": "ILS"
+        },
+        {
+          "tag": "button",
+          "class": "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation MuiButton-fullWidth btn bold css-osag22-MuiButtonBase-root-MuiButton-root",
+          "text": "ILS"
+        }
+      ],
+      "formInputsWithArabicPlaceholders": 0,
+      "totalFormInputs": 0,
+      "errors": []
+    },
+    {
+      "name": "Frontend FAQ",
+      "url": "http://localhost:3000/faq",
+      "accessible": true,
+      "hasRTLLayout": true,
+      "arabicTextPercentage": 0,
+      "totalTextElements": 1,
+      "arabicTextElements": 0,
+      "englishTextElements": 1,
+      "mixedTextElements": 0,
+      "missingArabicElements": [],
+      "formInputsWithArabicPlaceholders": 0,
+      "totalFormInputs": 0,
+      "errors": []
+    },
+    {
+      "name": "Frontend Sign In",
+      "url": "http://localhost:3000/sign-in",
+      "accessible": true,
+      "hasRTLLayout": true,
+      "arabicTextPercentage": 0,
+      "totalTextElements": 1,
+      "arabicTextElements": 0,
+      "englishTextElements": 1,
+      "mixedTextElements": 0,
+      "missingArabicElements": [],
+      "formInputsWithArabicPlaceholders": 0,
+      "totalFormInputs": 0,
+      "errors": []
+    },
+    {
+      "name": "Frontend Sign Up",
+      "url": "http://localhost:3000/sign-up",
+      "accessible": true,
+      "hasRTLLayout": true,
+      "arabicTextPercentage": 0,
+      "totalTextElements": 1,
+      "arabicTextElements": 0,
+      "englishTextElements": 1,
+      "mixedTextElements": 0,
+      "missingArabicElements": [],
+      "formInputsWithArabicPlaceholders": 0,
+      "totalFormInputs": 0,
+      "errors": []
+    },
+    {
+      "name": "Backend Login",
+      "url": "http://localhost:3001/",
+      "accessible": true,
+      "hasRTLLayout": true,
+      "arabicTextPercentage": 0,
+      "totalTextElements": 1,
+      "arabicTextElements": 0,
+      "englishTextElements": 1,
+      "mixedTextElements": 0,
+      "missingArabicElements": [],
+      "formInputsWithArabicPlaceholders": 0,
+      "totalFormInputs": 0,
+      "errors": []
+    }
+  ],
+  "inputTest": null,
+  "summary": {
+    "totalPages": 8,
+    "accessiblePages": 8,
+    "pagesWithRTL": 8,
+    "averageArabicPercentage": 8,
+    "pagesWithGoodArabicCoverage": 0,
+    "totalMissingArabicElements": 3
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "timestamp": "2025-07-31T10:30:47.769Z",
+  "page": "Frontend Home Page",
+  "summary": {
+    "total": 23,
+    "passed": 23,
+    "failed": 0,
+    "successRate": 100
+  },
+  "categories": {
+    "loading": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "layout": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "navigation": {
+      "passed": 4,
+      "failed": 0,
+      "total": 4
+    },
+    "heroSection": {
+      "passed": 4,
+      "failed": 0,
+      "total": 4
+    },
+    "featuredDresses": {
+      "passed": 4,
+      "failed": 0,
+      "total": 4
+    },
+    "search": {
+      "passed": 3,
+      "failed": 0,
+      "total": 3
+    },
+    "footer": {
+      "passed": 3,
+      "failed": 0,
+      "total": 3
+    },
+    "responsive": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    }
+  },
+  "details": [
+    {
+      "name": "Page Loading",
+      "category": "loading",
+      "status": "PASSED",
+      "message": "Home page should load completely"
+    },
+    {
+      "name": "Main Content Present",
+      "category": "layout",
+      "status": "PASSED",
+      "message": "Main content area should be present"
+    },
+    {
+      "name": "Page Title",
+      "category": "layout",
+      "status": "PASSED",
+      "message": "Page should have a meaningful title"
+    },
+    {
+      "name": "Header Present",
+      "category": "navigation",
+      "status": "PASSED",
+      "message": "Header should be present"
+    },
+    {
+      "name": "Logo Present",
+      "category": "navigation",
+      "status": "PASSED",
+      "message": "Logo should be present in header"
+    },
+    {
+      "name": "Navigation Menu",
+      "category": "navigation",
+      "status": "PASSED",
+      "message": "Navigation menu should be present"
+    },
+    {
+      "name": "Search Section",
+      "category": "navigation",
+      "status": "PASSED",
+      "message": "Search section should be available on home page"
+    },
+    {
+      "name": "Hero Section Present",
+      "category": "heroSection",
+      "status": "PASSED",
+      "message": "Hero section should be present"
+    },
+    {
+      "name": "Hero Title",
+      "category": "heroSection",
+      "status": "PASSED",
+      "message": "Hero section should have a title"
+    },
+    {
+      "name": "Hero Cover Text",
+      "category": "heroSection",
+      "status": "PASSED",
+      "message": "Hero section should have cover text"
+    },
+    {
+      "name": "Hero Video Element",
+      "category": "heroSection",
+      "status": "PASSED",
+      "message": "Hero section should have video element"
+    },
+    {
+      "name": "Dress Types Section",
+      "category": "featuredDresses",
+      "status": "PASSED",
+      "message": "Dress types section should be present"
+    },
+    {
+      "name": "Dress Type Boxes",
+      "category": "featuredDresses",
+      "status": "PASSED",
+      "message": "Dress type boxes should be displayed"
+    },
+    {
+      "name": "Dress Type Buttons",
+      "category": "featuredDresses",
+      "status": "PASSED",
+      "message": "Dress type buttons should be present"
+    },
+    {
+      "name": "Dress Type Information",
+      "category": "featuredDresses",
+      "status": "PASSED",
+      "message": "Dress type boxes should display information (names, prices, etc.)"
+    },
+    {
+      "name": "Search Form Present",
+      "category": "search",
+      "status": "PASSED",
+      "message": "Search form should be present in home search section"
+    },
+    {
+      "name": "Search Input Fields",
+      "category": "search",
+      "status": "PASSED",
+      "message": "Search form should have input fields"
+    },
+    {
+      "name": "Search Button Present",
+      "category": "search",
+      "status": "PASSED",
+      "message": "Search form should have a search button"
+    },
+    {
+      "name": "Footer Present",
+      "category": "footer",
+      "status": "PASSED",
+      "message": "Footer should be present"
+    },
+    {
+      "name": "Footer Links",
+      "category": "footer",
+      "status": "PASSED",
+      "message": "Footer should contain links"
+    },
+    {
+      "name": "Contact Information",
+      "category": "footer",
+      "status": "PASSED",
+      "message": "Footer should contain contact information or social links"
+    },
+    {
+      "name": "Mobile Responsiveness",
+      "category": "responsive",
+      "status": "PASSED",
+      "message": "Home page should be responsive on mobile"
+    },
+    {
+      "name": "Tablet Responsiveness",
+      "category": "responsive",
+      "status": "PASSED",
+      "message": "Home page should be responsive on tablet"
+    }
+  ]
+}

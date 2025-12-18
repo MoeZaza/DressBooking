@@ -1,0 +1,103 @@
+{
+  "timestamp": "2025-07-31T09:13:10.081Z",
+  "summary": {
+    "total": 10,
+    "passed": 1,
+    "failed": 9,
+    "successRate": 10
+  },
+  "categories": {
+    "infrastructure": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "authentication": {
+      "passed": 0,
+      "failed": 1,
+      "total": 1
+    },
+    "navigation": {
+      "passed": 0,
+      "failed": 4,
+      "total": 4
+    },
+    "dressManagement": {
+      "passed": 0,
+      "failed": 1,
+      "total": 1
+    },
+    "bookingManagement": {
+      "passed": 0,
+      "failed": 1,
+      "total": 1
+    },
+    "dataLoading": {
+      "passed": 0,
+      "failed": 2,
+      "total": 2
+    }
+  },
+  "details": [
+    {
+      "name": "Backend Application Loading",
+      "category": "infrastructure",
+      "status": "PASSED",
+      "message": "Backend application should load successfully"
+    },
+    {
+      "name": "Admin Authentication",
+      "category": "authentication",
+      "status": "FAILED",
+      "message": "Authentication failed: No element found for selector: input[type=\"email\"]"
+    },
+    {
+      "name": "Navigation - Dashboard/Bookings",
+      "category": "navigation",
+      "status": "FAILED",
+      "message": "Dashboard/Bookings navigation should be available"
+    },
+    {
+      "name": "Navigation - Dresses",
+      "category": "navigation",
+      "status": "FAILED",
+      "message": "Dresses navigation should be available"
+    },
+    {
+      "name": "Navigation - Locations",
+      "category": "navigation",
+      "status": "FAILED",
+      "message": "Locations navigation should be available"
+    },
+    {
+      "name": "Navigation - Suppliers",
+      "category": "navigation",
+      "status": "FAILED",
+      "message": "Suppliers navigation should be available"
+    },
+    {
+      "name": "Dress Management",
+      "category": "dressManagement",
+      "status": "FAILED",
+      "message": "Dress management test failed: No element found for selector: a[href=\"/dresses\"], a[href=\"#/dresses\"]"
+    },
+    {
+      "name": "Booking Management",
+      "category": "bookingManagement",
+      "status": "FAILED",
+      "message": "Booking management test failed: No element found for selector: a[href=\"/\"], a[href=\"#/\"]"
+    },
+    {
+      "name": "Data Container Loading",
+      "category": "dataLoading",
+      "status": "FAILED",
+      "message": "Data containers should load properly"
+    },
+    {
+      "name": "Data Loading",
+      "category": "dataLoading",
+      "status": "FAILED",
+      "message": "Data loading test failed: page.waitForTimeout is not a function"
+    }
+  ]
+}
