@@ -21,23 +21,7 @@ const dbInitialized = dbConnected ? await databaseHelper.initialize() : false
 
 if (dbConnected && dbInitialized) {
   logger.info('Database connected and initialized successfully')
-
-  // Initialize default data if needed - DISABLED FOR NOW
-  // try {
-  //   // Import and run the initialization function directly
-  //   const { runFullInitialization } = await import('./scripts/init-default-data.js')
-  //   const defaultDataInitialized = await runFullInitialization()
-
-  //   if (defaultDataInitialized) {
-  //     logger.info('Default data initialization completed successfully')
-  //   } else {
-  //     logger.warn('Default data initialization had issues, but continuing...')
-  //   }
-  // } catch (error) {
-  //   logger.warn('Could not run default data initialization:', error)
-  // }
-
-  logger.info('Skipping default data initialization (disabled)')
+  logger.info('Default data initialization is disabled - use db:init scripts to initialize data')
 } else {
   logger.info('Database connection failed - running in limited mode')
 }

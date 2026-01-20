@@ -4,7 +4,7 @@ import authJwt from '../middlewares/authJwt'
 import roleAuth from '../middlewares/roleAuth'
 import * as bookingController from '../controllers/bookingController'
 import { enhancedDatabaseSecurityStack, databaseSecurityStack } from '../middlewares/databaseSecurity'
-import { compressionMiddleware } from '../middleware/compression'
+import { compressionMiddleware } from '../middlewares/compression'
 
 const routes = express.Router()
 

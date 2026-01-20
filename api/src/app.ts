@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import express from 'express'
 import compression from 'compression'
 import nocache from 'nocache'
@@ -63,7 +64,6 @@ app.use(express.json({ limit: '50mb' }))
 
 app.use(corsValidator)
 app.use(cors())
-// app.options('*', cors())
 app.use(cookieParser(env.COOKIE_SECRET))
 app.use(allowedMethods)
 
@@ -129,7 +129,7 @@ app.get('/api/health', (_req, res) => {
     uptime: process.uptime(),
     version: '7.2.0',
     environment: env.NODE_ENV,
-    database: 'connected' // Simplified for now
+    database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
   })
 })
 
@@ -143,16 +143,6 @@ app.get('/', (_req, res) => {
     health: '/api/health',
     security: '/api/security/health',
     timestamp: new Date().toISOString()
-  })
-})
-
-// Health check endpoint for API documentation
-app.get('/api/health', (_req, res) => {
-  res.json({
-    status: 'healthy',
-    timestamp: new Date().toISOString(),
-    version: '7.2.0',
-    documentation: '/api-docs'
   })
 })
 

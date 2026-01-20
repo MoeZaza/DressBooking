@@ -28,7 +28,7 @@ export const verifyTokenAndUser = async (req: AuthenticatedRequest, res: Respons
   try {
     if ((env.DISABLE_AUTH_IN_DEV && env.IS_DEVELOPMENT) ||
         (env.IS_DEVELOPMENT && (!env.JWT_SECRET || !env.COOKIE_SECRET))) {
-      console.log('⚠️  Role authentication disabled in development mode')
+      logger.warn('Role authentication disabled in development mode')
       // Set a mock admin user for development (admin sees all data)
       req.user = {
         id: 'dev-admin-id',
@@ -40,7 +40,7 @@ export const verifyTokenAndUser = async (req: AuthenticatedRequest, res: Respons
     }
   } catch (envError) {
     // If there are issues reading env variables, default to bypassing auth in development
-    console.log('⚠️  Environment variable error, bypassing role authentication in development:', envError)
+    logger.warn('Environment variable error, bypassing role authentication in development:', envError)
     req.user = {
       id: 'dev-admin-id',
       type: 'admin' as bookcarsTypes.UserType,

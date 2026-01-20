@@ -25,7 +25,6 @@ import Review from '../models/Review'
 import WeddingPackage from '../models/WeddingPackage'
 import bcrypt from 'bcrypt'
 import * as bookcarsTypes from ':bookcars-types'
-// import { initializeDefaultData } from '../scripts/init-default-data' // Disabled for Atlas
 import databaseSecurityService from '../services/DatabaseSecurityService'
 
 /**
@@ -375,16 +374,6 @@ export const initializeAdmin = async () => {
 }
 
 /**
- * Create Token TTL index. (Disabled for Atlas - indexes already exist)
- *
- * @async
- * @returns {Promise<void>}
- */
-// const createTokenIndex = async (): Promise<void> => {
-//   await Token.collection.createIndex({ expireAt: 1 }, { name: TOKEN_EXPIRE_AT_INDEX_NAME, expireAfterSeconds: env.TOKEN_EXPIRE_AT, background: true })
-// }
-
-/**
  * Create Booking TTL index.
  *
  * @async
@@ -414,9 +403,6 @@ const createCollection = async<T>(model: Model<T>) => {
       // Only create collection, skip index creation since DB is already initialized
       await model.createCollection()
       logger.info(`Collection ${model.collection.name} created successfully`)
-
-      // Skip index creation for Atlas - indexes should already exist
-      // await model.createIndexes()
     } catch (error) {
       // Log error but don't crash the server
       logger.error(`Error creating collection ${model.collection.name}:`, error)
@@ -488,9 +474,7 @@ export const initialize = async (): Promise<boolean> => {
       }
     }
 
-    //
     // Update User TTL index if configuration changes
-    //
     const userIndexes = await User.collection.indexes()
     const userIndex = userIndexes.find((index) => index.name === USER_EXPIRE_AT_INDEX_NAME && index.expireAfterSeconds !== env.USER_EXPIRE_AT)
     if (userIndex) {
@@ -504,14 +488,10 @@ export const initialize = async (): Promise<boolean> => {
       }
     }
 
-    //
     // Skip Token TTL index update since database is already initialized on Atlas
-    //
     logger.info('Skipping Token TTL index update - database already initialized on Atlas')
 
-    //
     // Skip data initialization since database is already initialized on Atlas
-    //
     logger.info('Skipping data initialization - database already initialized on Atlas')
 
     // Only initialize admin if needed (this is safe and won't create indexes)

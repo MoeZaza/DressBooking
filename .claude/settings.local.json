@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(npm run dev:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(npm run build:*)",
+      "Bash(node scripts/start-all.js:*)",
+      "Bash(timeout:*)",
+      "Bash(node scripts/status-all:*)",
+      "Bash(npx playwright test:*)",
+      "Bash(node test-dashboard-crud.js)",
+      "Bash(node scripts/test-dashboard-crud:*)",
+      "Bash(curl:*)",
+      "Bash(TOKEN=\"eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY4OGM5NTExYmRhOWU1NzAxMjg3YzVmYSIsImlhdCI6MTc2ODkxNDAyMCwiZXhwIjoxNzY5MDAwNDIwfQ.cyf90v5UhbYQprpOAWeG4ZMWtm226eLUQ0PJXBxds3k\")",
+      "Bash(node:*)"
+    ]
+  }
+}

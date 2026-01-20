@@ -21,12 +21,12 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
   try {
     if ((env.DISABLE_AUTH_IN_DEV && env.IS_DEVELOPMENT) ||
         (env.IS_DEVELOPMENT && (!env.JWT_SECRET || !env.COOKIE_SECRET))) {
-      console.log('⚠️  Authentication disabled in development mode')
+      logger.warn('Authentication disabled in development mode')
       return next()
     }
   } catch (envError) {
     // If there are issues reading env variables, default to bypassing auth in development
-    console.log('⚠️  Environment variable error, bypassing authentication in development:', envError)
+    logger.warn('Environment variable error, bypassing authentication in development:', envError)
     return next()
   }
 

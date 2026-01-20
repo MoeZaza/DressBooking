@@ -343,9 +343,6 @@ dressSchema.index({ sleeves: 1 })
 dressSchema.index({ silhouette: 1 })
 dressSchema.index({ lastMaintenance: 1 })
 
-// Add pagination plugin to schema
-dressSchema.plugin(mongoosePaginate)
-
 // Dress model with pagination interface
 const Dress = model<env.Dress>('Dress', dressSchema) as any
 
