@@ -141,6 +141,14 @@ export default defineConfig({
       },
       testMatch: '**/cross-browser/frontend-*.spec.ts',
     },
+    {
+      name: 'ui-only-chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: 'http://localhost:3001',
+      },
+      testMatch: '**/ui-only/**/*.spec.ts',
+    },
   ],
 
   /* Run your local dev server before starting the tests */

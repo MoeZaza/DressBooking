@@ -82,6 +82,40 @@ const DressAccessories = {
   BAG: 'bag'
 }
 
+const DressColor = {
+  WHITE: 'white',
+  IVORY: 'ivory',
+  CREAM: 'cream',
+  CHAMPAGNE: 'champagne',
+  BLUSH: 'blush',
+  PINK: 'pink',
+  RED: 'red',
+  BURGUNDY: 'burgundy',
+  NAVY: 'navy',
+  ROYAL_BLUE: 'royal-blue',
+  BABY_BLUE: 'baby-blue',
+  EMERALD: 'emerald',
+  FOREST_GREEN: 'forest-green',
+  SAGE_GREEN: 'sage-green',
+  LAVENDER: 'lavender',
+  PURPLE: 'purple',
+  MAUVE: 'mauve',
+  PLUM: 'plum',
+  SILVER: 'silver',
+  GOLD: 'gold',
+  BLACK: 'black',
+  GRAY: 'gray',
+  CHARCOAL: 'charcoal',
+  BEIGE: 'beige',
+  TAN: 'tan',
+  BROWN: 'brown',
+  COPPER: 'copper',
+  BRONZE: 'bronze',
+  ROSE_GOLD: 'rose-gold',
+  MULTI: 'multi',
+  OMBRE: 'ombre'
+}
+
 const BookingStatus = {
   PENDING: 'pending',
   CONFIRMED: 'confirmed',
@@ -355,6 +389,96 @@ router.get('/api/dress-accessories', (req, res) => {
 })
 
 /**
+ * Get all dress colors for dropdown
+ */
+router.get('/api/dress-colors', (req: any, res: any) => {
+  try {
+    const lang = (req.query.lang as string) || 'en'
+
+    // Localization for dress colors
+    const colorLabels: Record<string, Record<string, string>> = {
+      en: {
+        'white': 'White',
+        'ivory': 'Ivory',
+        'cream': 'Cream',
+        'champagne': 'Champagne',
+        'blush': 'Blush',
+        'pink': 'Pink',
+        'red': 'Red',
+        'burgundy': 'Burgundy',
+        'navy': 'Navy',
+        'royal-blue': 'Royal Blue',
+        'baby-blue': 'Baby Blue',
+        'emerald': 'Emerald',
+        'forest-green': 'Forest Green',
+        'sage-green': 'Sage Green',
+        'lavender': 'Lavender',
+        'purple': 'Purple',
+        'mauve': 'Mauve',
+        'plum': 'Plum',
+        'silver': 'Silver',
+        'gold': 'Gold',
+        'black': 'Black',
+        'gray': 'Gray',
+        'charcoal': 'Charcoal',
+        'beige': 'Beige',
+        'tan': 'Tan',
+        'brown': 'Brown',
+        'copper': 'Copper',
+        'bronze': 'Bronze',
+        'rose-gold': 'Rose Gold',
+        'multi': 'Multi',
+        'ombre': 'Ombre'
+      },
+      ar: {
+        'white': 'أبيض',
+        'ivory': 'عاجي',
+        'cream': 'كريمي',
+        'champagne': 'شمبانيا',
+        'blush': 'وردي فاتح',
+        'pink': 'وردي',
+        'red': 'أحمر',
+        'burgundy': 'برغندي',
+        'navy': 'كحلي',
+        'royal-blue': 'أزرق ملكي',
+        'baby-blue': 'أزرق فاتح',
+        'emerald': 'زمردي',
+        'forest-green': 'أخضر غامق',
+        'sage-green': 'أخضر حكيم',
+        'lavender': 'بنفسجي فاتح',
+        'purple': 'بنفسجي',
+        'mauve': 'وردي غامق',
+        'plum': 'خوخي',
+        'silver': 'فضي',
+        'gold': 'ذهبي',
+        'black': 'أسود',
+        'gray': 'رمادي',
+        'charcoal': 'فحمي',
+        'beige': 'بيج',
+        'tan': 'تان',
+        'brown': 'بني',
+        'copper': 'نحاسي',
+        'bronze': 'برونزي',
+        'rose-gold': 'وردي ذهبي',
+        'multi': 'متعدد الألوان',
+        'ombre': 'تدرج لوني'
+      }
+    }
+
+    const labels = colorLabels[lang] || colorLabels.en
+    const dressColors = Object.values(DressColor).filter(c => c !== 'champagne' || true).map(color => ({
+      value: color,
+      label: labels[color] || color.charAt(0).toUpperCase() + color.slice(1).replace(/-/g, ' ')
+    }))
+
+    res.json(dressColors)
+  } catch (err: any) {
+    console.error('[dropdownRoutes.getDressColors]', err)
+    res.status(500).json({ error: 'Failed to get dress colors' })
+  }
+})
+
+/**
  * Get all booking statuses for dropdown
  */
 router.get('/api/booking-statuses', (req, res) => {
@@ -415,6 +539,10 @@ router.get('/api/all-dropdowns', (req, res) => {
       dressAccessories: Object.values(DressAccessories).map(accessory => ({
         value: accessory,
         label: accessory.charAt(0).toUpperCase() + accessory.slice(1)
+      })),
+      dressColors: Object.values(DressColor).map(color => ({
+        value: color,
+        label: color.charAt(0).toUpperCase() + color.slice(1).replace(/-/g, ' ')
       })),
       bookingStatuses: Object.values(BookingStatus).map(status => ({
         value: status,

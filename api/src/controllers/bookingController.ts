@@ -1512,7 +1512,7 @@ export const getBookings = async (req: AuthenticatedRequest, res: Response) => {
     let suppliers: mongoose.Types.ObjectId[]
     if (userType === bookcarsTypes.UserType.Admin) {
       // Admin can see all suppliers' bookings
-      suppliers = body.suppliers.map((id) => new mongoose.Types.ObjectId(id))
+      suppliers = (body.suppliers || []).map((id) => new mongoose.Types.ObjectId(id))
     } else {
       // Suppliers can only see their own bookings
       suppliers = [new mongoose.Types.ObjectId(userId!)]
@@ -1538,8 +1538,12 @@ export const getBookings = async (req: AuthenticatedRequest, res: Response) => {
     // Build the main match criteria for the aggregation pipeline
     const mainMatchCriteria: mongoose.FilterQuery<any> = {
       supplier: { $in: supplierObjectIds },
-      status: { $in: statuses },
       expireAt: null
+    }
+
+    // Only add status filter if statuses are provided
+    if (statuses && statuses.length > 0) {
+      mainMatchCriteria.status = { $in: statuses }
     }
 
     // Add additional filters to the main match criteria

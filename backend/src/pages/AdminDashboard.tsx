@@ -163,6 +163,13 @@ const AdminDashboard: React.FC = () => {
                          (headerStrings.DASHBOARD || 'Dashboard')
 
   useEffect(() => {
+    // Clear any stale error state on mount
+    const cachedError = localStorage.getItem('dashboard-error')
+    if (cachedError) {
+      console.log('Clearing stale dashboard error from localStorage')
+      localStorage.removeItem('dashboard-error')
+    }
+
     if (user && (isAdmin || isSupplier)) {
       fetchDashboardStats()
     }
@@ -197,10 +204,18 @@ const AdminDashboard: React.FC = () => {
         const cacheAge = now - parseInt(cacheTimestamp)
         if (cacheAge < cacheTimeout) {
           console.log('Using localStorage cached dashboard data')
-          setStats(JSON.parse(cachedData))
-          setLastFetch(parseInt(cacheTimestamp))
-          setLoading(false)
-          return
+          try {
+            setStats(JSON.parse(cachedData))
+            setLastFetch(parseInt(cacheTimestamp))
+            setError('') // Clear error when using valid cache
+            setLoading(false)
+            return
+          } catch (parseErr) {
+            console.error('Error parsing cached data:', parseErr)
+            // Clear corrupt cache
+            localStorage.removeItem('dashboard-cache')
+            localStorage.removeItem('dashboard-cache-timestamp')
+          }
         }
       }
 
@@ -214,10 +229,11 @@ const AdminDashboard: React.FC = () => {
         }
 
         // Make all API calls in parallel for better performance
+        const language = localStorage.getItem('language') || 'en'
         const [analyticsResponse, inventoryResponse, bookingsResponse] = await Promise.allSettled([
           fetch('/api/analytics/dashboard', { headers }),
           fetch('/api/inventory-stats', { headers }),
-          fetch('/api/bookings/1/10', {
+          fetch(`/api/bookings/1/10/${language}`, {
             method: 'POST',
             headers,
             body: JSON.stringify({
@@ -280,19 +296,32 @@ const AdminDashboard: React.FC = () => {
       const timestamp = Date.now()
       localStorage.setItem('dashboard-cache', JSON.stringify(dashboardStats))
       localStorage.setItem('dashboard-cache-timestamp', timestamp.toString())
+      // Clear any stale error from localStorage
+      localStorage.removeItem('dashboard-error')
 
       setStats(dashboardStats)
       setLastFetch(timestamp)
+      setError('') // Clear error on successful load
     } catch (err) {
       console.error('Error fetching dashboard stats:', err)
-      setError('Failed to load dashboard data')
 
       // Try to use fallback data from localStorage
       const cachedData = localStorage.getItem('dashboard-cache')
       if (cachedData) {
         console.log('Using stale cached data as fallback')
-        setStats(JSON.parse(cachedData))
+        try {
+          setStats(JSON.parse(cachedData))
+          setError('') // Clear error when using cached data
+        } catch (parseErr) {
+          console.error('Error parsing cached data:', parseErr)
+          // Clear corrupt cache and show error
+          localStorage.removeItem('dashboard-cache')
+          localStorage.removeItem('dashboard-cache-timestamp')
+          setError('Failed to load dashboard data')
+          setStats(fallbackData.emptyStats)
+        }
       } else {
+        setError('Failed to load dashboard data')
         setStats(fallbackData.emptyStats)
       }
     } finally {

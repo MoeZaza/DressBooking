@@ -112,15 +112,26 @@ export const getDashboardAnalytics = async (req: AuthenticatedRequest, res: Resp
           as: 'dressInfo'
         }
       },
-      { $unwind: '$dressInfo' }
+      { $unwind: { path: '$dressInfo', preserveNullAndEmptyArrays: true } }, // Use preserveNullAndEmptyArrays to avoid errors
+      {
+        $project: {
+          _id: 1,
+          bookingCount: 1,
+          totalRevenue: 1,
+          name: '$dressInfo.name',
+          image: '$dressInfo.image'
+        }
+      }
     ])
 
-    // Recent bookings
+    // Recent bookings - use lean to avoid circular reference issues
     const recentBookings = await Booking.find(supplierFilter)
+      .select('dress customer from to status price createdAt')
       .populate('dress', 'name image')
       .populate('customer', 'fullName email')
       .sort({ createdAt: -1 })
       .limit(10)
+      .lean() // Use lean() to avoid circular references
 
     // Customer insights
     const totalCustomers = await User.countDocuments({ type: bookcarsTypes.UserType.User })
