@@ -31,6 +31,7 @@ import './styles/accessibility.css'
 
 import '@/assets/css/common.css'
 import '@/assets/css/index.css'
+import '@/assets/css/mui-layout-fixes.css'
 
 if (import.meta.env.VITE_NODE_ENV === 'production') {
   disableDevTools()

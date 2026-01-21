@@ -62,3 +62,18 @@
     display: none;
   }
 }
+
+/* RTL Support */
+[dir="rtl"] .header-action {
+  margin-right: 0;
+  margin-left: 20px;
+}
+
+[dir="rtl"] .header-mobile {
+  margin-right: 0;
+  margin-left: -13px;
+}
+
+[dir="rtl"] .header-desktop {
+  justify-content: flex-start;
+}

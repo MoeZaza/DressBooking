@@ -58,3 +58,9 @@ div.us-list .us-blacklisted,
 div.us-list .us-blacklisted:hover {
   background: #f0f0f0;
 }
+
+/* RTL Support */
+[dir="rtl"] div.us-list span.us-avatar {
+  margin-right: 0;
+  margin-left: 5px;
+}

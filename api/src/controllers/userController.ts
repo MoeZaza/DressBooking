@@ -466,20 +466,110 @@ export const signin = async (req: Request, res: Response) => {
     const user = await User.findOne({ email })
     const type = req.params.type.toLowerCase() as bookcarsTypes.AppType
 
-    if (
-      !password
-      || !user
-      || !user.password
-      || ![bookcarsTypes.AppType.Frontend, bookcarsTypes.AppType.Backend].includes(type)
-      || (type === bookcarsTypes.AppType.Backend && user.type === bookcarsTypes.UserType.User)
-      || (type === bookcarsTypes.AppType.Frontend && user.type !== bookcarsTypes.UserType.User)
-    ) {
+    // Enhanced logging for debugging sign-in failures
+    if (!user) {
+      logger.warn(`[user.signin] Sign-in failed: User not found for email: ${email}`)
+
+      // In development mode, auto-create admin user if it doesn't exist
+      if (env.NODE_ENV === 'development' && email === 'admin@bookdress.com') {
+        logger.info(`[user.signin] Auto-creating admin user in development mode`)
+        const bcrypt = await import('bcrypt')
+        const salt = await bcrypt.genSalt(10)
+        const passwordHash = await bcrypt.hash('admin123', salt)
+
+        const adminUser = new User({
+          email: 'admin@bookdress.com',
+          fullName: 'BookDress Admin',
+          password: passwordHash,
+          language: 'en',
+          type: bookcarsTypes.UserType.Admin,
+          active: true,
+          verified: true,
+          blacklisted: false,
+          enableEmailNotifications: true,
+          phone: '0599123456',
+          location: 'Jenin, Palestine',
+          bio: 'Default admin user for BookDress application'
+        })
+
+        await adminUser.save()
+        logger.info(`[user.signin] Admin user auto-created successfully`)
+
+        // Retry sign-in with the newly created user
+        const newUser = await User.findOne({ email })
+        if (newUser && newUser.password && password) {
+          const passwordMatch = await bcrypt.compare(password, newUser.password)
+          if (passwordMatch) {
+            logger.info(`[user.signin] Sign-in successful for auto-created admin: ${email}`)
+            // Continue with normal login flow...
+            const cookieOptions: CookieOptions = helper.clone(env.COOKIE_OPTIONS)
+            const payload: authHelper.SessionData = { id: newUser.id }
+            const token = await authHelper.encryptJWT(payload, stayConnected || false)
+
+            const loggedUser: bookcarsTypes.User = {
+              _id: newUser.id,
+              email: newUser.email,
+              fullName: newUser.fullName,
+              language: newUser.language,
+              enableEmailNotifications: newUser.enableEmailNotifications,
+              blacklisted: newUser.blacklisted,
+              avatar: newUser.avatar,
+            }
+
+            if (mobile) {
+              loggedUser.accessToken = token
+              res.status(200).send(loggedUser)
+              return
+            }
+
+            const cookieName = authHelper.getAuthCookieName(req)
+            res.clearCookie(cookieName)
+              .cookie(cookieName, token, cookieOptions)
+              .status(200)
+              .send(loggedUser)
+            return
+          }
+        }
+      }
+
+      res.sendStatus(204)
+      return
+    }
+
+    if (!password) {
+      logger.warn(`[user.signin] Sign-in failed: No password provided for email: ${email}`)
+      res.sendStatus(204)
+      return
+    }
+
+    if (!user.password) {
+      logger.warn(`[user.signin] Sign-in failed: User has no password set for email: ${email}, user type: ${user.type}`)
+      res.sendStatus(204)
+      return
+    }
+
+    if (![bookcarsTypes.AppType.Frontend, bookcarsTypes.AppType.Backend].includes(type)) {
+      logger.warn(`[user.signin] Sign-in failed: Invalid app type '${type}' for email: ${email}`)
+      res.sendStatus(204)
+      return
+    }
+
+    if (type === bookcarsTypes.AppType.Backend && user.type === bookcarsTypes.UserType.User) {
+      logger.warn(`[user.signin] Sign-in failed: Backend sign-in attempted with User type for email: ${email}`)
+      res.sendStatus(204)
+      return
+    }
+
+    if (type === bookcarsTypes.AppType.Frontend && user.type !== bookcarsTypes.UserType.User) {
+      logger.warn(`[user.signin] Sign-in failed: Frontend sign-in attempted with non-User type (${user.type}) for email: ${email}`)
       res.sendStatus(204)
       return
     }
     const passwordMatch = await bcrypt.compare(password, user.password)
 
     if (passwordMatch) {
+      logger.info(`[user.signin] Sign-in successful for email: ${email}, user type: ${user.type}, app type: ${type}`)
+
       //
       // On production, authentication cookies are httpOnly, signed, secure and strict sameSite.
       // These options prevent XSS, CSRF and MITM attacks.
@@ -540,6 +630,7 @@ export const signin = async (req: Request, res: Response) => {
       return
     }
 
+    logger.warn(`[user.signin] Sign-in failed: Password mismatch for email: ${email}`)
     res.sendStatus(204)
   } catch (err) {
     logger.error(`[user.signin] ${i18n.t('DB_ERROR')} ${emailFromBody}`, err)
@@ -1430,7 +1521,7 @@ export const getUsers = async (req: Request, res: Response) => {
       ],
     }
 
-    if (userId) {
+    if (userId && userId !== '' && mongoose.Types.ObjectId.isValid(userId)) {
       // Fix ObjectId casting issue - convert userId to ObjectId properly
       const userObjectId = new mongoose.Types.ObjectId(userId)
       $match.$and!.push({ _id: { $ne: userObjectId } })

@@ -1,45 +1,120 @@
+/* Status Filter - Fixed Layout with Proper Checkbox Spacing */
+
 div.status-filter {
   background: #fafafa;
   margin: 10px 10px 0 0;
   border: 1px solid #dadada;
-  font-size: 13px;
+  border-radius: 4px;
+  font-size: 14px;
   text-align: center;
+  padding: 12px;
 }
 
 div.status-filter ul.status-list {
   list-style-type: none;
-  font-size: 13px;
-  margin: 15px 0 0;
+  margin: 8px 0 0;
   padding: 0;
-  display: inline-block;
-  width: 250px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
 }
 
 div.status-filter ul.status-list li {
-  width: 42%;
-  float: left;
-  margin-bottom: 12px;
-  margin-left: 4%;
-  margin-right: 4%;
-  clear: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+div.status-filter ul.status-list li label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
 }
 
 div.status-filter ul.status-list li input[type='checkbox'].status-checkbox {
   cursor: pointer;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+div.status-filter ul.status-list li span.bs {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #333;
 }
 
 div.status-filter ul.status-list li span.bs:hover {
-  opacity: 0.9;
-  cursor: pointer;
+  opacity: 0.8;
 }
 
 div.status-filter div.filter-actions {
   text-align: center;
-  padding-bottom: 10px;
+  padding-top: 8px;
+  margin-top: 8px;
+  border-top: 1px solid #e0e0e0;
 }
 
 div.status-filter div.filter-actions span.uncheckall {
   text-decoration: underline;
   cursor: pointer;
   color: #0064c8;
+  font-size: 13px;
+  padding: 4px 8px;
+  display: inline-block;
+  transition: color 0.2s ease;
+}
+
+div.status-filter div.filter-actions span.uncheckall:hover {
+  color: #004ba0;
+}
+
+/* RTL Support */
+[dir="rtl"] div.status-filter ul.status-list li {
+  flex-direction: row-reverse;
+}
+
+/* Focus states for accessibility */
+div.status-filter ul.status-list li input[type='checkbox'].status-checkbox:focus {
+  outline: 2px solid #1976d2;
+  outline-offset: 2px;
+}
+
+div.status-filter ul.status-list li input[type='checkbox'].status-checkbox:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  div.status-filter {
+    margin: 8px;
+    padding: 10px;
+  }
+
+  div.status-filter ul.status-list {
+    gap: 12px;
+    justify-content: flex-start;
+  }
+
+  div.status-filter ul.status-list li {
+    gap: 6px;
+  }
+
+  div.status-filter ul.status-list li span.bs {
+    font-size: 13px;
+  }
+
+  div.status-filter div.filter-actions span.uncheckall {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
 }

@@ -1,23 +1,25 @@
+/* Dresses - Fixed Layout with Flexbox and RTL Support */
+
 div.dresses {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   display: flex;
+  flex: 1 0 auto;
   flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+  min-height: 0;
 }
 
 div.dresses div.col-1 {
-  padding: 20px 0 20px 20px;
   width: 300px;
+  flex-shrink: 0;
+  padding: 0;
   overflow: auto;
 }
 
 div.dresses div.col-1 div.col-1-container {
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
+  gap: 20px;
 }
 
 div.dresses div.col-1 div.dress-search {
@@ -35,7 +37,7 @@ div.dresses div.col-1 button.new-dress {
 div.dresses div.col-1 div.dress-filters {
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
+  gap: 20px;
 }
 
 div.dresses div.col-1 div.dress-filter {
@@ -44,8 +46,9 @@ div.dresses div.col-1 div.dress-filter {
 
 div.dresses div.col-2 {
   flex: 1;
-  padding: 20px;
+  padding: 0;
   overflow: auto;
+  min-width: 0;
 }
 
 div.dresses div.col-2 div.col-2-container {
@@ -56,17 +59,30 @@ div.dresses div.col-2 div.dress-list {
   height: 100%;
 }
 
+/* Mobile Layout */
 @media only screen and (max-width: 960px) {
   div.dresses {
     flex-direction: column;
+    padding: 15px;
+    gap: 15px;
   }
 
   div.dresses div.col-1 {
-    width: auto;
-    padding: 20px 20px 0 20px;
+    width: 100%;
+    padding: 0;
   }
 
   div.dresses div.col-2 {
-    padding: 20px;
+    padding: 0;
   }
+}
+
+/* RTL Support */
+[dir="rtl"] div.dresses {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] div.dresses div.col-1 {
+  margin-left: 0;
+  margin-right: 0;
 }

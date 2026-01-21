@@ -29,3 +29,14 @@ div.pager div.actions {
   flex-direction: row;
   align-items: center;
 }
+
+/* RTL Support */
+[dir="rtl"] div.pager-container {
+  padding: 5px 0 5px 10px;
+  justify-content: flex-start;
+}
+
+[dir="rtl"] div.pager div.row-count {
+  margin-right: 0;
+  margin-left: 7px;
+}

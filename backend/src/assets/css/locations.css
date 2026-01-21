@@ -1,7 +1,12 @@
+/* Locations - Fixed Layout with Flexbox and RTL Support */
+
 div.locations {
   display: flex;
   flex: 1 0 auto;
-  transform: translate3d(0, 0, 0);
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+  min-height: 0;
 }
 
 div.locations .search {
@@ -12,18 +17,52 @@ div.locations .search {
 
 div.locations .info-box {
   background-color: #fff;
+  border-radius: 4px;
+  padding: 16px;
 }
 
-/* Device width is less than or equal to 960px */
+div.locations .sc-search {
+  width: 100%;
+}
 
-@media only screen and (width <=960px) {
+div.locations .new-location {
+  margin-top: 15px;
+  width: 100%;
+}
+
+/* Desktop Layout */
+@media only screen and (min-width: 961px) {
+  div.locations {
+    flex-direction: row;
+  }
+
+  div.locations div.col-1 {
+    width: 300px;
+    flex-shrink: 0;
+  }
+
+  div.locations div.col-1 div.col-1-container {
+    width: 100%;
+  }
+
+  div.locations div.col-2 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+}
+
+/* Mobile Layout */
+@media only screen and (max-width: 960px) {
   div.locations {
     flex-direction: column;
+    padding: 15px;
+    gap: 15px;
   }
 
   div.locations div.col-1 {
     width: 100%;
-    padding: 15px;
     display: flex;
     justify-content: center;
   }
@@ -34,48 +73,31 @@ div.locations .info-box {
   }
 
   div.locations .sc-search {
-    width: 80%;
+    width: 100%;
   }
 
   div.locations .new-location {
-    margin: 20px 5px 5px 0;
-    width: 100%;
+    margin: 15px 0 0 0;
   }
 
   div.locations div.col-2 {
     display: flex;
     flex-direction: column;
-    margin-top: 3px;
-    padding: 1px;
+    margin-top: 15px;
+    min-width: 0;
   }
 }
 
-/* Device width is greater than or equal to 960px */
+/* RTL Support */
+[dir="rtl"] div.locations {
+  flex-direction: row-reverse;
+}
 
-@media only screen and (width >=960px) {
-  div.locations {
-    flex-direction: row;
-  }
+[dir="rtl"] div.locations div.col-1 {
+  margin-left: 0;
+  margin-right: 20px;
+}
 
-  div.locations div.col-1 {
-    float: left;
-    width: 300px;
-    margin-left: 20px;
-  }
-
-  div.locations div.col-2 {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    flex: 1;
-  }
-
-  div.locations .search {
-    margin-top: 15px;
-  }
-
-  div.locations .new-location {
-    margin: 10px 5px 0 0;
-    width: 100%;
-  }
+[dir="rtl"].locations {
+  padding: 20px;
 }

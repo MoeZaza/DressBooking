@@ -23,7 +23,8 @@
       "Bash(if not exist screenshots mkdir screenshots)",
       "Bash(npm run test:*)",
       "Bash(npm run)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(npx tsc:*)"
     ]
   }
 }

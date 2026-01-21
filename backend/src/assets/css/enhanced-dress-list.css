@@ -1,4 +1,5 @@
 /* Enhanced Dress List Styles */
+/* Fixed: Icon spacing, image sizing, and label visibility */
 
 .enhanced-dress-card {
   position: relative;
@@ -50,6 +51,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  z-index: 1;
 }
 
 .status-badge {
@@ -82,6 +84,53 @@
   backdrop-filter: blur(10px);
 }
 
+/* Fix icon spacing in dress-info-list */
+.dress-info-list .dress-info-list-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+}
+
+.dress-info-list .dress-info-list-item svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.dress-info-list .dress-info-list-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Fix icon spacing in extras-list */
+.extras-list .dress-info-list-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+}
+
+.extras-list .dress-info-list-item svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.extras-list .dress-info-list-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Enhanced Supplier Avatar */
 .enhanced-supplier-avatar {
   width: 40px;
   height: 40px;
@@ -89,6 +138,7 @@
   overflow: hidden;
   border: 2px solid #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
 }
 
 .enhanced-supplier-avatar img {
@@ -319,16 +369,16 @@
   .dress-image-container {
     height: 200px;
   }
-  
+
   .enhanced-image-gallery .main-image {
     height: 300px;
   }
-  
+
   .enhanced-avatar-upload .avatar-preview {
     width: 80px;
     height: 80px;
   }
-  
+
   .images-grid {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 12px;
@@ -339,13 +389,37 @@
   .dress-image-container {
     height: 180px;
   }
-  
+
   .enhanced-image-gallery .main-image {
     height: 250px;
   }
-  
+
   .images-grid {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 8px;
   }
+
+  /* Mobile icon spacing fixes */
+  .dress-info-list .dress-info-list-item,
+  .extras-list .dress-info-list-item {
+    gap: 6px;
+  }
+
+  .dress-info-list .dress-info-list-item svg,
+  .extras-list .dress-info-list-item svg {
+    width: 16px;
+    height: 16px;
+  }
 }
+
+/* RTL Support */
+[dir="rtl"] .dress-info-list .dress-info-list-item,
+[dir="rtl"] .extras-list .dress-info-list-item {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .dress-info-list .dress-info-list-text,
+[dir="rtl"] .extras-list .dress-info-list-text {
+  text-align: right;
+}
+

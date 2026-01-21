@@ -98,6 +98,11 @@ div.footer section.payment {
   padding: 10px 0;
 }
 
+/* RTL support - payment aligns to start (left in RTL) */
+[dir="rtl"] div.footer section.payment {
+  justify-content: flex-start;
+}
+
 div.footer section.payment div.payment-text {
   display: flex;
   flex-direction: column;

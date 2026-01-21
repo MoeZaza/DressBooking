@@ -1511,11 +1511,21 @@ export const getBookings = async (req: AuthenticatedRequest, res: Response) => {
     // Filter suppliers based on user type
     let suppliers: mongoose.Types.ObjectId[]
     if (userType === bookcarsTypes.UserType.Admin) {
-      // Admin can see all suppliers' bookings
-      suppliers = (body.suppliers || []).map((id) => new mongoose.Types.ObjectId(id))
+      // Admin can see all suppliers' bookings - validate and convert supplier IDs
+      suppliers = (body.suppliers || [])
+        .filter((id: any) => id && mongoose.Types.ObjectId.isValid(typeof id === 'string' ? id : String(id)))
+        .map((id: any) => {
+          // Handle Buffer objects by converting to hex string first
+          const idStr = Buffer.isBuffer(id) ? id.toString('hex') : (typeof id === 'string' ? id : String(id))
+          return new mongoose.Types.ObjectId(idStr)
+        })
     } else {
       // Suppliers can only see their own bookings
-      suppliers = [new mongoose.Types.ObjectId(userId!)]
+      if (userId && mongoose.Types.ObjectId.isValid(userId)) {
+        suppliers = [new mongoose.Types.ObjectId(userId)]
+      } else {
+        suppliers = []
+      }
     }
 
     const {
@@ -1530,15 +1540,14 @@ export const getBookings = async (req: AuthenticatedRequest, res: Response) => {
     let keyword = (body.filter && body.filter.keyword) || ''
     const options = 'i'
 
-    // Fix ObjectId casting issue - ensure suppliers array contains proper ObjectIds
-    const supplierObjectIds = suppliers.map((id: any) =>
-      typeof id === 'string' ? new mongoose.Types.ObjectId(id) : id
-    )
-
     // Build the main match criteria for the aggregation pipeline
     const mainMatchCriteria: mongoose.FilterQuery<any> = {
-      supplier: { $in: supplierObjectIds },
       expireAt: null
+    }
+
+    // Only add supplier filter if we have valid suppliers
+    if (suppliers.length > 0) {
+      mainMatchCriteria.supplier = { $in: suppliers }
     }
 
     // Only add status filter if statuses are provided
@@ -1546,14 +1555,12 @@ export const getBookings = async (req: AuthenticatedRequest, res: Response) => {
       mainMatchCriteria.status = { $in: statuses }
     }
 
-    // Add additional filters to the main match criteria
-    if (user) {
-      const userObjectId = new mongoose.Types.ObjectId(user)
-      mainMatchCriteria.customer = userObjectId
+    // Add additional filters to the main match criteria with validation
+    if (user && mongoose.Types.ObjectId.isValid(user)) {
+      mainMatchCriteria.customer = new mongoose.Types.ObjectId(user)
     }
-    if (dress) {
-      const dressObjectId = new mongoose.Types.ObjectId(dress)
-      mainMatchCriteria.dress = dressObjectId
+    if (dress && mongoose.Types.ObjectId.isValid(dress)) {
+      mainMatchCriteria.dress = new mongoose.Types.ObjectId(dress)
     }
 
     if (dateBetween) {
@@ -1573,9 +1580,8 @@ export const getBookings = async (req: AuthenticatedRequest, res: Response) => {
     if (to) {
       mainMatchCriteria.to = { $lte: to }
     }
-    if (location) {
-      const locationObjectId = new mongoose.Types.ObjectId(location)
-      mainMatchCriteria.location = locationObjectId
+    if (location && mongoose.Types.ObjectId.isValid(location)) {
+      mainMatchCriteria.location = new mongoose.Types.ObjectId(location)
     }
 
     const { language } = req.params

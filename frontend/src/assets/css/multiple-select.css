@@ -34,6 +34,12 @@ li.ms-option:hover {
   margin-bottom: 5px;
 }
 
+/* RTL support for option name */
+[dir="rtl"] .option-name {
+  margin-left: 0;
+  margin-right: 5px;
+}
+
 .car-option-name {
   color: #333;
   display: inline-block;
@@ -42,6 +48,12 @@ li.ms-option:hover {
   white-space: nowrap;
   margin-left: 5px;
   margin-bottom: 5px;
+}
+
+/* RTL support for car option name */
+[dir="rtl"] .car-option-name {
+  margin-left: 0;
+  margin-right: 5px;
 }
 
 .suo {

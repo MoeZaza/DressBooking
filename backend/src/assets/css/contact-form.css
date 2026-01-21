@@ -31,3 +31,16 @@
     width: 120px;
   }
 }
+
+/* RTL Support */
+[dir="rtl"] .contact-form .recaptcha {
+  margin-left: 0;
+  margin-right: 85px;
+}
+
+@media only screen and (width <=960px) {
+  [dir="rtl"] .contact-form .recaptcha {
+    margin-left: 0;
+    margin-right: -10px;
+  }
+}

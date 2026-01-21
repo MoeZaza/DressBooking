@@ -1,69 +1,37 @@
+/* Bookings - Fixed Layout with Flexbox and RTL Support */
+
 div.bookings {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+  min-height: 0;
 }
 
-/* Device width is lower than or equal to 960px */
-
-@media only screen and (width <= 960px) {
-  div.bookings {
-    top: 56px;
-    overflow-y: auto;
-  }
-
-  div.bookings div.col-1,
-  div.bookings div.col-2 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  div.bookings div.col-1 .cl-supplier-filter label.accordion,
-  div.bookings div.col-1 .cl-status-filter label.accordion,
-  div.bookings div.col-1 .cl-booking-filter label.accordion {
-    background: #fff;
-  }
-
-  div.bookings div.col-1 .cl-supplier-filter,
-  div.bookings div.col-1 .cl-status-filter,
-  div.bookings div.col-1 .cl-booking-filter {
-    margin: 5px 10px;
-    background-color: #fff;
-    max-width: 480px;
-    width: calc(100% - 20px);
-  }
-
-  div.bookings div.col-1 .cl-booking-filter div.panel,
-  div.bookings div.col-1 .cl-booking-filter div.panel-collapse {
-    padding-right: 15px;
-    padding-left: 15px;
-  }
-
-  div.bookings div.col-1 .cl-new-booking {
-    width: calc(100% - 20px);
-    max-width: 480px;
-    margin: 15px 10px 5px;
-  }
+div.bookings .info-box {
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 16px;
 }
 
-/* Device width is greater than or equal to 960px */
+div.bookings .new-booking {
+  width: 100%;
+}
 
-@media only screen and (width >= 960px) {
+/* Desktop Layout */
+@media only screen and (min-width: 961px) {
   div.bookings {
-    top: 64px;
+    flex-direction: row;
   }
 
   div.bookings div.col-1 {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
     width: 300px;
-    padding: 12px 0 0 12px;
-    background: #fefefe;
-    overflow: auto;
+    flex-shrink: 0;
+  }
+
+  div.bookings div.col-1 div.col-1-container {
+    width: 100%;
   }
 
   div.bookings div.col-1 .cl-supplier-filter label.accordion,
@@ -91,12 +59,83 @@ div.bookings {
   }
 
   div.bookings div.col-1 .cl-new-booking {
-    width: 265px;
-    margin-left: 5px;
+    width: 100%;
   }
 
   div.bookings div.col-2 {
-    position: absolute;
-    inset: 0 0 0 300px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
   }
+}
+
+/* Mobile Layout */
+@media only screen and (max-width: 960px) {
+  div.bookings {
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
+  }
+
+  div.bookings div.col-1 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  div.bookings div.col-1 div.col-1-container {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  div.bookings div.col-1 .cl-supplier-filter label.accordion,
+  div.bookings div.col-1 .cl-status-filter label.accordion,
+  div.bookings div.col-1 .cl-booking-filter label.accordion {
+    background: #fff;
+  }
+
+  div.bookings div.col-1 .cl-supplier-filter,
+  div.bookings div.col-1 .cl-status-filter,
+  div.bookings div.col-1 .cl-booking-filter {
+    margin: 5px 10px;
+    background-color: #fff;
+    width: calc(100% - 20px);
+  }
+
+  div.bookings div.col-1 .cl-booking-filter div.panel,
+  div.bookings div.col-1 .cl-booking-filter div.panel-collapse {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  div.bookings div.col-1 .cl-new-booking {
+    width: calc(100% - 20px);
+    max-width: 480px;
+    margin: 15px 10px 5px;
+  }
+
+  div.bookings div.col-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+/* RTL Support */
+[dir="rtl"] div.bookings {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] div.bookings div.col-1 {
+  margin-left: 0;
+  margin-right: 20px;
+}
+
+[dir="rtl"] div.bookings div.col-1 .cl-supplier-filter,
+[dir="rtl"] div.bookings div.col-1 .cl-status-filter,
+[dir="rtl"] div.bookings div.col-1 .cl-booking-filter {
+  margin: 10px 0 10px 10px;
 }

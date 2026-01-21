@@ -99,3 +99,17 @@ div.cars div.filter-progress-wrapper .filter-progress {
     width: 100%;
   }
 }
+
+/* RTL Support */
+[dir="rtl"] div.cars {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] div.cars div.col-1 {
+  margin-left: 0;
+  margin-right: 20px;
+}
+
+[dir="rtl"] div.cars .car-filter {
+  text-align: right;
+}

@@ -1,23 +1,76 @@
+/* Users - Fixed Layout with Flexbox and RTL Support */
+
 div.users {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+  min-height: 0;
 }
 
-/* Device width is lower than or equal to 960px */
+div.users .search {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
-@media only screen and (width <= 960px) {
+div.users .info-box {
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 16px;
+}
+
+div.users .sc-search {
+  width: 100%;
+}
+
+div.users .new-user {
+  margin-top: 15px;
+  width: 100%;
+}
+
+/* Desktop Layout */
+@media only screen and (min-width: 961px) {
   div.users {
-    top: 56px;
+    flex-direction: row;
   }
 
   div.users div.col-1 {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    padding: 10px;
+    width: 300px;
+    flex-shrink: 0;
+  }
+
+  div.users div.col-1 div.col-1-container {
+    width: 100%;
+  }
+
+  div.users div.col-1 .user-type-filter {
+    width: 100%;
+  }
+
+  div.users div.col-2 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  div.users .search {
+    margin-top: 15px;
+  }
+}
+
+/* Mobile Layout */
+@media only screen and (max-width: 960px) {
+  div.users {
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
+  }
+
+  div.users div.col-1 {
+    width: 100%;
     display: flex;
     justify-content: center;
   }
@@ -31,47 +84,28 @@ div.users {
     display: none;
   }
 
-  div.users div.col-1 .search,
-  div.users div.col-1 .new-user {
+  div.users .sc-search {
     width: 100%;
   }
 
+  div.users .new-user {
+    margin: 15px 0 0 0;
+  }
+
   div.users div.col-2 {
-    position: absolute;
-    inset: 90px 0 0;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    min-width: 0;
   }
 }
 
-/* Device width is greater than or equal to 960px */
+/* RTL Support */
+[dir="rtl"] div.users {
+  flex-direction: row-reverse;
+}
 
-@media only screen and (width >= 960px) {
-  div.users {
-    top: 64px;
-  }
-
-  div.users div.col-1 {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 300px;
-    padding: 20px 0 0 12px;
-    background: #fefefe;
-  }
-
-  div.users div.col-1 .user-type-filter {
-    margin-left: 5px;
-    width: 265px;
-  }
-
-  div.users div.col-1 .new-user {
-    width: 265px;
-    margin-left: 5px;
-    margin-top: 15px;
-  }
-
-  div.users div.col-2 {
-    position: absolute;
-    inset: 0 0 0 300px;
-  }
+[dir="rtl"] div.users div.col-1 {
+  margin-left: 0;
+  margin-right: 20px;
 }

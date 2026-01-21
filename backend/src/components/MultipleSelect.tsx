@@ -155,14 +155,17 @@ const MultipleSelect = ({
                     ...params.InputProps,
                     startAdornment: (
                       <>
-                        <InputAdornment position="start">
+                        <InputAdornment position="start" sx={{ mr: 0.5 }}>
                           {option.image ? (
-                            <Avatar src={bookcarsHelper.joinURL(env.CDN_USERS, option.image)} className="avatar-small suo" />
+                            <Avatar
+                              src={bookcarsHelper.joinURL(env.CDN_USERS, option.image)}
+                              className="avatar-small suo"
+                              sx={{ width: 28, height: 28 }}
+                            />
                           ) : (
-                            <AccountCircle className="avatar-small suo" color="disabled" />
+                            <AccountCircle className="avatar-small suo" color="disabled" sx={{ fontSize: 28 }} />
                           )}
                         </InputAdornment>
-                        {params.InputProps.startAdornment}
                       </>
                     ),
                   }
@@ -200,10 +203,9 @@ const MultipleSelect = ({
                     ...params.InputProps,
                     startAdornment: (
                       <>
-                        <InputAdornment position="start">
-                          <LocationIcon />
+                        <InputAdornment position="start" sx={{ mr: 0.5 }}>
+                          <LocationIcon sx={{ fontSize: 20 }} />
                         </InputAdornment>
-                        {params.InputProps.startAdornment}
                       </>
                     ),
                   }
@@ -224,10 +226,9 @@ const MultipleSelect = ({
                     ...params.InputProps,
                     startAdornment: (
                       <>
-                        <InputAdornment position="start">
-                          <CountryIcon />
+                        <InputAdornment position="start" sx={{ mr: 0.5 }}>
+                          <CountryIcon sx={{ fontSize: 20 }} />
                         </InputAdornment>
-                        {params.InputProps.startAdornment}
                       </>
                     ),
                   }
@@ -250,20 +251,22 @@ const MultipleSelect = ({
                     ...params.InputProps,
                     startAdornment: (
                       <>
-                        <InputAdornment position="start">
+                        <InputAdornment position="start" sx={{ mr: 0.5 }}>
                           {option.image ? (
                             <img
                               src={bookcarsHelper.joinURL(env.CDN_DRESSES, option.image)}
                               alt={option.name}
                               style={{
-                                height: env.SELECTED_DRESS_OPTION_IMAGE_HEIGHT,
+                                height: 28,
+                                width: 28,
+                                objectFit: 'cover',
+                                borderRadius: '4px',
                               }}
                             />
                           ) : (
-                            <AccountCircle className="avatar-small suo" color="disabled" />
+                            <AccountCircle className="avatar-small suo" color="disabled" sx={{ fontSize: 28 }} />
                           )}
                         </InputAdornment>
-                        {params.InputProps.startAdornment}
                       </>
                     ),
                   }
@@ -300,8 +303,8 @@ const MultipleSelect = ({
           if (type === bookcarsTypes.RecordType.User) {
             return (
               <li {..._props} key={option._id} className={`${props.className} ms-option`}>
-                <span className="option-image">
-                  {option.image ? <Avatar src={bookcarsHelper.joinURL(env.CDN_USERS, option.image)} className="avatar-medium" /> : <AccountCircle className="avatar-medium" color="disabled" />}
+                <span className="option-image user-option-image">
+                  {option.image ? <Avatar src={bookcarsHelper.joinURL(env.CDN_USERS, option.image)} className="avatar-medium" sx={{ width: 40, height: 40 }} /> : <AccountCircle className="avatar-medium" color="disabled" sx={{ fontSize: 40 }} />}
                 </span>
                 <span className="option-name">{option.name}</span>
               </li>
@@ -319,8 +322,8 @@ const MultipleSelect = ({
           if (type === bookcarsTypes.RecordType.Location) {
             return (
               <li {..._props} key={option._id} className={`${props.className} ms-option`}>
-                <span className="option-image">
-                  <LocationIcon />
+                <span className="option-image icon-option-image">
+                  <LocationIcon sx={{ fontSize: 20 }} />
                 </span>
                 <span className="option-name">{option.name}</span>
               </li>
@@ -330,8 +333,8 @@ const MultipleSelect = ({
           if (type === bookcarsTypes.RecordType.Country) {
             return (
               <li {..._props} key={option._id} className={`${props.className} ms-option`}>
-                <span className="option-image">
-                  <CountryIcon />
+                <span className="option-image icon-option-image">
+                  <CountryIcon sx={{ fontSize: 20 }} />
                 </span>
                 <span className="option-name">{option.name}</span>
               </li>
@@ -347,11 +350,14 @@ const MultipleSelect = ({
                       src={bookcarsHelper.joinURL(env.CDN_DRESSES, option.image)}
                       alt={option.name}
                       style={{
-                        height: env.DRESS_OPTION_IMAGE_HEIGHT,
+                        height: 40,
+                        width: 60,
+                        objectFit: 'cover',
+                        borderRadius: '4px',
                       }}
                     />
                   ) : (
-                    <AccountCircle className="avatar-medium" color="disabled" />
+                    <AccountCircle className="avatar-medium" color="disabled" sx={{ fontSize: 40 }} />
                   )}
                 </span>
                 <span className="car-option-name">{option.name}</span>

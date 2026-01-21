@@ -73,7 +73,7 @@ const Footer = () => {
           </div>
           <img
             src={SecurePayment}
-            alt=""
+            alt={`Secure payment via ${env.PAYMENT_GATEWAY === bookcarsTypes.PaymentGateway.Stripe ? 'Stripe' : 'PayPal'}`}
             style={{ height: env.PAYMENT_GATEWAY === bookcarsTypes.PaymentGateway.PayPal ? 64 : 'auto' }}
           />
         </section>

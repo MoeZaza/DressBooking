@@ -196,3 +196,14 @@ div.bs-list div.bs-buttons button {
     overflow-y: auto;
   }
 }
+
+/* RTL Support */
+[dir="rtl"] div.bs-list div.booking-details div.booking-detail div.booking-detail-value span.car-supplier-name {
+  margin-left: 0;
+  margin-right: 5px;
+}
+
+[dir="rtl"] div.bs-list div.extras div.extra span.extra-title {
+  margin-right: 0;
+  margin-left: 5px;
+}

@@ -310,7 +310,7 @@ export const getLocations = async (req: Request, res: Response) => {
         locations.forEach(location => {
           if (location.values && location.values.some((v: any) => v.toString() === value._id.toString())) {
             valueMap.set(location._id.toString(), {
-              _id: location._id,
+              _id: location._id.toString(), // Convert _id to string
               name: value.value,
               country: location.country,
               supplier: location.supplier

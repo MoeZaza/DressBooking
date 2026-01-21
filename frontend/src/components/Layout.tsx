@@ -61,7 +61,7 @@ const Layout = ({
     <>
       {
         !(unauthorized && strict) && (
-          (!user && !loading) || (user && user.verified) ? (
+          (!user && !loading) || (user && (user.verified || !strict)) ? (
             <div className="content">{children}</div>
           ) : (
             !loading && (

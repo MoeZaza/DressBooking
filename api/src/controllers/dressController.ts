@@ -301,21 +301,40 @@ export const getDresses = async (req: AuthenticatedRequest, res: Response): Prom
     }
 
     const result = await Dress.paginate(query, options)
-    
+
     // Convert relative image paths to full HTTP URLs for all dresses
+    // And convert ObjectId fields to strings for proper serialization
     if (result.docs && Array.isArray(result.docs)) {
       result.docs.forEach((dress: any) => {
+        // Convert _id to string
+        if (dress._id) {
+          dress._id = dress._id.toString()
+        }
+
+        // Convert supplier._id to string
+        if (dress.supplier && dress.supplier._id) {
+          dress.supplier._id = dress.supplier._id.toString()
+        }
+
+        // Convert locations array _ids to strings
+        if (dress.locations && Array.isArray(dress.locations)) {
+          dress.locations = dress.locations.map((loc: any) => ({
+            _id: loc._id.toString(),
+            name: loc.name
+          }))
+        }
+
         if (dress.images && Array.isArray(dress.images)) {
           dress.images = dress.images.map((img: string) => helper.getCdnUrl(img, 'dresses'))
         }
-        
+
         // Convert supplier avatar to full URL if exists
         if (dress.supplier && dress.supplier.avatar) {
           dress.supplier.avatar = helper.getCdnUrl(dress.supplier.avatar, 'users')
         }
       })
     }
-    
+
     res.json(result)
   } catch (err: any) {
     console.error(`[dressController.getDresses] ${err}`)
@@ -342,17 +361,32 @@ export const getDress = async (req: Request, res: Response): Promise<void> => {
       return
     }
 
+    // Convert ObjectId fields to strings for proper serialization
+    const dressObj = dress.toObject()
+    if (dressObj._id) {
+      dressObj._id = dressObj._id.toString()
+    }
+    if (dressObj.supplier && dressObj.supplier._id) {
+      dressObj.supplier._id = dressObj.supplier._id.toString()
+    }
+    if (dressObj.locations && Array.isArray(dressObj.locations)) {
+      dressObj.locations = dressObj.locations.map((loc: any) => ({
+        _id: loc._id.toString(),
+        name: loc.name
+      }))
+    }
+
     // Convert relative image paths to full HTTP URLs
-    if (dress.images && Array.isArray(dress.images)) {
-      dress.images = dress.images.map((img: string) => helper.getCdnUrl(img, 'dresses'))
+    if (dressObj.images && Array.isArray(dressObj.images)) {
+      dressObj.images = dressObj.images.map((img: string) => helper.getCdnUrl(img, 'dresses'))
     }
 
     // Convert supplier avatar to full URL if exists
-    if (dress.supplier && dress.supplier.avatar) {
-      dress.supplier.avatar = helper.getCdnUrl(dress.supplier.avatar, 'users')
+    if (dressObj.supplier && dressObj.supplier.avatar) {
+      dressObj.supplier.avatar = helper.getCdnUrl(dressObj.supplier.avatar, 'users')
     }
 
-    res.json(dress)
+    res.json(dressObj)
   } catch (err: any) {
     console.error(`[dressController.getDress] ${err}`)
     res.status(500).json({ error: err.message })

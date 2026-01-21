@@ -1,7 +1,12 @@
+/* Multiple Select - Fixed Layout and Spacing */
+
 li.ms-option {
   display: flex;
   align-items: center;
   width: 100%;
+  min-height: 48px;
+  padding: 8px 12px;
+  gap: 12px;
 }
 
 li.ms-option:hover {
@@ -10,7 +15,20 @@ li.ms-option:hover {
 }
 
 .option-image {
-  margin-top: 5px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-option-image {
+  width: 40px;
+  height: 40px;
+}
+
+.icon-option-image {
+  width: 24px;
+  height: 24px;
 }
 
 .option-car {
@@ -20,21 +38,23 @@ li.ms-option:hover {
 .option-name {
   color: #333;
   display: inline-block;
-  font-size: 0.9em;
-  line-height: 1em;
+  font-size: 0.95rem;
+  line-height: 1.4;
   white-space: nowrap;
-  margin-left: 5px;
-  margin-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
 }
 
 .car-option-name {
   color: #333;
   display: inline-block;
-  font-size: 1em;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 500;
   white-space: nowrap;
-  margin-left: 5px;
-  margin-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
 }
 
 .suo {
@@ -55,12 +75,69 @@ li.ms-option:hover {
 }
 
 .car-ia {
-  width: 160px;
-  height: 100px;
+  width: 64px;
+  height: 48px;
 }
 
 .car-ia img,
 .supplier-ia img {
   max-width: 100%;
   max-height: 100%;
+  object-fit: cover;
+}
+
+/* Ensure proper spacing in the input field */
+.multiple-select .MuiAutocomplete-inputRoot {
+  padding-left: 12px !important;
+}
+
+/* Fix for InputAdornment overlap */
+.multiple-select .MuiInputAdornment-positionStart {
+  margin-right: 8px;
+}
+
+.multiple-select .MuiInputAdornment-positionStart svg {
+  font-size: 20px;
+}
+
+/* Ensure avatar sizes are properly set */
+.multiple-select .avatar-small {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+.multiple-select .avatar-medium {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+/* Fix label spacing */
+.multiple-select .MuiInputLabel-root {
+  transform: translate(14px, 16px) scale(1);
+}
+
+.multiple-select .MuiInputLabel-shrink {
+  transform: translate(14px, -6px) scale(0.75);
+}
+
+/* Fix for dropdown list */
+.multiple-select .MuiAutocomplete-listbox {
+  max-height: 300px;
+}
+
+.multiple-select .MuiPaper-root {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive fixes */
+@media (max-width: 768px) {
+  li.ms-option {
+    min-height: 56px;
+    padding: 12px;
+  }
+
+  .option-name,
+  .car-option-name {
+    font-size: 0.9rem;
+  }
 }

@@ -23,6 +23,12 @@
   margin-right: 10px;
 }
 
+/* RTL support for language flag */
+[dir="rtl"] .menu div.language .flag {
+  margin-right: 0;
+  margin-left: 10px;
+}
+
 .menu .menu-lnk {
   color: #1a1a1a;
 }
@@ -37,6 +43,11 @@
 
 .header-action {
   margin-right: 20px;
+}
+
+[dir="rtl"] .header-action {
+  margin-right: 0;
+  margin-left: 20px;
 }
 
 .header-desktop {

@@ -1,43 +1,46 @@
+/* User Type Filter - Fixed Layout with Flexbox and RTL Support */
+
 div.user-type-filter {
   background: #fafafa;
   margin: 10px 10px 0 0;
-  padding: 5px;
+  padding: 12px;
   border: 1px solid #dadada;
+  border-radius: 4px;
   font-size: 13px;
 }
 
 div.user-type-filter ul.user-type-list {
   list-style-type: none;
   font-size: 13px;
-  margin: 15px 0 0;
+  margin: 8px 0 0;
   padding: 0;
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
 }
 
 div.user-type-filter ul.user-type-list li {
-  width: 42%;
-  float: left;
-  margin-bottom: 12px;
-  margin-left: 4%;
-  margin-right: 4%;
-  clear: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
 }
 
 div.user-type-filter ul.user-type-list li span.bs {
-  padding: 3px;
-  width: 80px;
+  padding: 6px 12px;
+  min-width: 80px;
   text-align: center;
   color: #fff;
-  box-shadow: none;
-  vertical-align: middle;
-  position: relative;
-  top: -3px;
-  left: 5px;
+  border-radius: 3px;
   cursor: pointer;
-  overflow: hidden;
-  margin-bottom: 0;
-  display: inline-block;
-  opacity: 1;
+  font-weight: 500;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
 }
 
 div.user-type-filter ul.user-type-list li span.bs:hover {
@@ -58,11 +61,44 @@ div.user-type-filter ul.user-type-list li span.bs-user {
 
 div.user-type-filter div.filter-actions {
   text-align: center;
-  padding-bottom: 5px;
+  padding-top: 8px;
+  margin-top: 8px;
+  border-top: 1px solid #e0e0e0;
 }
 
 div.user-type-filter div.filter-actions span.uncheckall {
   text-decoration: underline;
   cursor: pointer;
   color: #0064c8;
+  font-size: 13px;
+  padding: 4px 8px;
+  display: inline-block;
+  transition: color 0.2s ease;
+}
+
+div.user-type-filter div.filter-actions span.uncheckall:hover {
+  color: #004ba0;
+}
+
+/* RTL Support */
+[dir="rtl"] div.user-type-filter {
+  margin: 10px 0 0 10px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  div.user-type-filter {
+    margin: 8px;
+    padding: 10px;
+  }
+
+  div.user-type-filter ul.user-type-list {
+    gap: 8px;
+  }
+
+  div.user-type-filter ul.user-type-list li span.bs {
+    font-size: 12px;
+    padding: 5px 10px;
+    min-width: 70px;
+  }
 }

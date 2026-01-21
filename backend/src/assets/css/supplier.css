@@ -110,3 +110,40 @@ div.supplier {
     flex: 1 1;
   }
 }
+
+/* RTL Support */
+[dir="rtl"] div.supplier {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .supplier div.col-1 div.car-supplier span.car-supplier-info {
+  margin-left: 0;
+  margin-right: 5px;
+}
+
+[dir="rtl"] .supplier div.col-1 {
+  border-right: none;
+  border-left: #eee solid 1px;
+}
+
+@media only screen and (width <=960px) {
+  [dir="rtl"] div.supplier {
+    flex-direction: column;
+  }
+
+  [dir="rtl"] .supplier div.col-1 {
+    border-left: none;
+    border-right: #eee solid 1px;
+  }
+}
+
+@media only screen and (width >=960px) {
+  [dir="rtl"] div.supplier {
+    flex-direction: row-reverse;
+  }
+
+  [dir="rtl"] .supplier div.col-1 {
+    border-right: none;
+    border-left: #eee solid 1px;
+  }
+}

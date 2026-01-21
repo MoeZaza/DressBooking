@@ -12,3 +12,8 @@ div.booking-filter .bf-search {
 div.booking-filter .btn-search {
   margin: 20px 0;
 }
+
+/* RTL Support */
+[dir="rtl"] div.booking-filter {
+  margin: 10px 0 0 10px;
+}

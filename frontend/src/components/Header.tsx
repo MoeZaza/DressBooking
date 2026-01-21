@@ -533,7 +533,7 @@ const Header = ({
                 </Button>
               )}
               {isSignedIn && (
-                <IconButton aria-label="" onClick={handleNotificationsClick} className="btn">
+                <IconButton aria-label="Notifications" onClick={handleNotificationsClick} className="btn">
                   <Badge badgeContent={notificationCount > 0 ? notificationCount : null} color="error">
                     <NotificationsIcon />
                   </Badge>
@@ -556,7 +556,7 @@ const Header = ({
                 </div>
               </Button>
               {isSignedIn && (
-                <IconButton onClick={handleNotificationsClick} className="btn">
+                <IconButton aria-label="Notifications" onClick={handleNotificationsClick} className="btn">
                   <Badge badgeContent={notificationCount > 0 ? notificationCount : null} color="error">
                     <NotificationsIcon />
                   </Badge>

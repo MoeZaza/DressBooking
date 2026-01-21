@@ -26,3 +26,14 @@ div.info-box span.info-box-text {
   justify-content: center;
   margin-left: -10px;
 }
+
+/* RTL Support */
+[dir="rtl"] div.info-box .info-box-icon {
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+[dir="rtl"] div.info-box span.info-box-text {
+  margin-left: 0;
+  margin-right: -10px;
+}

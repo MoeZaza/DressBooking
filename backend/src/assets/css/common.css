@@ -294,3 +294,54 @@ div.content {
     justify-content: flex-end;
   }
 }
+
+/* RTL Support */
+[dir="rtl"] .buttons button {
+  margin-right: 0 !important;
+  margin-left: 15px;
+}
+
+[dir="rtl"] .btn-margin {
+  margin-right: 0 !important;
+  margin-left: 10px !important;
+}
+
+[dir="rtl"] .d-adornment {
+  margin-right: 0;
+  margin-left: -13px;
+}
+
+[dir="rtl"] .avatar-action-icon {
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+[dir="rtl"] .info span {
+  margin-left: 0;
+  margin-right: 5px;
+}
+
+[dir="rtl"] .dialog-actions {
+  margin-right: 0;
+  margin-left: 5px;
+}
+
+@media only screen and (width <=960px) {
+  [dir="rtl"] .buttons button {
+    margin-left: 0 !important;
+  }
+
+  [dir="rtl"] .btn-margin {
+    margin-left: 0 !important;
+  }
+
+  [dir="rtl"] .d-adornment {
+    margin-left: -3px;
+  }
+}
+
+@media only screen and (width >=960px) {
+  [dir="rtl"] .buttons {
+    justify-content: flex-start;
+  }
+}

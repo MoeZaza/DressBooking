@@ -276,9 +276,9 @@ export const getSuppliers = async (req: Request, res: Response) => {
       { $group: { _id: '$supplier', count: { $sum: 1 } } }
     ])
 
-    // Combine results
+    // Combine results and convert _id to string for proper serialization
     const suppliersWithCounts = suppliers.map(supplier => ({
-      _id: supplier._id,
+      _id: supplier._id.toString(), // Convert ObjectId/Buffer to string
       fullName: supplier.fullName,
       avatar: supplier.avatar,
       dressCount: dressCounts.find((dc: any) => dc._id.equals(supplier._id))?.count || 0
@@ -290,11 +290,6 @@ export const getSuppliers = async (req: Request, res: Response) => {
         pageInfo: [{ totalRecords }],
       },
     ]
-
-    data[0].resultData = data[0].resultData.map((supplier: any) => {
-      const { _id, fullName, avatar, dressCount } = supplier
-      return { _id, fullName, avatar, dressCount }
-    })
 
     res.json(data)
   } catch (err) {
@@ -324,7 +319,7 @@ export const getAllSuppliers = async (req: Request, res: Response) => {
 
     data = data.map((supplier) => {
       const { _id, fullName, avatar } = supplier
-      return { _id, fullName, avatar }
+      return { _id: _id.toString(), fullName, avatar } // Convert _id to string
     })
 
     res.json(data)
@@ -613,6 +608,15 @@ export const getBackendSuppliers = async (req: Request, res: Response) => {
           },
         },
         { $sort: { fullName: 1 } },
+        // Convert _id from ObjectId to string for proper serialization
+        {
+          $project: {
+            _id: { $toString: '$_id' },
+            fullName: 1,
+            avatar: 1,
+            dressCount: 1,
+          },
+        },
       ],
       { collation: { locale: env.DEFAULT_LANGUAGE, strength: 2 } },
     )
