@@ -24,7 +24,13 @@
       "Bash(npm run test:*)",
       "Bash(npm run)",
       "Bash(ls:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npm install:*)",
+      "Bash(npx playwright install:*)",
+      "Bash(npm run init-admin:*)",
+      "Bash(npm run db:init:data:*)",
+      "Bash(npm run db:init:*)",
+      "Bash(mongod:*)"
     ]
   }
 }

@@ -88,77 +88,69 @@ const Dresses: React.FC = () => {
 
   return (
     <Layout>
-      {!loading && (
-        <Container maxWidth="xl">
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-            <Typography variant="h4" gutterBottom>
-              {strings.DRESSES}
-            </Typography>
-            {user && (
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<AddIcon />}
-                onClick={handleCreateDress}
-              >
-                {strings.NEW_DRESS}
-              </Button>
-            )}
-          </Box>
+      <Container maxWidth="xl">
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+          <Typography variant="h4" gutterBottom>
+            {strings.DRESSES}
+          </Typography>
+          {user && (
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<AddIcon />}
+              onClick={handleCreateDress}
+            >
+              {strings.NEW_DRESS}
+            </Button>
+          )}
+        </Box>
 
-          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3 }}>
-            <Box sx={{ width: { xs: '100%', md: '25%' } }}>
-              <Paper sx={{ p: 2 }}>
-                <Typography variant="h6" gutterBottom>
-                  {commonStrings.FILTERS}
-                </Typography>
-                <Divider sx={{ mb: 2 }} />
-                <DressTypeFilter
-                  className="dress-filter"
-                  onChange={handleDressTypeFilterChange}
-                />
-                <DressSizeFilter
-                  className="dress-filter"
-                  onChange={handleDressSizeFilterChange}
-                />
-                <DressStyleFilter
-                  className="dress-filter"
-                  onChange={handleDressStyleFilterChange}
-                />
-                <DepositFilter
-                  className="dress-filter"
-                  onChange={handleDepositFilterChange}
-                />
-                <RentalsCountFilter
-                  className="dress-filter"
-                  onChange={handleRentalsCountFilterChange}
-                />
-                {/* {admin && (
-                  <AvailabilityFilter
-                    className="dress-filter"
-                    onChange={handleAvailabilityFilterChange}
-                  />
-                )} */}
-              </Paper>
-            </Box>
-            <Box sx={{ width: { xs: '100%', md: '75%' } }}>
-              <DressList
-                user={user}
-                suppliers={suppliers}
-                dressType={dressType}
-                dressSize={dressSize}
-                dressStyle={dressStyle}
-                deposit={deposit.toString()}
-                availability={availability}
-                rentalsCount={rentalsCount}
-                loading={loading}
-                onLoad={handleDressListLoad}
-                onDelete={handleDressDelete}
+        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3 }}>
+          <Box sx={{ width: { xs: '100%', md: '25%' } }}>
+            <Paper sx={{ p: 2 }}>
+              <Typography variant="h6" gutterBottom>
+                {commonStrings.FILTERS}
+              </Typography>
+              <Divider sx={{ mb: 2 }} />
+              <DressTypeFilter
+                className="dress-filter"
+                onChange={handleDressTypeFilterChange}
               />
-            </Box>
+              <DressSizeFilter
+                className="dress-filter"
+                onChange={handleDressSizeFilterChange}
+              />
+              <DressStyleFilter
+                className="dress-filter"
+                onChange={handleDressStyleFilterChange}
+              />
+              <DepositFilter
+                className="dress-filter"
+                onChange={handleDepositFilterChange}
+              />
+              <RentalsCountFilter
+                className="dress-filter"
+                onChange={handleRentalsCountFilterChange}
+              />
+            </Paper>
           </Box>
-        </Container>
-      )}
+          <Box sx={{ width: { xs: '100%', md: '75%' } }}>
+            <DressList
+              user={user}
+              suppliers={suppliers}
+              dressType={dressType}
+              dressSize={dressSize}
+              dressStyle={dressStyle}
+              deposit={deposit.toString()}
+              availability={availability}
+              rentalsCount={rentalsCount}
+              loading={loading}
+              onLoad={handleDressListLoad}
+              onDelete={handleDressDelete}
+            />
+          </Box>
+        </Box>
+      </Container>
     </Layout>
   )
 }

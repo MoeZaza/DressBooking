@@ -13,16 +13,23 @@ import { AuthenticatedRequest } from '../middlewares/roleAuth'
 const generateDressCode = async (): Promise<string> => {
   let code: string
   let exists = true
+  let attempts = 0
+  const maxAttempts = 100
 
-  while (exists) {
+  while (exists && attempts < maxAttempts) {
     // Generate code format: DR-YYYY-NNNN (e.g., DR-2024-0001)
     const year = new Date().getFullYear()
     const randomNum = Math.floor(Math.random() * 9999).toString().padStart(4, '0')
-    code = `DR-${year}-${randomNum}`
+    code = `DR-${year}-${randomNum}-${Date.now().toString(36)}` // Add timestamp for uniqueness
 
     // Check if code already exists
     const existingDress = await Dress.findOne({ dressCode: code })
     exists = !!existingDress
+    attempts++
+  }
+
+  if (exists) {
+    throw new Error('Failed to generate unique dress code after maximum attempts')
   }
 
   return code!
@@ -443,8 +450,8 @@ export const create = async (req: Request, res: Response): Promise<void> => {
         res.status(400).json({ error: 'Supplier not found' })
         return
       }
-      if (supplierDoc.type !== 'supplier') {
-        res.status(400).json({ error: 'User is not a supplier' })
+      if (supplierDoc.type !== 'supplier' && supplierDoc.type !== 'admin') {
+        res.status(400).json({ error: 'User is not a supplier or admin' })
         return
       }
     }

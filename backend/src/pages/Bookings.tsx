@@ -206,18 +206,19 @@ const Bookings = () => {
           )}
 
           <div className="col-1">
+            {/* Always show New Booking button in header */}
+            <Button
+              variant="contained"
+              className="btn-primary cl-new-booking"
+              size="small"
+              onClick={() => navigate('/create-booking')}
+              sx={{ mb: 2 }}
+            >
+              {strings.NEW_BOOKING}
+            </Button>
+
             {leftPanel && (
               <>
-                <Button
-                  variant="contained"
-                  className="btn-primary cl-new-booking"
-                  size="small"
-                  onClick={() => navigate('/create-booking')}
-                  sx={{ mb: 2 }}
-                >
-                  {strings.NEW_BOOKING}
-                </Button>
-
 
 
                 {admin && (
