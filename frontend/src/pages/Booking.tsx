@@ -69,7 +69,7 @@ const Booking = () => {
 
         if (_dressResponse && _dressResponse.data && from && to) {
           const _dress = _dressResponse.data
-          const _booking = bookcarsHelper.clone(booking)
+          const _booking = booking ? bookcarsHelper.clone(booking) : {} as bookcarsTypes.Booking
           _booking.dress = _dress
           const _price = bookcarsHelper.calculateTotalPrice(_dress, (_dress.supplier as bookcarsTypes.User).priceChangeRate || 0, _booking)
 

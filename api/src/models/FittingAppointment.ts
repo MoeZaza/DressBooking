@@ -100,4 +100,9 @@ fittingAppointmentSchema.index({ appointmentDate: 1, timeSlot: 1 })
 
 const FittingAppointment = model<env.FittingAppointment>('FittingAppointment', fittingAppointmentSchema)
 
+// Create indexes manually and handle potential errors
+FittingAppointment.syncIndexes().catch((err) => {
+  console.error('Error creating FittingAppointment indexes:', err)
+})
+
 export default FittingAppointment

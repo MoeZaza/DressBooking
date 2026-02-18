@@ -80,9 +80,12 @@ interface DressListProps {
   dressType?: string
   dressSize?: string
   dressStyle?: string
+  dressMaterial?: string
   deposit?: string
   availability?: string
   rentalsCount?: string
+  from?: Date
+  to?: Date
   loading?: boolean
   onLoad?: (data: Dress[]) => void
   onDelete?: () => void
@@ -95,9 +98,12 @@ const DressList: React.FC<DressListProps> = ({
   dressType,
   dressSize,
   dressStyle,
+  dressMaterial,
   deposit,
   availability,
   rentalsCount,
+  from,
+  to,
   loading: externalLoading,
   onLoad
 }) => {
@@ -110,26 +116,17 @@ const DressList: React.FC<DressListProps> = ({
   const [sortModel, setSortModel] = useState([{ field: 'rentals', sort: 'desc' as 'asc' | 'desc' }])
 
   useEffect(() => {
-    console.log('DressList useEffect triggered with location:', location)
     fetchDresses()
-  }, [keyword, suppliers, location, dressType, dressSize, dressStyle, deposit, availability, rentalsCount])
+  }, [keyword, suppliers, location, dressType, dressSize, dressStyle, dressMaterial, deposit, availability, rentalsCount, from, to])
 
   useEffect(() => {
     if (dresses.length > 0) {
       filterDresses()
     }
-  }, [dresses, keyword, location, dressType, dressSize, dressStyle, deposit, availability, rentalsCount])
+  }, [dresses, keyword, location, dressType, dressSize, dressStyle, dressMaterial, deposit, availability, rentalsCount])
 
   const fetchDresses = async () => {
     try {
-      console.log('DressList: Starting to fetch dresses with props:', {
-        suppliers,
-        location,
-        dressType,
-        dressSize,
-        dressStyle,
-        deposit
-      })
       setLoading(true)
 
       // Build filter payload
@@ -156,7 +153,11 @@ const DressList: React.FC<DressListProps> = ({
       }
 
       if (dressStyle) {
-        payload.material = [dressStyle] // Assuming dressStyle maps to material
+        payload.style = [dressStyle] // Fixed: dressStyle maps to 'style', not 'material'
+      }
+
+      if (dressMaterial) {
+        payload.material = [dressMaterial]
       }
 
       if (deposit) {
@@ -167,17 +168,25 @@ const DressList: React.FC<DressListProps> = ({
         payload.availability = [availability]
       }
 
-      console.log('DressList: Built payload for API call:', payload)
-      console.log('DressList: Location parameter type:', typeof location, 'value:', location)
+      // Add date range for availability checking
+      if (from) {
+        payload.from = from instanceof Date ? from.toISOString() : from
+      }
+
+      if (to) {
+        payload.to = to instanceof Date ? to.toISOString() : to
+      }
+
       // Use filtered search if we have any filters, otherwise get all dresses
       let fetchedDresses: Dress[] = []
 
       if (Object.keys(payload).length > 0) {
         const result = await DressService.getDressesWithFilters(payload, 1, 100)
-        console.log('Filtered search result:', result)
-        // Handle paginated response structure
+        // Handle multiple response formats: {docs: [...]}, [{resultData: [...]}], or direct array
         if (result && result.docs && Array.isArray(result.docs)) {
           fetchedDresses = result.docs
+        } else if (Array.isArray(result) && result.length > 0 && result[0]?.resultData) {
+          fetchedDresses = result[0].resultData
         } else if (Array.isArray(result)) {
           fetchedDresses = result
         } else {
@@ -185,10 +194,11 @@ const DressList: React.FC<DressListProps> = ({
         }
       } else {
         const result = await DressService.getDresses(1, 100)
-        console.log('Basic search result:', result)
-        // Handle paginated response structure
+        // Handle multiple response formats
         if (result && result.docs && Array.isArray(result.docs)) {
           fetchedDresses = result.docs
+        } else if (Array.isArray(result) && result.length > 0 && result[0]?.resultData) {
+          fetchedDresses = result[0].resultData
         } else if (Array.isArray(result)) {
           fetchedDresses = result
         } else {
@@ -196,7 +206,6 @@ const DressList: React.FC<DressListProps> = ({
         }
       }
 
-      console.log('Fetched dresses:', fetchedDresses)
       setDresses(fetchedDresses)
       setFilteredDresses(fetchedDresses)
       if (onLoad) {
@@ -228,6 +237,11 @@ const DressList: React.FC<DressListProps> = ({
     // Filter by dress style
     if (dressStyle) {
       filtered = filtered.filter(dress => dress.style === dressStyle)
+    }
+
+    // Filter by dress material
+    if (dressMaterial) {
+      filtered = filtered.filter(dress => dress.material === dressMaterial)
     }
 
     // Filter by deposit

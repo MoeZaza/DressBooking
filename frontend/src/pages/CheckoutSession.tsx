@@ -15,12 +15,8 @@ const CheckoutSession = () => {
   const { sessionId } = useParams()
   const [bookingId, setBookingId] = useState('')
   const [loading, setLoading] = useState(true)
-  const [noMatch, setNoMatch] = useState(false)
+  const [noMatch, setNoMatch] = useState(!sessionId)
   const [success, setSuccess] = useState(false)
-
-  if (!sessionId) {
-    setNoMatch(true)
-  }
 
   useEffect(() => {
     if (sessionId) {
@@ -54,8 +50,7 @@ const CheckoutSession = () => {
             : (
               noMatch
                 ? <NoMatch hideHeader />
-                : (
-                  success && bookingId && (
+                : bookingId && (
                     <CheckoutStatus
                       bookingId={bookingId}
                       language={UserService.getLanguage()}
@@ -63,7 +58,6 @@ const CheckoutSession = () => {
                       className="status"
                     />
                   )
-                )
             )
         }
       </div>

@@ -25,8 +25,8 @@ import '@/assets/css/contact-form.css'
 
 const schema = z.object({
   email: z.string().email({ message: commonStrings.EMAIL_NOT_VALID }),
-  subject: z.string(),
-  message: z.string(),
+  subject: z.string().min(1, { message: 'Subject is required' }).min(3, { message: 'Subject must be at least 3 characters' }),
+  message: z.string().min(1, { message: 'Message is required' }).min(10, { message: 'Message must be at least 10 characters' }),
 })
 
 type FormFields = z.infer<typeof schema>

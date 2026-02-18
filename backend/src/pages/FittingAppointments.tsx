@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import {   
   Container,
   Typography,
@@ -69,6 +69,7 @@ import { useLanguage } from '@/context/LanguageContext'
 import Layout from '@/components/Layout'
 import * as helper from '@/common/helper'
 import * as FittingAppointmentService from '@/services/FittingAppointmentService'
+import * as DressService from '@/services/DressService'
 
 interface FittingAppointment {
   _id: string
@@ -142,12 +143,33 @@ const FittingAppointments = () => {
   const [error, setError] = useState<string>('')
   const [success, setSuccess] = useState<string>('')
 
+  // Ref for timeout cleanup
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
+  // Helper to clear messages with proper cleanup
+  const clearMessages = useCallback(() => {
+    timeoutRef.current = setTimeout(() => {
+      setSuccess('')
+      setError('')
+    }, 3000)
+  }, [])
+
   // Available dresses for new appointments
   const [availableDresses, setAvailableDresses] = useState<bookcarsTypes.Dress[]>([])
 
   // New appointment form data
   const [newAppointment, setNewAppointment] = useState({
     dress: '',
+    location: '',
     appointmentDate: new Date(),
     timeSlot: '',
     customerName: '',
@@ -161,6 +183,41 @@ const FittingAppointments = () => {
       fetchAppointments()
     }
   }, [selectedDate, user])
+
+  useEffect(() => {
+    if (user) {
+      loadAvailableDresses()
+    }
+  }, [user])
+
+  const loadAvailableDresses = async () => {
+    if (!user) return
+
+    try {
+      const filters: bookcarsTypes.GetDressesPayload = {
+        suppliers: [user._id!]
+      }
+      const data = await DressService.getDresses('', filters, 1, 100)
+
+      let dressesList: bookcarsTypes.Dress[] = []
+      if (Array.isArray(data)) {
+        if (data[0]?.resultData) {
+          dressesList = data[0].resultData
+        } else if ((data as any).docs) {
+          dressesList = (data as any).docs
+        } else {
+          dressesList = data as unknown as bookcarsTypes.Dress[]
+        }
+      } else if ((data as any)?.docs) {
+        dressesList = (data as any).docs
+      }
+
+      setAvailableDresses(dressesList)
+    } catch (err) {
+      console.error('Error loading dresses:', err)
+      setAvailableDresses([])
+    }
+  }
 
   const fetchAppointments = async () => {
     if (!user) return
@@ -217,17 +274,21 @@ const FittingAppointments = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
+      case 'confirmed':
       case 'scheduled': return 'primary'
       case 'completed': return 'success'
       case 'cancelled': return 'error'
       case 'no-show': return 'warning'
+      case 'pending': return 'default'
       default: return 'default'
     }
   }
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'scheduled': return <Schedule />
+      case 'pending': return <Schedule />
+      case 'confirmed':
+      case 'scheduled': return <CheckCircle />
       case 'completed': return <CheckCircle />
       case 'cancelled': return <Cancel />
       case 'no-show': return <AccessTime />
@@ -247,28 +308,133 @@ const FittingAppointments = () => {
     setEditDialogOpen(true)
   }
 
-  const handleUpdateStatus = (appointmentId: string, newStatus: string) => {
-    setAppointments(prev => 
-      prev.map(apt => 
-        apt._id === appointmentId 
-          ? { ...apt, status: newStatus as any }
-          : apt
+  const handleUpdateStatus = async (appointmentId: string, newStatus: string) => {
+    try {
+      setLoading(true)
+      await FittingAppointmentService.updateAppointment(appointmentId, {
+        status: newStatus as any
+      })
+
+      setAppointments(prev =>
+        prev.map(apt =>
+          apt._id === appointmentId
+            ? { ...apt, status: newStatus as any }
+            : apt
+        )
       )
-    )
+      setSuccess(`${strings.STATUS_UPDATED || 'Status updated'} successfully`)
+      clearMessages()
+    } catch (err: any) {
+      console.error('Error updating status:', err)
+      setError(err.message || 'Failed to update status')
+      clearMessages()
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const handleSaveAppointment = () => {
-    if (selectedAppointment) {
-      setAppointments(prev => 
-        prev.map(apt => 
-          apt._id === selectedAppointment._id 
+  const handleSaveAppointment = async () => {
+    if (!selectedAppointment) return
+
+    try {
+      setLoading(true)
+      await FittingAppointmentService.updateAppointment(selectedAppointment._id, {
+        status: selectedAppointment.status as bookcarsTypes.FittingAppointmentStatus | undefined,
+        alterationsNeeded: selectedAppointment.alterationNotes,
+        fittingNotes: selectedAppointment.fittingNotes,
+        measurements: selectedAppointment.measurements
+      })
+
+      setAppointments(prev =>
+        prev.map(apt =>
+          apt._id === selectedAppointment._id
             ? selectedAppointment
             : apt
         )
       )
+      setEditDialogOpen(false)
+      setSelectedAppointment(null)
+      setSuccess(strings.UPDATED_SUCCESSFULLY || 'Appointment updated successfully')
+      clearMessages()
+    } catch (err: any) {
+      console.error('Error saving appointment:', err)
+      setError(err.message || 'Failed to save appointment')
+      clearMessages()
+    } finally {
+      setLoading(false)
     }
-    setEditDialogOpen(false)
-    setSelectedAppointment(null)
+  }
+
+  const handleSaveMeasurements = async () => {
+    if (!selectedAppointment) return
+
+    try {
+      setLoading(true)
+      await FittingAppointmentService.updateAppointment(selectedAppointment._id, {
+        measurements: selectedAppointment.measurements
+      })
+
+      setAppointments(prev =>
+        prev.map(apt =>
+          apt._id === selectedAppointment._id
+            ? selectedAppointment
+            : apt
+        )
+      )
+      setMeasurementDialogOpen(false)
+      setSelectedAppointment(null)
+      setSuccess(strings.MEASUREMENTS_SAVED || 'Measurements saved successfully')
+      clearMessages()
+    } catch (err: any) {
+      console.error('Error saving measurements:', err)
+      setError(err.message || 'Failed to save measurements')
+      clearMessages()
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleCreateAppointment = async () => {
+    if (!user || !newAppointment.dress || !newAppointment.customerName || !newAppointment.customerEmail) {
+      setError('Please fill in all required fields')
+      return
+    }
+
+    try {
+      setLoading(true)
+      await FittingAppointmentService.createAppointment({
+        dress: newAppointment.dress,
+        supplier: user._id!,
+        location: newAppointment.location,
+        appointmentDate: newAppointment.appointmentDate,
+        timeSlot: newAppointment.timeSlot,
+        customerName: newAppointment.customerName,
+        customerPhone: newAppointment.customerPhone,
+        customerEmail: newAppointment.customerEmail,
+        notes: newAppointment.notes
+      })
+
+      setAddDialogOpen(false)
+      setNewAppointment({
+        dress: '',
+        location: '',
+        appointmentDate: new Date(),
+        timeSlot: '',
+        customerName: '',
+        customerPhone: '',
+        customerEmail: '',
+        notes: '',
+      })
+      setSuccess(strings.APPOINTMENT_CREATED || 'Appointment created successfully')
+      clearMessages()
+      fetchAppointments()
+    } catch (err: any) {
+      console.error('Error creating appointment:', err)
+      setError(err.message || 'Failed to create appointment')
+      clearMessages()
+    } finally {
+      setLoading(false)
+    }
   }
 
   const formatCurrency = (amount: number) => {
@@ -873,8 +1039,112 @@ const FittingAppointments = () => {
             <Button onClick={() => setMeasurementDialogOpen(false)}>
               {strings.CANCEL || 'Cancel'}
             </Button>
-            <Button onClick={handleSaveAppointment} variant="contained">
+            <Button onClick={handleSaveMeasurements} variant="contained" disabled={loading}>
               {strings.SAVE_MEASUREMENTS || 'Save Measurements'}
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Add Appointment Dialog */}
+        <Dialog open={addDialogOpen} onClose={() => setAddDialogOpen(false)} maxWidth="md" fullWidth>
+          <DialogTitle>{strings.ADD_APPOINTMENT || 'Add Fitting Appointment'}</DialogTitle>
+          <DialogContent>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
+              <FormControl fullWidth>
+                <Autocomplete
+                  options={availableDresses}
+                  getOptionLabel={(option) => `${option.dressCode || option.name} - ${option.name}`}
+                  value={availableDresses.find(d => d._id === newAppointment.dress) || null}
+                  onChange={(_, value) => setNewAppointment({
+                    ...newAppointment,
+                    dress: value?._id || ''
+                  })}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label={strings.SELECT_DRESS || 'Select Dress'}
+                      required
+                    />
+                  )}
+                />
+              </FormControl>
+
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                  label={strings.APPOINTMENT_DATE || 'Appointment Date'}
+                  value={newAppointment.appointmentDate}
+                  onChange={(newDate) => setNewAppointment({
+                    ...newAppointment,
+                    appointmentDate: newDate || new Date()
+                  })}
+                  slotProps={{ textField: { fullWidth: true, required: true } }}
+                />
+              </LocalizationProvider>
+
+              <TextField
+                label={strings.TIME_SLOT || 'Time Slot'}
+                value={newAppointment.timeSlot}
+                onChange={(e) => setNewAppointment({
+                  ...newAppointment,
+                  timeSlot: e.target.value
+                })}
+                placeholder="e.g., 10:00 AM - 11:00 AM"
+                fullWidth
+                required
+              />
+
+              <TextField
+                label={strings.CUSTOMER_NAME || 'Customer Name'}
+                value={newAppointment.customerName}
+                onChange={(e) => setNewAppointment({
+                  ...newAppointment,
+                  customerName: e.target.value
+                })}
+                fullWidth
+                required
+              />
+
+              <TextField
+                label={strings.CUSTOMER_EMAIL || 'Customer Email'}
+                type="email"
+                value={newAppointment.customerEmail}
+                onChange={(e) => setNewAppointment({
+                  ...newAppointment,
+                  customerEmail: e.target.value
+                })}
+                fullWidth
+                required
+              />
+
+              <TextField
+                label={strings.CUSTOMER_PHONE || 'Customer Phone'}
+                value={newAppointment.customerPhone}
+                onChange={(e) => setNewAppointment({
+                  ...newAppointment,
+                  customerPhone: e.target.value
+                })}
+                fullWidth
+              />
+
+              <TextField
+                label={strings.NOTES || 'Notes'}
+                value={newAppointment.notes}
+                onChange={(e) => setNewAppointment({
+                  ...newAppointment,
+                  notes: e.target.value
+                })}
+                multiline
+                rows={3}
+                fullWidth
+              />
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setAddDialogOpen(false)} disabled={loading}>
+              {strings.CANCEL || 'Cancel'}
+            </Button>
+            <Button onClick={handleCreateAppointment} variant="contained" disabled={loading}>
+              {loading ? (strings.CREATING || 'Creating...') : (strings.CREATE || 'Create')}
             </Button>
           </DialogActions>
         </Dialog>

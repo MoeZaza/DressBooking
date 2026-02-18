@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {
   Box,
   Card,
@@ -93,6 +93,16 @@ const InventoryAnalytics: React.FC = () => {
   const [error, setError] = useState<string>('')
   const { canViewAccounting, canViewAnalytics } = usePermissions()
 
+  // Track mounted state to prevent state updates after unmount
+  const isMountedRef = useRef(true)
+
+  useEffect(() => {
+    isMountedRef.current = true
+    return () => {
+      isMountedRef.current = false
+    }
+  }, [])
+
   useEffect(() => {
     if (!canViewAccounting() || !canViewAnalytics()) {
       setError('You do not have permission to view inventory analytics')
@@ -114,15 +124,21 @@ const InventoryAnalytics: React.FC = () => {
 
       if (response.ok) {
         const data = await response.json()
-        setAnalytics(data)
+        if (isMountedRef.current) {
+          setAnalytics(data)
+        }
       } else {
         throw new Error('Failed to fetch analytics')
       }
     } catch (err: any) {
       console.error('Error fetching analytics:', err)
-      setError(err.message || 'Failed to load analytics')
+      if (isMountedRef.current) {
+        setError(err.message || 'Failed to load analytics')
+      }
     } finally {
-      setLoading(false)
+      if (isMountedRef.current) {
+        setLoading(false)
+      }
     }
   }
 

@@ -70,4 +70,9 @@ expenseSchema.index({ dress: 1, date: -1 })
 
 const Expense = model<env.Expense>('Expense', expenseSchema)
 
+// Create indexes manually and handle potential errors
+Expense.syncIndexes().catch((err) => {
+  console.error('Error creating Expense indexes:', err)
+})
+
 export default Expense

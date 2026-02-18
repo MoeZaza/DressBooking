@@ -44,11 +44,21 @@ const DressSelectList = ({
       // Note: keyword search is handled by the API endpoint, not in the payload
 
       const data = await DressService.getDressesWithFilters(payload, p, env.PAGE_SIZE)
-      const _dresses: bookcarsTypes.Dress[] = data && data.length > 0 ? data : []
+
+      // Handle multiple response formats: {docs: [...]}, [{resultData: [...]}], or direct array
+      let _dresses: bookcarsTypes.Dress[] = []
+      if (data && data.docs && Array.isArray(data.docs)) {
+        _dresses = data.docs
+      } else if (Array.isArray(data) && data.length > 0 && data[0]?.resultData) {
+        _dresses = data[0].resultData
+      } else if (Array.isArray(data)) {
+        _dresses = data
+      }
+
       const _rows = page === 1 ? _dresses : [...dresses, ..._dresses]
 
       setDresses(_rows)
-      setFetch(data.length > 0)
+      setFetch(_dresses.length > 0)
       if (d) {
         d()
       }

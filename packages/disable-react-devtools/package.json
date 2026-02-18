@@ -2,10 +2,10 @@
   "name": "disable-react-devtools",
   "version": "1.0.0",
   "description": "Disable React DevTools for Production",
-  "main": "index.js",
+  "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "build": "rimraf ./index.js ./index.d.ts && npx tsc"
+    "build": "rimraf ./dist && npx tsc --outDir ./dist --declaration"
   },
   "keywords": [],
   "author": "",

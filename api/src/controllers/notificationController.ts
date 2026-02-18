@@ -86,35 +86,51 @@ export const markAsRead = async (req: Request, res: Response) => {
   try {
     const { body }: { body: { ids: string[] } } = req
     const { ids: _ids } = body
-    const ids = _ids.map((id) => new mongoose.Types.ObjectId(id))
+
+    // Validate ObjectId formats
+    const validIds = _ids.filter(id => mongoose.Types.ObjectId.isValid(id))
+    if (validIds.length !== _ids.length) {
+      res.status(400).send(i18n.t('INVALID_ID'))
+      return
+    }
+
+    const ids = validIds.map((id) => new mongoose.Types.ObjectId(id))
     const { userId: _userId } = req.params
+
+    // Validate userId
+    if (!mongoose.Types.ObjectId.isValid(_userId)) {
+      res.status(400).send(i18n.t('INVALID_ID'))
+      return
+    }
+
     const userId = new mongoose.Types.ObjectId(_userId)
 
-    const bulk = Notification.collection.initializeOrderedBulkOp()
     const notifications = await Notification.find({
       _id: { $in: ids },
       isRead: false,
     })
     const { length } = notifications
 
-    bulk.find({ _id: { $in: ids }, isRead: false }).update({ $set: { isRead: true } })
-    await bulk.execute()
-    // const result = await bulk.execute()
-
-    // if (result.modifiedCount !== length) {
-    //   logger.error(`[notification.markAsRead] ${i18n.t('DB_ERROR')}`)
-    //   res.status(400).send(i18n.t('DB_ERROR'))
-    // }
+    // Use bulkWrite instead of deprecated initializeOrderedBulkOp
+    if (length > 0) {
+      const bulkOps = ids.map(id => ({
+        updateOne: {
+          filter: { _id: id, isRead: false },
+          update: { $set: { isRead: true } }
+        }
+      }))
+      await Notification.bulkWrite(bulkOps)
+    }
 
     const counter = await NotificationCounter.findOne({ user: userId })
     if (!counter || typeof counter.count === 'undefined') {
-      res.sendStatus(204)
+      res.json({ success: true, modifiedCount: length })
       return
     }
     counter.count -= length
     await counter.save()
 
-    res.sendStatus(200)
+    res.json({ success: true, modifiedCount: length })
   } catch (err) {
     logger.error(`[notification.markAsRead] ${i18n.t('DB_ERROR')}`, err)
     res.status(400).send(i18n.t('DB_ERROR') + err)
@@ -134,35 +150,51 @@ export const markAsUnRead = async (req: Request, res: Response) => {
   try {
     const { body }: { body: { ids: string[] } } = req
     const { ids: _ids } = body
-    const ids = _ids.map((id) => new mongoose.Types.ObjectId(id))
+
+    // Validate ObjectId formats
+    const validIds = _ids.filter(id => mongoose.Types.ObjectId.isValid(id))
+    if (validIds.length !== _ids.length) {
+      res.status(400).send(i18n.t('INVALID_ID'))
+      return
+    }
+
+    const ids = validIds.map((id) => new mongoose.Types.ObjectId(id))
     const { userId: _userId } = req.params
+
+    // Validate userId
+    if (!mongoose.Types.ObjectId.isValid(_userId)) {
+      res.status(400).send(i18n.t('INVALID_ID'))
+      return
+    }
+
     const userId = new mongoose.Types.ObjectId(_userId)
 
-    const bulk = Notification.collection.initializeOrderedBulkOp()
     const notifications = await Notification.find({
       _id: { $in: ids },
       isRead: true,
     })
     const { length } = notifications
 
-    bulk.find({ _id: { $in: ids }, isRead: true }).update({ $set: { isRead: false } })
-    await bulk.execute()
-    // const result = await bulk.execute()
-
-    // if (result.modifiedCount !== length) {
-    //   logger.error(`[notification.markAsUnRead] ${i18n.t('DB_ERROR')}`)
-    //   res.status(400).send(i18n.t('DB_ERROR'))
-    // }
+    // Use bulkWrite instead of deprecated initializeOrderedBulkOp
+    if (length > 0) {
+      const bulkOps = ids.map(id => ({
+        updateOne: {
+          filter: { _id: id, isRead: true },
+          update: { $set: { isRead: false } }
+        }
+      }))
+      await Notification.bulkWrite(bulkOps)
+    }
 
     const counter = await NotificationCounter.findOne({ user: userId })
     if (!counter || typeof counter.count === 'undefined') {
-      res.sendStatus(204)
+      res.json({ success: true, modifiedCount: length })
       return
     }
     counter.count += length
     await counter.save()
 
-    res.sendStatus(200)
+    res.json({ success: true, modifiedCount: length })
   } catch (err) {
     logger.error(`[notification.markAsUnRead] ${i18n.t('DB_ERROR')}`, err)
     res.status(400).send(i18n.t('DB_ERROR') + err)
@@ -182,8 +214,23 @@ export const deleteNotifications = async (req: Request, res: Response) => {
   try {
     const { body }: { body: { ids: string[] } } = req
     const { ids: _ids } = body
-    const ids = _ids.map((id) => new mongoose.Types.ObjectId(id))
+
+    // Validate ObjectId formats
+    const validIds = _ids.filter(id => mongoose.Types.ObjectId.isValid(id))
+    if (validIds.length !== _ids.length) {
+      res.status(400).send(i18n.t('INVALID_ID'))
+      return
+    }
+
+    const ids = validIds.map((id) => new mongoose.Types.ObjectId(id))
     const { userId: _userId } = req.params
+
+    // Validate userId
+    if (!mongoose.Types.ObjectId.isValid(_userId)) {
+      res.status(400).send(i18n.t('INVALID_ID'))
+      return
+    }
+
     const userId = new mongoose.Types.ObjectId(_userId)
 
     const count = await Notification
@@ -194,13 +241,13 @@ export const deleteNotifications = async (req: Request, res: Response) => {
 
     const counter = await NotificationCounter.findOne({ user: userId })
     if (!counter || typeof counter.count === 'undefined') {
-      res.sendStatus(204)
+      res.json({ success: true, deletedCount: count })
       return
     }
     counter.count -= count
     await counter.save()
 
-    res.sendStatus(200)
+    res.json({ success: true, deletedCount: count })
   } catch (err) {
     logger.error(`[notification.deleteNotifications] ${i18n.t('DB_ERROR')}`, err)
     res.status(400).send(i18n.t('DB_ERROR') + err)

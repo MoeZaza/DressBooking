@@ -47,10 +47,10 @@ export const capitalize = (str: string): string => {
  * Check if a value is a Date.
  *
  * @export
- * @param {?*} [value]
- * @returns {boolean}
+ * @param {value?: unknown}
+ * @returns {value is Date}
  */
-export const isDate = (value?: any): boolean => {
+export const isDate = (value: unknown): value is Date => {
   return value instanceof Date && !Number.isNaN(value.valueOf())
 }
 
@@ -110,42 +110,23 @@ export const isCvv = (val: string) => {
 /**
  * Check if two arrays are equal.
  *
- * @param {*} a
- * @param {*} b
+ * @param {a: any[]}
+ * @param {b: any[]}
  * @returns {boolean}
  */
-export const arrayEqual = (a: any, b: any) => {
-  if (a === b) {
-    return true
-  }
-  if (a == null || b == null) {
-    return false
-  }
-  if (a.length !== b.length) {
-    return false
-  }
-
-  // If you don't care about the order of the elements inside
-  // the array, you should sort both arrays here.
-  // Please note that calling sort on an array will modify that array.
-  // you might want to clone your array first.
-
-  for (let i = 0; i < a.length; i += 1) {
-    if (a[i] !== b[i]) {
-      return false
-    }
-  }
-  return true
+export const arrayEqual = <T>(a: T[], b: T[]): boolean => {
+  if (a.length !== b.length) return false
+  return a.every((val, idx) => val === b[idx])
 }
 
 /**
  * Clone an object or array.
  *
- * @param {*} obj
- * @returns {*}
+ * @param {obj: any}
+ * @returns {any}
  */
-export const clone = (obj: any) => {
-  return Array.isArray(obj) ? Array.from(obj) : Object.assign({}, obj)
+export const clone = <T extends object>(obj: T): T => {
+  return JSON.parse(JSON.stringify(obj)) as T
 }
 
 /**
@@ -361,15 +342,16 @@ export const getAllDressTypes = () => [
 /**
  * Randomize (shuffle) an array.
  *
- * @param {any[]} array
+ * @param {array: T[]}
+ * @returns {T[]}
  */
-export const shuffle = (array: any[]) => {
-  for (let i = array.length - 1; i > 0; i--) {
+export const shuffle = <T>(array: T[]): T[] => {
+  const result = [...array]
+  for (let i = result.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
-    const temp = array[i]
-    array[i] = array[j]
-    array[j] = temp
+    ;[result[i], result[j]] = [result[j], result[i]]
   }
+  return result
 }
 
 /**

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import {   Container,
   Typography,
   Card,
@@ -100,6 +100,27 @@ const WeddingPackages: React.FC = () => {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
 
+  // Ref for timeout cleanup
+  const successTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const abortControllerRef = useRef<AbortController | null>(null)
+  const isMountedRef = useRef(true)
+
+  // Cleanup on unmount
+  useEffect(() => {
+    isMountedRef.current = true
+    return () => {
+      isMountedRef.current = false
+      if (successTimeoutRef.current) {
+        clearTimeout(successTimeoutRef.current)
+      }
+      abortControllerRef.current?.abort()
+    }
+  }, [])
+
+  const clearSuccess = useCallback(() => {
+    successTimeoutRef.current = setTimeout(() => setSuccess(''), 3000)
+  }, [])
+
   useEffect(() => {
     if (user) {
       fetchPackages()
@@ -113,11 +134,16 @@ const WeddingPackages: React.FC = () => {
   }
 
   const fetchPackages = async () => {
+    // Create new AbortController for this fetch
+    const controller = new AbortController()
+    abortControllerRef.current = controller
+
     try {
       setLoading(true)
 
       // Fetch real wedding packages from API
       const response = await fetch('/api/wedding-packages', {
+        signal: controller.signal,
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
@@ -131,6 +157,11 @@ const WeddingPackages: React.FC = () => {
         throw new Error('API not available')
       }
     } catch (err: any) {
+      // Don't show error if request was aborted (component unmounted)
+      if (err?.name === 'AbortError' || !isMountedRef.current) {
+        return
+      }
+
       console.error('Error fetching packages:', err)
 
       let errorMessage = 'Failed to load wedding packages'
@@ -279,7 +310,7 @@ const WeddingPackages: React.FC = () => {
       }
 
       setOpenDialog(false)
-      setTimeout(() => setSuccess(''), 3000)
+      clearSuccess()
     } catch (err: any) {
       console.error('Error saving package:', err)
 
@@ -311,7 +342,7 @@ const WeddingPackages: React.FC = () => {
         if (response.ok) {
           setPackages(packages.filter(pkg => pkg._id !== packageId))
           setSuccess('Package deleted successfully!')
-          setTimeout(() => setSuccess(''), 3000)
+          clearSuccess()
         } else {
           const errorData = await response.json()
           throw new Error(errorData.error || 'Failed to delete package')
@@ -390,12 +421,12 @@ const WeddingPackages: React.FC = () => {
                     />
                   </Box>
                   <Box sx={{ display: 'flex', gap: 1 }}>
-                    <Tooltip title="Edit">
+                    <Tooltip title={commonStrings.UPDATE}>
                       <IconButton size="small" onClick={() => handleEditPackage(pkg)}>
                         <Edit />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip title="Delete">
+                    <Tooltip title={commonStrings.DELETE}>
                       <IconButton size="small" onClick={() => handleDeletePackage(pkg._id)}>
                         <Delete />
                       </IconButton>
@@ -422,7 +453,7 @@ const WeddingPackages: React.FC = () => {
                   </Box>
                   <Box sx={{ textAlign: 'right' }}>
                     <Typography variant="body2" color="text.secondary">
-                      Deposit: ${pkg.pricing.depositRequired}
+                      {commonStrings.DEPOSIT_REQUIRED} ${pkg.pricing.depositRequired}
                     </Typography>
                     {pkg.pricing.discountPercentage > 0 && (
                       <Chip 

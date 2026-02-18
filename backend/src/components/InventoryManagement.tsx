@@ -61,6 +61,7 @@ import {
 } from 'recharts'
 import * as AnalyticsService from '@/services/AnalyticsService'
 import * as DressService from '@/services/DressService'
+import * as bookcarsTypes from ':bookcars-types'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -128,13 +129,20 @@ const InventoryManagement: React.FC = () => {
         AnalyticsService.getMonthlyReport(),
         AnalyticsService.getExpenses(),
         AnalyticsService.getRevenues(),
-        DressService.getDresses('', { size: ['100'] }, 1, 100)
+        DressService.getDresses('', {}, 1, 100)
       ])
       setFinancialSummary(summary)
       setMonthlyReport(monthly)
       setExpenses(expenseData)
       setRevenues(revenueData)
-      setDresses(dressData)
+      // Handle both response formats: [{resultData: [...]}] and {docs: [...]}
+      if (Array.isArray(dressData) && dressData.length > 0 && dressData[0]?.resultData) {
+        setDresses(dressData[0].resultData)
+      } else if ((dressData as any)?.docs) {
+        setDresses((dressData as any).docs)
+      } else {
+        setDresses([])
+      }
       setError(null)
     } catch (err: any) {
       console.error('Error fetching inventory data:', err)

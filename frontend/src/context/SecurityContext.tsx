@@ -88,6 +88,7 @@ export interface SecurityContextType {
   getThreatSummary: () => { total: number; byLevel: Record<ThreatLevel, number> }
   getRecentEvents: (count?: number) => SecurityEvent[]
   isSecure: () => boolean
+  getSecurityScore: () => number
 }
 
 /**
@@ -420,6 +421,19 @@ export const SecurityProvider: React.FC<SecurityProviderProps> = ({ children }) 
     return state.threatLevel !== ThreatLevel.CRITICAL && state.blockedRequests < 10
   }
 
+  const getSecurityScore = (): number => {
+    const summary = getThreatSummary()
+    let score = 100
+
+    // Deduct points based on threat levels
+    score -= summary.byLevel[ThreatLevel.CRITICAL] * 30
+    score -= summary.byLevel[ThreatLevel.HIGH] * 15
+    score -= summary.byLevel[ThreatLevel.MEDIUM] * 5
+    score -= summary.byLevel[ThreatLevel.LOW] * 2
+
+    return Math.max(0, score)
+  }
+
   const contextValue: SecurityContextType = {
     state,
     dispatch,
@@ -435,7 +449,8 @@ export const SecurityProvider: React.FC<SecurityProviderProps> = ({ children }) 
     clearEvents,
     getThreatSummary,
     getRecentEvents,
-    isSecure
+    isSecure,
+    getSecurityScore
   }
 
   return (
@@ -455,5 +470,8 @@ export const useSecurityContext = (): SecurityContextType => {
   }
   return context
 }
+
+// Export ThreatLevel for other modules to use
+export { ThreatLevel }
 
 export default SecurityContext

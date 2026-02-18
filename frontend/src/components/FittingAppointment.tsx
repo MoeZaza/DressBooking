@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {   
   Dialog,
   DialogTitle,
@@ -54,6 +54,18 @@ const FittingAppointment: React.FC<FittingAppointmentProps> = ({
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+
+  // Ref for timeout cleanup
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
 
   const timeSlots = [
     '09:00-10:00',
@@ -166,7 +178,7 @@ const FittingAppointment: React.FC<FittingAppointmentProps> = ({
         notes: '',
       })
 
-      setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
         setSuccess('')
         onClose()
       }, 2000)

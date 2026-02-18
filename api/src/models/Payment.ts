@@ -56,4 +56,9 @@ paymentSchema.index({ transactionId: 1 })
 
 const Payment = model<env.Payment>('Payment', paymentSchema)
 
+// Create indexes manually and handle potential errors
+Payment.syncIndexes().catch((err) => {
+  console.error('Error creating Payment indexes:', err)
+})
+
 export default Payment

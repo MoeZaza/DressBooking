@@ -848,6 +848,8 @@ export interface Booking extends Document {
   fittingNotes?: string
   alterationNotes?: string
   accessoriesIncluded?: string[]
+  notes?: string
+  cancellationReason?: string
 }
 
 /**

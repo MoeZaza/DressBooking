@@ -63,8 +63,34 @@ const SupplierList = ({
       setLoading(true)
 
       const data = await SupplierService.getSuppliers(_keyword || '')
-      const _data = data && data.length > 0 ? data[0] : { pageInfo: { totalRecord: 0 }, resultData: [] }
-      if (!_data) {
+
+      // Handle multiple response formats: {docs: [...]}, [{resultData: [...]}], or direct array
+      let _data: { pageInfo: any[]; resultData: any[] } = { pageInfo: [{ totalRecords: 0 }], resultData: [] }
+
+      if (data) {
+        if (Array.isArray(data) && data.length > 0) {
+          if (data[0]?.resultData) {
+            _data = data[0] as any
+          } else if ((data[0] as any)?.docs) {
+            _data = {
+              pageInfo: [{ totalRecords: (data[0] as any).totalDocs || 0 }],
+              resultData: (data[0] as any).docs || []
+            }
+          } else {
+            _data = {
+              pageInfo: [{ totalRecords: data.length }],
+              resultData: data
+            }
+          }
+        } else if ((data as any)?.docs) {
+          _data = {
+            pageInfo: [{ totalRecords: (data as any).totalDocs || 0 }],
+            resultData: (data as any).docs || []
+          }
+        }
+      }
+
+      if (!_data || !_data.resultData) {
         helper.error()
         return
       }

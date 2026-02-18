@@ -371,9 +371,9 @@ const Checkout = () => {
                           style={{ maxWidth: '300px', height: 'auto' }}
                         />
                       )}
-                      {!env.HIDE_SUPPLIERS && (
+                      {!env.HIDE_SUPPLIERS && dress.supplier && (
                         <div className="dress-supplier">
-                          <img src={bookcarsHelper.joinURL(env.CDN_USERS, dress.supplier.avatar)} alt={dress.supplier.fullName} style={{ height: env.SUPPLIER_IMAGE_HEIGHT }} />
+                          {dress.supplier.avatar && <img src={bookcarsHelper.joinURL(env.CDN_USERS, dress.supplier.avatar)} alt={dress.supplier.fullName} style={{ height: env.SUPPLIER_IMAGE_HEIGHT }} />}
                           <span className="dress-supplier-name">{dress.supplier.fullName}</span>
                         </div>
                       )}
@@ -411,12 +411,12 @@ const Checkout = () => {
                           <span className="checkout-detail-title">{strings.DRESS}</span>
                           <div className="checkout-detail-value">{dress.name}</div>
                         </div>
-                        {!env.HIDE_SUPPLIERS && (
+                        {!env.HIDE_SUPPLIERS && dress.supplier && (
                           <div className="checkout-detail" style={{ height: bookingDetailHeight }}>
                             <span className="checkout-detail-title">{commonStrings.SUPPLIER}</span>
                             <div className="checkout-detail-value">
                               <div className="dress-supplier">
-                                <img src={bookcarsHelper.joinURL(env.CDN_USERS, dress.supplier.avatar)} alt={dress.supplier.fullName} style={{ height: env.SUPPLIER_IMAGE_HEIGHT }} />
+                                {dress.supplier.avatar && <img src={bookcarsHelper.joinURL(env.CDN_USERS, dress.supplier.avatar)} alt={dress.supplier.fullName} style={{ height: env.SUPPLIER_IMAGE_HEIGHT }} />}
                                 <span className="dress-supplier-name">{dress.supplier.fullName}</span>
                               </div>
                             </div>
@@ -704,7 +704,7 @@ const Checkout = () => {
                     {!env.PAYMENT_GATEWAY && (
                       <div className="payment-disabled-message">
                         <p style={{ textAlign: 'center', padding: '20px', backgroundColor: '#f5f5f5', borderRadius: '8px', margin: '20px 0' }}>
-                          💳 Payment processing is currently disabled. This booking will be processed manually by the admin.
+                          {strings.PAYMENT_DISABLED}
                         </p>
                       </div>
                     )}

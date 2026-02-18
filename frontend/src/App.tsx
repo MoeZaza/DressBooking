@@ -6,6 +6,7 @@ import { UserProvider } from '@/context/UserContext'
 import { RecaptchaProvider } from '@/context/RecaptchaContext'
 import { PayPalProvider } from '@/context/PayPalContext'
 import { SecurityProvider } from '@/context/SecurityContext'
+import { LanguageProvider } from '@/context/LanguageContext'
 import { init as initGA } from '@/common/ga4'
 import ScrollToTop from '@/components/ScrollToTop'
 import NProgressIndicator from '@/components/NProgressIndicator'
@@ -51,39 +52,31 @@ const MyAppointments = lazy(() => import('@/pages/MyAppointments'))
 const AppLayout = () => {
   const location = useLocation()
   const [refreshKey, setRefreshKey] = useState(0) // refreshKey to check user and notifications when navigating between routes
-  const [isRTL, setIsRTL] = useState(false)
-
-  useEffect(() => {
-    // Set document direction based on language
-    const language = UserService.getLanguage()
-    const rtl = language === 'ar'
-    setIsRTL(rtl)
-    document.documentElement.setAttribute('dir', rtl ? 'rtl' : 'ltr')
-    document.body.setAttribute('dir', rtl ? 'rtl' : 'ltr')
-  }, [])
 
   useEffect(() => {
     setRefreshKey((prev) => prev + 1)
   }, [location.pathname])
 
   return (
-    <SecurityProvider>
-      <UserProvider refreshKey={refreshKey}>
-        <NotificationProvider refreshKey={refreshKey}>
-          <RecaptchaProvider>
-            <PayPalProvider>
-              <ScrollToTop />
-              <div className="app">
-                <Suspense fallback={<NProgressIndicator />}>
-                  <Header />
-                  <Outlet />
-                </Suspense>
-              </div>
-            </PayPalProvider>
-          </RecaptchaProvider>
-        </NotificationProvider>
-      </UserProvider>
-    </SecurityProvider>
+    <LanguageProvider>
+      <SecurityProvider>
+        <UserProvider refreshKey={refreshKey}>
+          <NotificationProvider refreshKey={refreshKey}>
+            <RecaptchaProvider>
+              <PayPalProvider>
+                <ScrollToTop />
+                <div className="app">
+                  <Suspense fallback={<NProgressIndicator />}>
+                    <Header />
+                    <Outlet />
+                  </Suspense>
+                </div>
+              </PayPalProvider>
+            </RecaptchaProvider>
+          </NotificationProvider>
+        </UserProvider>
+      </SecurityProvider>
+    </LanguageProvider>
   )
 }
 

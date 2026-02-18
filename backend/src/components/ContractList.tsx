@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { IconButton } from '@mui/material'
 import { Upload as UploadIcon, Delete as DeleteIcon } from '@mui/icons-material'
 import * as bookcarsTypes from ':bookcars-types'
@@ -25,6 +25,16 @@ interface Language {
 const ContractList: React.FC<ContractListProps> = ({ supplier, onUpload, onDelete }) => {
   const [languages, setLanguages] = useState<Language[]>([])
   const [language, setLanguage] = useState('')
+  const uploadTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (uploadTimeoutRef.current) {
+        clearTimeout(uploadTimeoutRef.current)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     const _languages = []
@@ -104,7 +114,7 @@ const ContractList: React.FC<ContractListProps> = ({ supplier, onUpload, onDelet
                 setLanguage(lang.code)
                 const upload = document.getElementById('upload-contract') as HTMLInputElement
                 upload.value = ''
-                setTimeout(() => {
+                uploadTimeoutRef.current = setTimeout(() => {
                   upload.click()
                 }, 0)
               }}

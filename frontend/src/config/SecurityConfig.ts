@@ -3,6 +3,9 @@
  * Implements CSP, security headers, and client-side security measures
  */
 
+// Performance observer reference for cleanup
+let perfObserver: PerformanceObserver | null = null
+
 /**
  * Content Security Policy configuration
  */
@@ -326,14 +329,18 @@ export const applySecurityHeaders = (config: SecurityConfig): void => {
 
 /**
  * Initialize security monitoring
+ * Returns cleanup function for removing event listeners
  */
-export const initializeSecurityMonitoring = (config: SecurityConfig): void => {
+export const initializeSecurityMonitoring = (config: SecurityConfig): (() => void) => {
   if (!config.monitoring.enableThreatLogging) {
-    return
+    return () => {}
   }
 
   // CSP violation reporting
-  document.addEventListener('securitypolicyviolation', (event) => {
+  let cspHandler: ((event: SecurityPolicyViolationEvent) => void) | null = null
+  let errorHandler: ((event: ErrorEvent) => void) | null = null
+
+  cspHandler = (event) => {
     const violation = {
       blockedURI: event.blockedURI,
       violatedDirective: event.violatedDirective,
@@ -358,7 +365,9 @@ export const initializeSecurityMonitoring = (config: SecurityConfig): void => {
         console.error('Failed to report CSP violation:', error)
       })
     }
-  })
+  }
+
+  document.addEventListener('securitypolicyviolation', cspHandler)
 
   // Performance monitoring
   if (config.monitoring.enablePerformanceMonitoring) {
@@ -376,12 +385,34 @@ export const initializeSecurityMonitoring = (config: SecurityConfig): void => {
 
   // Error monitoring
   if (config.monitoring.enableErrorReporting) {
-    window.addEventListener('error', (event) => {
+    errorHandler = (event) => {
       // Log security-related errors
       if (event.message.includes('CSP') || event.message.includes('security')) {
         console.error('Security-related error:', event)
       }
-    })
+    }
+    window.addEventListener('error', errorHandler)
+  }
+
+  // Return cleanup function
+  return () => {
+    if (cspHandler) {
+      document.removeEventListener('securitypolicyviolation', cspHandler)
+      cspHandler = null
+    }
+    if (errorHandler) {
+      window.removeEventListener('error', errorHandler)
+      errorHandler = null
+    }
+    cleanupPerformance()
+  }
+}
+
+// Performance cleanup function
+const cleanupPerformance = () => {
+  if (perfObserver) {
+    perfObserver.disconnect()
+    perfObserver = null
   }
 }
 

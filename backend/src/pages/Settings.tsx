@@ -92,9 +92,11 @@ const Settings = () => {
   }
 
   const onAvatarChange = (avatar: string) => {
-    const _user = bookcarsHelper.clone(user)
-    _user.avatar = avatar
-    setUser(_user)
+    if (user) {
+      const _user = bookcarsHelper.clone(user)
+      _user.avatar = avatar
+      setUser(_user)
+    }
     setLoading(false)
   }
 

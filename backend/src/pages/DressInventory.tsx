@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {   
   Container,
   Typography,
@@ -100,6 +100,18 @@ const DressInventory: React.FC = () => {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
 
+  // Track mounted state to prevent state updates after unmount
+  const isMountedRef = useRef(true)
+  const abortControllerRef = useRef<AbortController | null>(null)
+
+  useEffect(() => {
+    isMountedRef.current = true
+    return () => {
+      isMountedRef.current = false
+      abortControllerRef.current?.abort()
+    }
+  }, [])
+
   useEffect(() => {
     if (user) {
       fetchInventoryStats()
@@ -113,11 +125,16 @@ const DressInventory: React.FC = () => {
   }
 
   const fetchInventoryStats = async () => {
+    // Create new AbortController for this fetch
+    const controller = new AbortController()
+    abortControllerRef.current = controller
+
     try {
       setLoading(true)
 
       // Fetch real inventory stats from API
       const response = await fetch('/api/inventory-stats', {
+        signal: controller.signal,
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
@@ -144,12 +161,23 @@ const DressInventory: React.FC = () => {
         upcomingBookings: inventoryData.upcomingBookings || [],
       }
 
-      setStats(transformedStats)
+      if (isMountedRef.current) {
+        setStats(transformedStats)
+      }
     } catch (err) {
+      // Don't show error if request was aborted (component unmounted)
+      if (err && typeof err === 'object' && 'name' in err && err.name === 'AbortError') {
+        return
+      }
+
       console.error('Error fetching inventory stats:', err)
-      setError('Failed to load inventory statistics')
+      if (isMountedRef.current) {
+        setError('Failed to load inventory statistics')
+      }
     } finally {
-      setLoading(false)
+      if (isMountedRef.current) {
+        setLoading(false)
+      }
     }
   }
 
@@ -177,18 +205,26 @@ const DressInventory: React.FC = () => {
       })
 
       if (response.ok) {
-        setSuccess(`Bulk update applied to ${quickActions.selectedDresses.length} dresses`)
-        setBulkUpdateDialog(false)
-        setQuickActions({ bulkUpdate: false, selectedDresses: [] })
+        if (isMountedRef.current) {
+          setSuccess(`Bulk update applied to ${quickActions.selectedDresses.length} dresses`)
+          setBulkUpdateDialog(false)
+          setQuickActions({ bulkUpdate: false, selectedDresses: [] })
+        }
         fetchInventoryStats()
       } else {
         const errorData = await response.json()
-        setError(errorData.error || 'Failed to perform bulk update')
+        if (isMountedRef.current) {
+          setError(errorData.error || 'Failed to perform bulk update')
+        }
       }
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to perform bulk update')
+      if (isMountedRef.current) {
+        setError(err.response?.data?.error || 'Failed to perform bulk update')
+      }
     } finally {
-      setLoading(false)
+      if (isMountedRef.current) {
+        setLoading(false)
+      }
     }
   }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { 
   Container,
   Typography,
@@ -110,6 +110,18 @@ const AnalyticsDashboard: React.FC = () => {
   })
   const [error, setError] = useState('')
 
+  // Track mounted state to prevent state updates after unmount
+  const isMountedRef = useRef(true)
+  const abortControllerRef = useRef<AbortController | null>(null)
+
+  useEffect(() => {
+    isMountedRef.current = true
+    return () => {
+      isMountedRef.current = false
+      abortControllerRef.current?.abort()
+    }
+  }, [])
+
   useEffect(() => {
     if (user) {
       fetchAnalytics()
@@ -123,12 +135,17 @@ const AnalyticsDashboard: React.FC = () => {
   }
 
   const fetchAnalytics = async () => {
+    // Create new AbortController for this fetch
+    const controller = new AbortController()
+    abortControllerRef.current = controller
+
     try {
       setLoading(true)
       setError('')
 
       // Fetch real analytics data from API
       const analyticsResponse = await fetch(`/api/analytics?startDate=${dateRange.startDate.toISOString()}&endDate=${dateRange.endDate.toISOString()}`, {
+        signal: controller.signal,
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
@@ -224,9 +241,20 @@ const AnalyticsDashboard: React.FC = () => {
         },
       }
 
-      setAnalytics(combinedAnalytics)
+      // Check if component is still mounted before updating state
+      if (isMountedRef.current) {
+        setAnalytics(combinedAnalytics)
+      }
     } catch (err: any) {
+      // Don't show error if request was aborted (component unmounted)
+      if (err?.name === 'AbortError') {
+        return
+      }
+
       console.error('Error fetching analytics:', err)
+
+      // Check if component is still mounted before updating state
+      if (!isMountedRef.current) return
 
       let errorMessage = 'Failed to load analytics data'
       if (err.name === 'TypeError' && err.message.includes('fetch')) {
@@ -272,7 +300,9 @@ const AnalyticsDashboard: React.FC = () => {
         },
       })
     } finally {
-      setLoading(false)
+      if (isMountedRef.current) {
+        setLoading(false)
+      }
     }
   }
 

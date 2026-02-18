@@ -127,11 +127,6 @@ const Search = () => {
     // Check if we have search parameters
     const hasSearchParams = _keyword || locationId || _from || _to || urlDressType
 
-    if (!hasSearchParams) {
-      // Show all dresses when no search parameters
-      console.log('No search parameters, showing all dresses')
-    }
-
     // Set keyword if provided
     if (_keyword) {
       setKeyword(_keyword)
@@ -139,14 +134,13 @@ const Search = () => {
 
     // Handle dress type from URL query parameter
     if (urlDressType) {
-      console.log('Setting dress type from URL:', urlDressType)
       // Cast string to DressType enum value
       const dressTypeEnum = urlDressType as bookcarsTypes.DressType
       setDressType([dressTypeEnum])
     }
 
     let _selectedLocation
-    let _suppliers: any[] = []
+    let _suppliers: bookcarsTypes.User[] = []
     let _supplierIds: string[] = []
 
     try {
@@ -208,15 +202,14 @@ const Search = () => {
             <div className="search-form-container">
               <SearchForm
                 location={selectedLocation?._id}
-                onFormSubmit={(data: any) => {
+                onFormSubmit={(data: bookcarsTypes.SearchFormData) => {
                   // Handle search form submission
-                  console.log('Search form submitted:', data)
-                  
+
                   // Update search state with form data
                   if (data.keyword !== undefined) {
                     setKeyword(data.keyword || '')
                   }
-                  
+
                   if (data.location) {
                     // Ensure we have the full location object for display
                     // If data.location is just an ID string, fetch the full object
@@ -237,42 +230,23 @@ const Search = () => {
                       setSelectedLocation(undefined)
                     }
                   }
-                  
+
                   if (data.dressType !== undefined) {
-                    setDressType(data.dressType ? [data.dressType] : [])
+                    setDressType(data.dressType ? [data.dressType as bookcarsTypes.DressType] : bookcarsHelper.getAllDressTypes())
                   }
-                  
+
                   if (data.dressSize !== undefined) {
-                    setDressSize(data.dressSize ? [data.dressSize] : [])
+                    setDressSize(data.dressSize ? [data.dressSize as bookcarsTypes.DressSize] : bookcarsHelper.getAllDressSizes())
                   }
-                  
+
                   if (data.dressStyle !== undefined) {
-                    setDressStyle(data.dressStyle ? [data.dressStyle] : [])
+                    setDressStyle(data.dressStyle ? [data.dressStyle as bookcarsTypes.DressStyle] : bookcarsHelper.getAllDressStyles())
                   }
-                  
+
                   if (data.from && data.to) {
                     setFrom(data.from)
                     setTo(data.to)
                   }
-                  
-                  console.log('Search triggered with parameters:', {
-                    keyword: data.keyword,
-                    location: data.location?._id || data.location,
-                    dressType: data.dressType,
-                    dressSize: data.dressSize,
-                    dressStyle: data.dressStyle,
-                    from: data.from,
-                    to: data.to
-                  })
-                  
-                  // Debug logging for location parameter
-                  console.log('Location debug info:', {
-                    'data.location': data.location,
-                    'data.location._id': data.location?._id,
-                    'typeof data.location': typeof data.location,
-                    'selectedLocation?._id': selectedLocation?._id,
-                    'will be passed to DressList': selectedLocation?._id
-                  })
                 }}
               />
             </div>
@@ -330,7 +304,10 @@ const Search = () => {
                 dressType={dressType.length === 1 ? dressType[0] : ''}
                 dressSize={dressSize.length === 1 ? dressSize[0] : ''}
                 dressStyle={dressStyle.length === 1 ? dressStyle[0] : ''}
+                dressMaterial={dressMaterial.length === 1 ? dressMaterial[0] : ''}
                 deposit={deposit.toString()}
+                from={from}
+                to={to}
                 loading={loading}
               />
             </div>

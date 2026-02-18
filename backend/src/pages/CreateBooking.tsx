@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {
 
   InputLabel,
@@ -90,6 +90,18 @@ const CreateBooking: React.FC = () => {
   const [dressSearchTerm, setDressSearchTerm] = useState('')
   const [dressAvailability, setDressAvailability] = useState<boolean>(true)
 
+  // Ref for timeout cleanup
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
   const steps = [
     strings.CUSTOMER_INFORMATION || 'Customer',
     strings.DRESS_AND_DATES || 'Dress & Dates',
@@ -125,7 +137,11 @@ const CreateBooking: React.FC = () => {
         types: [bookcarsTypes.UserType.User]
       }
       const customersData = await UserService.getUsers(customersPayload, '', 1, 100)
-      setCustomers(customersData?.[0]?.resultData || [])
+      // Handle both response formats: [{resultData: [...]}] and {docs: [...]}
+      const customersList = Array.isArray(customersData)
+        ? (customersData[0]?.resultData || [])
+        : ((customersData as any)?.docs || [])
+      setCustomers(customersList)
 
       // Load locations
       const locationsData = await LocationService.getLocations('', 1, 100)
@@ -135,19 +151,35 @@ const CreateBooking: React.FC = () => {
       if (Array.isArray(locationsData) && locationsData.length > 0) {
         // Format: [{resultData: [...]}]
         locationsArray = locationsData[0]?.resultData || []
+      } else if ((locationsData as any)?.docs) {
+        // Format: {docs: [...]}
+        locationsArray = (locationsData as any).docs
       }
 
       setLocations(locationsArray)
 
-      // Load all available dresses initially
+      // Load all available dresses initially with proper payload
       try {
-        const dressesData = await DressService.getDresses('', {}, 1, 100)
+        const dressesPayload: bookcarsTypes.GetDressesPayload = {
+          availability: [bookcarsTypes.Availablity.Available]
+        }
+        const dressesData = await DressService.getDresses('', dressesPayload, 1, 100)
 
         // Handle different response formats
         let dressesArray: bookcarsTypes.Dress[] = []
         if (Array.isArray(dressesData) && dressesData.length > 0) {
-          // Format: [{resultData: [...]}]
-          dressesArray = dressesData[0]?.resultData || []
+          if (dressesData[0]?.resultData) {
+            // Format: [{resultData: [...]}]
+            dressesArray = dressesData[0].resultData
+          } else if ((dressesData as any).docs) {
+            // Format: {docs: [...]}
+            dressesArray = (dressesData as any).docs
+          } else {
+            // Direct array format
+            dressesArray = dressesData as unknown as bookcarsTypes.Dress[]
+          }
+        } else if ((dressesData as any)?.docs) {
+          dressesArray = (dressesData as any).docs
         }
 
         setDresses(dressesArray)
@@ -178,14 +210,26 @@ const CreateBooking: React.FC = () => {
 
   const loadDressesForSupplier = async (supplierId: string) => {
     try {
-      const filters = supplierId ? { suppliers: [supplierId] } : {}
+      const filters: bookcarsTypes.GetDressesPayload = supplierId
+        ? { suppliers: [supplierId], availability: [bookcarsTypes.Availablity.Available] }
+        : { availability: [bookcarsTypes.Availablity.Available] }
       const dressesData = await DressService.getDresses('', filters, 1, 100)
 
       // Handle different response formats
       let dressesArray: bookcarsTypes.Dress[] = []
       if (Array.isArray(dressesData) && dressesData.length > 0) {
-        // Format: [{resultData: [...]}]
-        dressesArray = dressesData[0]?.resultData || []
+        if (dressesData[0]?.resultData) {
+          // Format: [{resultData: [...]}]
+          dressesArray = dressesData[0].resultData
+        } else if ((dressesData as any).docs) {
+          // Format: {docs: [...]}
+          dressesArray = (dressesData as any).docs
+        } else {
+          // Direct array format
+          dressesArray = dressesData as unknown as bookcarsTypes.Dress[]
+        }
+      } else if ((dressesData as any)?.docs) {
+        dressesArray = (dressesData as any).docs
       }
 
       setDresses(dressesArray)
@@ -199,17 +243,24 @@ const CreateBooking: React.FC = () => {
     try {
       // Load all locations and filter by supplier
       const locationsData = await LocationService.getLocations('', 1, 1000)
-      
+
       // Handle different response formats for locations
       let locationsArray: bookcarsTypes.Location[] = []
       if (Array.isArray(locationsData) && locationsData.length > 0) {
-        // Format: [{resultData: [...]}]
-        locationsArray = locationsData[0]?.resultData || []
+        if (locationsData[0]?.resultData) {
+          // Format: [{resultData: [...]}]
+          locationsArray = locationsData[0].resultData
+        } else if ((locationsData as any)?.docs) {
+          // Format: {docs: [...]}
+          locationsArray = (locationsData as any).docs
+        }
+      } else if ((locationsData as any)?.docs) {
+        locationsArray = (locationsData as any).docs
       }
 
       // Filter locations by supplier
-      const supplierLocations = locationsArray.filter((location: any) => 
-        location.supplier && location.supplier._id === supplierId
+      const supplierLocations = locationsArray.filter((location: any) =>
+        location.supplier && (location.supplier._id === supplierId || location.supplier === supplierId)
       )
 
       setLocations(supplierLocations)
@@ -278,15 +329,18 @@ const CreateBooking: React.FC = () => {
 
       // Create new customer if needed
       if (formData.createNewCustomer) {
+        // Use selected booking location or first available location
+        const customerLocation = formData.location?._id || (locations.length > 0 ? locations[0]._id : '')
+
         const newCustomer: bookcarsTypes.CreateUserPayload = {
           fullName: formData.customerName,
           email: formData.customerEmail,
           phone: formData.customerPhone,
-          location: 'Jenin', // Default location
-          bio: '', // Default empty bio
+          location: customerLocation,
+          bio: '',
           type: 'user',
           verified: true,
-          language: 'ar',
+          language: language || 'en',
         }
 
         const createdCustomer = await UserService.create(newCustomer)
@@ -313,6 +367,7 @@ const CreateBooking: React.FC = () => {
         fittingDate: formData.fittingDate,
         alterationNotes: formData.alterationNotes,
         accessoriesIncluded: formData.accessoriesIncluded,
+        notes: formData.notes,
       }
 
       const response = await fetch('/api/admin-create-booking', {
@@ -325,9 +380,9 @@ const CreateBooking: React.FC = () => {
       })
 
       if (response.ok) {
-        await response.json() 
+        await response.json()
         setSuccess('Booking created successfully!')
-        setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
           navigate('/')
         }, 1500)
       } else {
@@ -534,28 +589,28 @@ const CreateBooking: React.FC = () => {
             </Box>
 
             <FormControl fullWidth margin="normal">
-              <InputLabel>Payment Status</InputLabel>
+              <InputLabel>{commonStrings.PAYMENT_STATUS}</InputLabel>
               <Select
                 value={formData.paymentStatus}
                 onChange={(e) => setFormData(prev => ({ ...prev, paymentStatus: e.target.value }))}
               >
-                <MenuItem value="pending">Pending</MenuItem>
-                <MenuItem value="paid">Paid</MenuItem>
-                <MenuItem value="partial">Partial</MenuItem>
-                <MenuItem value="refunded">Refunded</MenuItem>
+                <MenuItem value="pending">{commonStrings.BOOKING_STATUS_PENDING}</MenuItem>
+                <MenuItem value="paid">{commonStrings.BOOKING_STATUS_PAID}</MenuItem>
+                <MenuItem value="partial">{commonStrings.PARTIAL}</MenuItem>
+                <MenuItem value="refunded">{commonStrings.REFUNDED}</MenuItem>
               </Select>
             </FormControl>
 
             <FormControl fullWidth margin="normal">
-              <InputLabel>Booking Status</InputLabel>
+              <InputLabel>{commonStrings.BOOKING_STATUS}</InputLabel>
               <Select
                 value={formData.status}
                 onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value as bookcarsTypes.BookingStatus }))}
               >
-                <MenuItem value="pending">Pending</MenuItem>
-                <MenuItem value="confirmed">Confirmed</MenuItem>
-                <MenuItem value="cancelled">Cancelled</MenuItem>
-                <MenuItem value="completed">Completed</MenuItem>
+                <MenuItem value="pending">{commonStrings.BOOKING_STATUS_PENDING}</MenuItem>
+                <MenuItem value="confirmed">{commonStrings.CONFIRMED}</MenuItem>
+                <MenuItem value="cancelled">{commonStrings.BOOKING_STATUS_CANCELLED}</MenuItem>
+                <MenuItem value="completed">{commonStrings.COMPLETED}</MenuItem>
               </Select>
             </FormControl>
 
@@ -566,14 +621,14 @@ const CreateBooking: React.FC = () => {
                   onChange={(e) => setFormData(prev => ({ ...prev, fittingRequired: e.target.checked }))}
                 />
               }
-              label="Fitting Required"
+              label={commonStrings.FITTING_REQUIRED}
               sx={{ mb: 2 }}
             />
 
             {formData.fittingRequired && (
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DateTimePicker
-                  label="Fitting Date"
+                  label={commonStrings.FITTING_DATE}
                   value={formData.fittingDate}
                   onChange={(newValue) => setFormData(prev => ({ ...prev, fittingDate: newValue }))}
                   slotProps={{

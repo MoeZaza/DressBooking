@@ -143,7 +143,7 @@ class TestRunner {
       keyword: 'E2E Test'
     })
     
-    if (!searchResponse.data.docs.some((d: any) => d._id === createdDress._id)) {
+    if (!searchResponse.data.docs.some((d: unknown) => (d as any)._id === createdDress._id)) {
       throw new Error('Created dress not found in search results')
     }
 
@@ -212,7 +212,7 @@ class TestRunner {
       keyword: 'Multi-Image'
     })
 
-    const foundDress = searchResponse.data.docs.find((d: any) => d._id === createdDress._id)
+    const foundDress = searchResponse.data.docs.find((d: unknown) => (d as any)._id === createdDress._id)
     if (!foundDress || !foundDress.images || foundDress.images.length !== 5) {
       throw new Error('Multi-image dress not properly returned in search')
     }
@@ -248,8 +248,8 @@ class TestRunner {
       if (analyticsResponse.status !== 200) {
         throw new Error(`Analytics API returned ${analyticsResponse.status}`)
       }
-    } catch (error: any) {
-      if (error.response?.status === 404) {
+    } catch (error: unknown) {
+      if ((error as any).response?.status === 404) {
         console.log('⚠️ Analytics endpoint not found, skipping analytics test...')
         return
       }
@@ -274,8 +274,8 @@ class TestRunner {
           throw new Error(`Missing Arabic translation for ${key}`)
         }
       }
-    } catch (error: any) {
-      if (error.response?.status === 404) {
+    } catch (error: unknown) {
+      if ((error as any).response?.status === 404) {
         console.log('⚠️ Language API endpoint not found, checking language files directly...')
         // This is acceptable as language files are loaded statically
         return

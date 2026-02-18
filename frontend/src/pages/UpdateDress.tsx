@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { 
   Container,
@@ -35,15 +35,15 @@ const UpdateDress: React.FC = () => {
   const location = useLocation()
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
-  const [dress, setDress] = useState<any>(null)
-  const [user, setUser] = useState<any>(null)
+  const [dress, setDress] = useState<bookcarsTypes.Dress | null>(null)
+  const [user, setUser] = useState<bookcarsTypes.User | null>(null)
   const [formData, setFormData] = useState({
     name: '',
-    type: '',
-    size: '',
-    style: '',
+    type: DressType.Other,
+    size: DressSize.M,
+    style: DressStyle.Casual,
     color: '',
-    material: '',
+    material: DressMaterial.Cotton,
     price: 0,
     deposit: 0,
     available: true,
@@ -69,6 +69,18 @@ const UpdateDress: React.FC = () => {
   const [error, setError] = useState(false)
   const [imageError, setImageError] = useState(false)
   const [validationErrors, setValidationErrors] = useState<Record<string, boolean>>({})
+
+  // Ref for timeout cleanup
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     const params = new URLSearchParams(location.search)
@@ -97,18 +109,18 @@ const UpdateDress: React.FC = () => {
         // Set form data
         setFormData({
           name: dressData.name || '',
-          type: dressData.type || '',
-          size: dressData.size || '',
-          style: dressData.style || '',
+          type: dressData.type || DressType.Other,
+          size: dressData.size || DressSize.M,
+          style: dressData.style || DressStyle.Casual,
           color: dressData.color || '',
-          material: dressData.material || '',
+          material: dressData.material || DressMaterial.Cotton,
           price: dressData.price || 0,
           deposit: dressData.deposit || 0,
           available: dressData.available !== undefined ? dressData.available : true,
-          locations: dressData.locations ? dressData.locations.map((loc: any) =>
-            typeof loc === 'object' ? loc._id : loc) : [],
-          cancellation: dressData.cancellation || false,
-          amendments: dressData.amendments || false,
+          locations: dressData.locations ? dressData.locations.map((loc: Location | string) =>
+            typeof loc === 'object' ? (loc as Location)._id : loc) : [],
+          cancellation: typeof dressData.cancellation === 'number' ? dressData.cancellation : 0,
+          amendments: typeof dressData.amendments === 'number' ? dressData.amendments : 0,
           customizable: dressData.customizable || false,
           designerName: dressData.designerName || '',
           dressCode: dressData.dressCode || '',
@@ -259,6 +271,10 @@ const UpdateDress: React.FC = () => {
     setSaving(true)
     
     try {
+      if (!dress) {
+        throw new Error('Dress not found')
+      }
+      
       const updateData: bookcarsTypes.Dress = {
         ...dress,
         ...formData,
@@ -266,12 +282,18 @@ const UpdateDress: React.FC = () => {
         image: imageChanged ? image : dress.image,
         price: formData.price,
         supplier: dress.supplier,
-        locations: formData.locations.map(id => locations.find(loc => loc._id === id)!).filter(Boolean)
+        locations: formData.locations.map(id => locations.find(loc => loc._id === id)!).filter(Boolean),
+        length: dress.length || 0,
+        rentals: dress.rentals || 0,
+        range: dress.range || 'casual',
+        accessories: dress.accessories || [],
+        cancellation: formData.cancellation ? 1 : 0,
+        amendments: formData.amendments ? 1 : 0
       }
 
       await DressService.updateDress(dress._id, updateData)
       setSuccess(true)
-      setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
         navigate(`/dress?dr=${dress._id}`)
       }, 1000)
     } catch (error) {

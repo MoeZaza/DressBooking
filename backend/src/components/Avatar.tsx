@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {
   Button,
   Avatar as MaterialAvatar,
@@ -69,6 +69,16 @@ const Avatar = ({
   const [avatarRecord, setAvatarRecord] = useState<bookcarsTypes.User | bookcarsTypes.Dress | bookcarsTypes.Location>()
   const [avatar, setAvatar] = useState<string | undefined | null>(null)
   const [loading, setIsLoading] = useState(true)
+  const uploadTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (uploadTimeoutRef.current) {
+        clearTimeout(uploadTimeoutRef.current)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     setAvatar(_avatar)
@@ -305,7 +315,7 @@ const Avatar = ({
     }
     const upload = document.getElementById('upload') as HTMLInputElement
     upload.value = ''
-    setTimeout(() => {
+    uploadTimeoutRef.current = setTimeout(() => {
       upload.click()
     }, 0)
   }

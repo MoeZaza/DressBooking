@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Button,
@@ -41,6 +41,18 @@ const Home = () => {
   const [eveningPricePhr, setEveningPricePhr] = useState(100)
   const [cocktailPricePhr, setCocktailPricePhr] = useState(75)
 
+  // Ref for IntersectionObserver cleanup
+  const observerRef = useRef<IntersectionObserver | null>(null)
+
+  // Cleanup observer on unmount
+  useEffect(() => {
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect()
+      }
+    }
+  }, [])
+
   useEffect(() => {
     const init = async () => {
       const _weddingPricePhr = await PaymentService.convertPrice(weddingPricePhr)
@@ -76,12 +88,16 @@ const Home = () => {
       setSuppliers(_suppliers)
     }
 
-    const observer = new IntersectionObserver(handleIntersection)
+    // Clean up previous observer if exists
+    if (observerRef.current) {
+      observerRef.current.disconnect()
+    }
+
+    // Create new observer and store in ref for cleanup
+    observerRef.current = new IntersectionObserver(handleIntersection)
     const video = document.getElementById('cover') as HTMLVideoElement
     if (video) {
-      observer.observe(video)
-    } else {
-      console.error('Cover video not found')
+      observerRef.current.observe(video)
     }
   }
 
@@ -261,12 +277,12 @@ const Home = () => {
           <div className="boxes">
             <div className="box">
               <div className="box-content">
-                <span>Wedding Dresses</span>
-                <p>Perfect for your special day</p>
+                <span>{strings.WEDDING_DRESSES}</span>
+                <p>{strings.PERFECT_FOR_SPECIAL_DAY}</p>
                 <ul>
                   <li>
                     <span className="price">{bookcarsHelper.formatPrice(weddingPricePhr, commonStrings.CURRENCY, language)}</span>
-                    <span className="unit"> · per day</span>
+                    <span className="unit"> · {strings.PER_DAY}</span>
                   </li>
                 </ul>
               </div>
@@ -285,12 +301,12 @@ const Home = () => {
             </div>
             <div className="box">
               <div className="box-content">
-                <span>Evening Dresses</span>
-                <p>Elegant for special occasions</p>
+                <span>{strings.EVENING_DRESSES}</span>
+                <p>{strings.ELEGANT_FOR_OCCASIONS}</p>
                 <ul>
                   <li>
                     <span className="price">{bookcarsHelper.formatPrice(eveningPricePhr, commonStrings.CURRENCY, language)}</span>
-                    <span className="unit"> · per day</span>
+                    <span className="unit"> · {strings.PER_DAY}</span>
                   </li>
                 </ul>
               </div>
@@ -309,12 +325,12 @@ const Home = () => {
             </div>
             <div className="box">
               <div className="box-content">
-                <span>Cocktail Dresses</span>
-                <p>Perfect for parties and events</p>
+                <span>{strings.COCKTAIL_DRESSES}</span>
+                <p>{strings.PERFECT_FOR_PARTIES}</p>
                 <ul>
                   <li>
                     <span className="price">{bookcarsHelper.formatPrice(cocktailPricePhr, commonStrings.CURRENCY, language)}</span>
-                    <span className="unit"> · per day</span>
+                    <span className="unit"> · {strings.PER_DAY}</span>
                   </li>
                 </ul>
               </div>

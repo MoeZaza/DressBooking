@@ -180,8 +180,14 @@ const CreateDress = () => {
         return
       }
 
+      // Validate user exists before proceeding
+      if (!user?._id) {
+        helper.error('User not authenticated')
+        return
+      }
+
       const data: bookcarsTypes.CreateDressPayload = {
-        loggedUser: user!._id!,
+        loggedUser: user._id,
         name,
         supplier,
 

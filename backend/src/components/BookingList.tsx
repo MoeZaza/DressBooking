@@ -131,12 +131,51 @@ const BookingList = ({
           _page + 1,
           _pageSize,
         )
-        const _data = data && data.length > 0 ? data[0] : { pageInfo: { totalRecord: 0 }, resultData: [] }
-        if (!_data) {
+
+        // Handle multiple response formats: {docs: [...]}, [{resultData: [...]}], or direct array
+        let processedData: any = { pageInfo: { totalRecords: 0 }, resultData: [] }
+
+        if (data) {
+          if (Array.isArray(data) && data.length > 0) {
+            if ((data[0] as any).resultData) {
+              // Standard format: [{resultData: [...], pageInfo: [...]}]
+              const resultData = data[0] as any
+              processedData = {
+                pageInfo: resultData.pageInfo,
+                resultData: resultData.resultData
+              }
+            } else if ((data[0] as any).docs) {
+              // Mongoose-paginate-v2 format: [{docs: [...], totalDocs: ...}]
+              const mongooseData = data[0] as any
+              processedData = {
+                pageInfo: { totalRecords: mongooseData.totalDocs || 0 },
+                resultData: mongooseData.docs || []
+              }
+            } else {
+              // Direct array format
+              processedData = {
+                pageInfo: { totalRecords: data.length },
+                resultData: data as bookcarsTypes.Booking[]
+              }
+            }
+          } else if ((data as any).docs) {
+            // Direct mongoose-paginate-v2 response: {docs: [...], totalDocs: ...}
+            const mongooseData = data as any
+            processedData = {
+              pageInfo: { totalRecords: mongooseData.totalDocs || 0 },
+              resultData: mongooseData.docs || []
+            }
+          }
+        }
+
+        // Now cast to the expected type
+        const _data: bookcarsTypes.ResultData<bookcarsTypes.Booking> = processedData as bookcarsTypes.ResultData<bookcarsTypes.Booking>
+
+        if (!_data || !_data.resultData) {
           helper.error()
           return
         }
-        const totalRecords = Array.isArray(_data.pageInfo) && _data.pageInfo.length > 0 ? _data.pageInfo[0].totalRecords : 0
+        const totalRecords = _data.pageInfo?.totalRecords ?? 0
 
         if (env.isMobile) {
           const _rows = _page === 0 ? _data.resultData : [...rows, ..._data.resultData]
@@ -220,10 +259,13 @@ const BookingList = ({
   const getDate = (date?: string) => {
     if (date) {
       const d = new Date(date)
+      if (isNaN(d.getTime())) {
+        return 'N/A'
+      }
       return `${bookcarsHelper.formatDatePart(d.getDate())}-${bookcarsHelper.formatDatePart(d.getMonth() + 1)}-${d.getFullYear()}`
     }
 
-    throw new Error('Invalid date')
+    return 'N/A'
   }
 
   const getColumns = (): GridColDef<bookcarsTypes.Booking>[] => {
@@ -460,6 +502,13 @@ const BookingList = ({
           }
         }
       }
+
+      // Cleanup scroll event listener on unmount
+      return () => {
+        if (element) {
+          element.onscroll = null
+        }
+      }
     }
   }, [containerClassName, page, fetch, loading, offset])
 
@@ -506,8 +555,6 @@ const BookingList = ({
     setSelectedId(_selectedId)
     setSelectedIndex(_selectedIndex)
     setopenDeleteDialog(true)
-    setSelectedId(_selectedId)
-    setSelectedIndex(_selectedIndex)
   }
 
   const handleCancelDelete = () => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { 
   Dialog,
   DialogTitle,
@@ -53,6 +53,18 @@ const DressCodeManager: React.FC<DressCodeManagerProps> = ({
     existingDress?: any
   } | null>(null)
   const [copied, setCopied] = useState(false)
+
+  // Ref for timeout cleanup
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
 
   const loadDressCode = useCallback(async () => {
     try {
@@ -133,8 +145,8 @@ const DressCodeManager: React.FC<DressCodeManagerProps> = ({
       // Update the dress object
       const updatedDress = { ...dress, dressCode }
       onUpdate(updatedDress)
-      
-      setTimeout(() => {
+
+      timeoutRef.current = setTimeout(() => {
         setSuccess('')
         onClose()
       }, 2000)
@@ -156,8 +168,8 @@ const DressCodeManager: React.FC<DressCodeManagerProps> = ({
       
       setDressCode(newDressCode)
       setSuccess('New dress code generated!')
-      
-      setTimeout(() => setSuccess(''), 3000)
+
+      timeoutRef.current = setTimeout(() => setSuccess(''), 3000)
     } catch (err: any) {
       console.error('Error generating dress code:', err)
       setError('Failed to generate new dress code')
@@ -170,7 +182,7 @@ const DressCodeManager: React.FC<DressCodeManagerProps> = ({
     try {
       await navigator.clipboard.writeText(dressCode)
       setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      timeoutRef.current = setTimeout(() => setCopied(false), 2000)
     } catch (err) {
       console.error('Failed to copy dress code:', err)
     }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { 
   IconButton,
@@ -108,6 +108,8 @@ const DressList = ({
   const [openInfoDialog, setOpenInfoDialog] = useState(false)
   const [openDressCodeManager, setOpenDressCodeManager] = useState(false)
   const [selectedDress, setSelectedDress] = useState<bookcarsTypes.Dress | null>(null)
+  const abortControllerRef = useRef<AbortController | null>(null)
+  const isMountedRef = useRef(true)
 
   useEffect(() => {
     if (env.PAGINATION_MODE === Const.PAGINATION_MODE.INFINITE_SCROLL || env.isMobile) {
@@ -124,8 +126,27 @@ const DressList = ({
           }
         }
       }
+
+      // Cleanup scroll event listener on unmount
+      return () => {
+        if (element) {
+          element.onscroll = null
+        }
+      }
     }
   }, [fetch, loading, page])
+
+  // Cleanup abort controller and mounted state on unmount
+  useEffect(() => {
+    isMountedRef.current = true
+    return () => {
+      isMountedRef.current = false
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort()
+        abortControllerRef.current = null
+      }
+    }
+  }, [])
 
   const fetchData = async (
     _page: number,
@@ -140,49 +161,75 @@ const DressList = ({
     _range?: string[],
     _rentalsCount?: string,
   ) => {
+    // Create new AbortController for this fetch
+    const controller = new AbortController()
+    abortControllerRef.current = controller
+
+    // Abort if component is unmounted before fetch starts
+    if (!isMountedRef.current) {
+      return
+    }
+
     try {
       setLoading(true)
 
-      // Timeout prevention: Set a maximum timeout for API calls
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Request timeout after 15 seconds')), 15000)
-      })
+      // Timeout prevention: Set a maximum timeout for API calls with abort
+      const timeoutId = setTimeout(() => {
+        controller.abort()
+      }, 15000)
 
       const payload: bookcarsTypes.GetDressesPayload = {
         suppliers: suppliers ?? [],
         dressSpecs,
         dressType: __dressType,
         dressSize: __dressSize,
-
         deposit,
         availability,
         ranges: _range,
-
       }
 
-      // Race between API call and timeout
-      const data = await Promise.race([
-        DressService.getDresses(keyword || '', payload, _page, env.DRESSES_PAGE_SIZE),
-        timeoutPromise
-      ])
+      // Fetch data with abort signal
+      let data
+      try {
+        data = await DressService.getDresses(keyword || '', payload, _page, env.DRESSES_PAGE_SIZE)
+      } catch (err: any) {
+        // If aborted, don't treat as error
+        if (err.name === 'AbortError' || controller.signal.aborted) {
+          clearTimeout(timeoutId)
+          return
+        }
+        throw err
+      }
 
-      // Handle the API response structure - data might be in 'docs' field or direct array
+      clearTimeout(timeoutId)
+
+      // Check if component is still mounted before processing data
+      if (!isMountedRef.current) {
+        return
+      }
+
+      // Handle the API response structure - data might be in 'docs' field, 'resultData' field, or direct array
       let _data
       if (data && Array.isArray(data) && data.length > 0) {
-        // Check if first element has docs (paginated response)
         const firstItem = data[0] as any
-        if (firstItem && firstItem.docs) {
-          // New API response format with pagination
+        if (firstItem && firstItem.resultData) {
+          // Standard format: [{resultData: [...], pageInfo: [...]}]
+          _data = firstItem
+        } else if (firstItem && firstItem.docs) {
+          // Mongoose-paginate-v2 format: [{docs: [...], totalDocs: ...}]
           _data = {
             pageInfo: [{ totalRecords: firstItem.totalDocs || 0 }],
             resultData: firstItem.docs || []
           }
         } else {
-          // Legacy format
-          _data = data[0]
+          // Direct array format: [...]
+          _data = {
+            pageInfo: [{ totalRecords: data.length }],
+            resultData: data
+          }
         }
       } else if (data && typeof data === 'object' && 'docs' in data) {
-        // Direct paginated response
+        // Direct mongoose-paginate-v2 response: {docs: [...], totalDocs: ...}
         const paginatedData = data as any
         _data = {
           pageInfo: [{ totalRecords: paginatedData.totalDocs || 0 }],
@@ -218,6 +265,11 @@ const DressList = ({
         onLoad({ rows: _data.resultData, rowCount: _totalRecords })
       }
     } catch (err: any) {
+      // Don't show error if request was aborted (component unmounted)
+      if (err.name === 'AbortError' || controller.signal.aborted || !isMountedRef.current) {
+        return
+      }
+
       console.error('DressList fetchData error:', err)
 
       // Handle timeout specifically
@@ -232,8 +284,12 @@ const DressList = ({
         helper.error(err)
       }
     } finally {
-      setLoading(false)
-      setInit(false)
+      // Only update state if component is still mounted
+      if (isMountedRef.current) {
+        setLoading(false)
+        setInit(false)
+      }
+      abortControllerRef.current = null
     }
   }
 

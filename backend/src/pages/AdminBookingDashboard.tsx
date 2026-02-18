@@ -48,6 +48,7 @@ import BookingList from '@/components/BookingList'
 
 import * as AdminBookingService from '@/services/AdminBookingService'
 import * as helper from '@/common/helper'
+import { strings as commonStrings } from '@/lang/common'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -196,15 +197,15 @@ const AdminBookingDashboard: React.FC = () => {
         {/* Header */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
           <Typography variant="h4" component="h1">
-            Booking Management Dashboard
+            {commonStrings.BOOKING_MANAGEMENT_DASHBOARD}
           </Typography>
           <Box sx={{ display: 'flex', gap: 1 }}>
-            <Tooltip title="Refresh Data">
+            <Tooltip title={commonStrings.REFRESH_DATA}>
               <IconButton onClick={handleRefresh} disabled={loading}>
                 <RefreshIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Export Bookings">
+            <Tooltip title={commonStrings.EXPORT_BOOKINGS}>
               <IconButton onClick={handleExport}>
                 <ExportIcon />
               </IconButton>
@@ -214,7 +215,7 @@ const AdminBookingDashboard: React.FC = () => {
               startIcon={<AddIcon />}
               onClick={() => navigate('/create-booking')}
             >
-              New Booking
+              {commonStrings.CREATE_NEW_BOOKING}
             </Button>
           </Box>
         </Box>
@@ -228,14 +229,11 @@ const AdminBookingDashboard: React.FC = () => {
               <Card>
                 <CardContent>
                   <Typography color="textSecondary" gutterBottom>
-                    Total Revenue
+                    {commonStrings.TOTAL_REVENUE}
                   </Typography>
                   <Typography variant="h5">
                     ${analytics.totalRevenue?.toLocaleString() || 0}
                   </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    All time
-                  </Typography>
                 </CardContent>
               </Card>
             </Box>
@@ -243,14 +241,11 @@ const AdminBookingDashboard: React.FC = () => {
               <Card>
                 <CardContent>
                   <Typography color="textSecondary" gutterBottom>
-                    Total Bookings
+                    {commonStrings.TOTAL_BOOKINGS}
                   </Typography>
                   <Typography variant="h5">
                     {analytics.totalBookings || 0}
                   </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    All time
-                  </Typography>
                 </CardContent>
               </Card>
             </Box>
@@ -258,14 +253,11 @@ const AdminBookingDashboard: React.FC = () => {
               <Card>
                 <CardContent>
                   <Typography color="textSecondary" gutterBottom>
-                    Avg. Booking Value
+                    {commonStrings.AVG_BOOKING_VALUE}
                   </Typography>
                   <Typography variant="h5">
                     ${analytics.averageBookingValue?.toFixed(2) || 0}
                   </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    Per booking
-                  </Typography>
                 </CardContent>
               </Card>
             </Box>
@@ -273,13 +265,10 @@ const AdminBookingDashboard: React.FC = () => {
               <Card>
                 <CardContent>
                   <Typography color="textSecondary" gutterBottom>
-                    Available Dresses
+                    {commonStrings.AVAILABLE_DRESSES}
                   </Typography>
                   <Typography variant="h5">
                     {analytics.availableDresses || 0}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    Ready to book
                   </Typography>
                 </CardContent>
               </Card>
@@ -290,10 +279,10 @@ const AdminBookingDashboard: React.FC = () => {
         {/* Tabs */}
         <Paper sx={{ mb: 3 }}>
           <Tabs value={currentTab} onChange={handleTabChange} aria-label="booking management tabs">
-            <Tab icon={<DashboardIcon />} label="Overview" />
-            <Tab icon={<CalendarIcon />} label="Calendar" />
-            <Tab icon={<ListIcon />} label="List View" />
-            <Tab icon={<AnalyticsIcon />} label="Analytics" />
+            <Tab icon={<DashboardIcon />} label={commonStrings.OVERVIEW} />
+            <Tab icon={<CalendarIcon />} label={commonStrings.CALENDAR} />
+            <Tab icon={<ListIcon />} label={commonStrings.LIST_VIEW} />
+            <Tab icon={<AnalyticsIcon />} label={commonStrings.ANALYTICS} />
           </Tabs>
         </Paper>
 
@@ -305,7 +294,7 @@ const AdminBookingDashboard: React.FC = () => {
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
-                    Recent Bookings
+                    {commonStrings.RECENT_BOOKINGS}
                   </Typography>
                   <BookingList
                     containerClassName="recent-bookings"
@@ -326,7 +315,7 @@ const AdminBookingDashboard: React.FC = () => {
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
-                    Quick Stats
+                    {commonStrings.QUICK_STATS}
                   </Typography>
                   {analytics?.categoryBreakdown && (
                     <Box sx={{ mb: 2 }}>
@@ -346,7 +335,7 @@ const AdminBookingDashboard: React.FC = () => {
                   {analytics?.monthlyTrends && (
                     <Box sx={{ mt: 3 }}>
                       <Typography variant="subtitle2" gutterBottom>
-                        Revenue Trend (Last 6 Months)
+                        {commonStrings.REVENUE_TREND}
                       </Typography>
                       <ResponsiveContainer width="100%" height={150}>
                         <LineChart data={prepareMonthlyTrendsData().slice(-6)}>
@@ -396,7 +385,7 @@ const AdminBookingDashboard: React.FC = () => {
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
-                    Monthly Booking Trends
+                    {commonStrings.MONTHLY_BOOKING_TRENDS}
                   </Typography>
                   <ResponsiveContainer width="100%" height={400}>
                     <AreaChart data={prepareMonthlyTrendsData()}>
@@ -407,7 +396,7 @@ const AdminBookingDashboard: React.FC = () => {
                       <RechartsTooltip
                         formatter={(value: number, name: string) => [
                           name === 'revenue' ? formatCurrency(value) : value,
-                          name === 'revenue' ? 'Revenue' : name === 'bookings' ? 'Bookings' : 'Avg Value'
+                          name === 'revenue' ? commonStrings.REVENUE : name === 'bookings' ? commonStrings.BOOKINGS : commonStrings.AVERAGE_BOOKING_VALUE
                         ]}
                       />
                       <Legend />
@@ -419,7 +408,7 @@ const AdminBookingDashboard: React.FC = () => {
                         stroke="#8884d8"
                         fill="#8884d8"
                         fillOpacity={0.6}
-                        name="Revenue"
+                        name={commonStrings.REVENUE}
                       />
                       <Line
                         yAxisId="right"
@@ -427,7 +416,7 @@ const AdminBookingDashboard: React.FC = () => {
                         dataKey="bookings"
                         stroke="#82ca9d"
                         strokeWidth={3}
-                        name="Bookings"
+                        name={commonStrings.BOOKINGS}
                       />
                     </AreaChart>
                   </ResponsiveContainer>
@@ -440,7 +429,7 @@ const AdminBookingDashboard: React.FC = () => {
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
-                    Booking Status Distribution
+                    {commonStrings.BOOKING_STATUS_DISTRIBUTION}
                   </Typography>
                   <ResponsiveContainer width="100%" height={400}>
                     <PieChart>
@@ -470,7 +459,7 @@ const AdminBookingDashboard: React.FC = () => {
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
-                    Category Performance
+                    {commonStrings.CATEGORY_PERFORMANCE}
                   </Typography>
                   <ResponsiveContainer width="100%" height={300}>
                     <BarChart data={prepareCategoryData()}>
@@ -481,12 +470,12 @@ const AdminBookingDashboard: React.FC = () => {
                       <RechartsTooltip
                         formatter={(value: number, name: string) => [
                           name === 'revenue' ? formatCurrency(value) : value,
-                          name === 'revenue' ? 'Revenue' : 'Bookings'
+                          name === 'revenue' ? commonStrings.REVENUE : commonStrings.BOOKINGS
                         ]}
                       />
                       <Legend />
-                      <Bar yAxisId="left" dataKey="revenue" fill="#8884d8" name="Revenue" />
-                      <Bar yAxisId="right" dataKey="bookings" fill="#82ca9d" name="Bookings" />
+                      <Bar yAxisId="left" dataKey="revenue" fill="#8884d8" name={commonStrings.REVENUE} />
+                      <Bar yAxisId="right" dataKey="bookings" fill="#82ca9d" name={commonStrings.BOOKINGS} />
                     </BarChart>
                   </ResponsiveContainer>
                 </CardContent>
@@ -535,18 +524,18 @@ const AdminBookingDashboard: React.FC = () => {
                       <RechartsTooltip
                         formatter={(value: number, name: string) => [
                           name === 'revenue' ? formatCurrency(value) : value,
-                          name === 'revenue' ? 'Revenue' : 'Bookings'
+                          name === 'revenue' ? commonStrings.REVENUE : commonStrings.BOOKINGS
                         ]}
                       />
                       <Legend />
-                      <Bar yAxisId="left" dataKey="revenue" fill="#8884d8" name="Revenue" />
+                      <Bar yAxisId="left" dataKey="revenue" fill="#8884d8" name={commonStrings.REVENUE} />
                       <Line
                         yAxisId="right"
                         type="monotone"
                         dataKey="bookings"
                         stroke="#82ca9d"
                         strokeWidth={3}
-                        name="Bookings"
+                        name={commonStrings.BOOKINGS}
                       />
                     </BarChart>
                   </ResponsiveContainer>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Box,
@@ -55,6 +55,18 @@ const Profile = () => {
     activeBookings: 0,
   })
 
+  // Track mounted state to prevent state updates after unmount
+  const isMountedRef = useRef(true)
+  const abortControllerRef = useRef<AbortController | null>(null)
+
+  useEffect(() => {
+    isMountedRef.current = true
+    return () => {
+      isMountedRef.current = false
+      abortControllerRef.current?.abort()
+    }
+  }, [])
+
   useEffect(() => {
     if (user) {
       setProfileUser(user)
@@ -64,38 +76,88 @@ const Profile = () => {
   }, [user])
 
   const loadUserStats = async () => {
+    // Create new AbortController for this fetch
+    const controller = new AbortController()
+    abortControllerRef.current = controller
+
     try {
       if (user) {
         // Load user statistics based on role
-        if (user.type === bookcarsTypes.UserType.Supplier) {
-          // Load supplier stats (bookings, revenue, dresses)
-          // This would be implemented with actual API calls
-          setStats({
-            totalBookings: 45,
-            totalRevenue: 12500,
-            totalDresses: 28,
-            activeBookings: 8,
+        if (user.type === bookcarsTypes.UserType.Supplier || user.type === bookcarsTypes.UserType.Admin) {
+          // Load supplier/admin stats from API
+          const response = await fetch('/api/analytics/dashboard', {
+            signal: controller.signal,
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
           })
-        } else if (user.type === bookcarsTypes.UserType.Admin) {
-          // Load admin stats (all system data)
-          setStats({
-            totalBookings: 156,
-            totalRevenue: 45000,
-            totalDresses: 89,
-            activeBookings: 23,
-          })
+
+          if (response.ok) {
+            const data = await response.json()
+            if (isMountedRef.current) {
+              setStats({
+                totalBookings: data.totalBookings || 0,
+                totalRevenue: data.totalRevenue || 0,
+                totalDresses: data.totalDresses || 0,
+                activeBookings: data.activeBookings || 0,
+              })
+            }
+          } else {
+            // Fallback to zero stats on error
+            if (isMountedRef.current) {
+              setStats({
+                totalBookings: 0,
+                totalRevenue: 0,
+                totalDresses: 0,
+                activeBookings: 0,
+              })
+            }
+          }
         } else {
           // Load customer stats (their bookings)
-          setStats({
-            totalBookings: 3,
-            totalRevenue: 850,
-            totalDresses: 0,
-            activeBookings: 1,
+          const response = await fetch('/api/bookings/user-stats', {
+            signal: controller.signal,
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
           })
+
+          if (response.ok) {
+            const data = await response.json()
+            if (isMountedRef.current) {
+              setStats({
+                totalBookings: data.totalBookings || 0,
+                totalRevenue: data.totalSpent || 0,
+                totalDresses: 0,
+                activeBookings: data.activeBookings || 0,
+              })
+            }
+          } else {
+            if (isMountedRef.current) {
+              setStats({
+                totalBookings: 0,
+                totalRevenue: 0,
+                totalDresses: 0,
+                activeBookings: 0,
+              })
+            }
+          }
         }
       }
     } catch (err) {
+      // Don't show error if request was aborted (component unmounted)
+      if (err && typeof err === 'object' && 'name' in err && err.name === 'AbortError') {
+        return
+      }
+
       console.error('Error loading user stats:', err)
+      // Set default stats on error
+      setStats({
+        totalBookings: 0,
+        totalRevenue: 0,
+        totalDresses: 0,
+        activeBookings: 0,
+      })
     }
   }
 

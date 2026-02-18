@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {
   FormControl,
   InputLabel,
@@ -23,17 +23,37 @@ interface DropdownOption {
 const DressStyleFilter: React.FC<DressStyleFilterProps> = ({ onChange, className }) => {
   const [value, setValue] = useState('')
   const [dressStyles, setDressStyles] = useState<DropdownOption[]>([])
+  const abortControllerRef = useRef<AbortController | null>(null)
+  const isMountedRef = useRef(true)
+
+  useEffect(() => {
+    isMountedRef.current = true
+    return () => {
+      isMountedRef.current = false
+      abortControllerRef.current?.abort()
+    }
+  }, [])
 
   useEffect(() => {
     const fetchDressStyles = async () => {
+      // Create new AbortController for this fetch
+      const controller = new AbortController()
+      abortControllerRef.current = controller
+
       try {
         const language = langHelper.getLanguage()
-        const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/dress-styles?lang=${language}`)
+        const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/dress-styles?lang=${language}`, {
+          signal: controller.signal
+        })
         if (response.ok) {
           const styles = await response.json()
           setDressStyles(styles)
         }
       } catch (error) {
+        // Don't show error if request was aborted (component unmounted)
+        if (error && typeof error === 'object' && 'name' in error && error.name === 'AbortError') {
+          return
+        }
         console.error('Failed to fetch dress styles:', error)
         // Fallback to basic styles
         setDressStyles([

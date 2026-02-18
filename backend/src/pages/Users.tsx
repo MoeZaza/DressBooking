@@ -6,6 +6,7 @@ import * as bookcarsTypes from ':bookcars-types'
 import Layout from '@/components/Layout'
 import env from '@/config/env.config'
 import { strings } from '@/lang/users'
+import { strings as commonStrings } from '@/lang/common'
 import { useLanguage } from '@/context/LanguageContext'
 import * as helper from '@/common/helper'
 import UserTypeFilter from '@/components/UserTypeFilter'
@@ -72,7 +73,7 @@ const Users = () => {
 
           {/* Floating Action Button for Creating New User */}
           {admin && (
-            <Tooltip title="Create New User">
+            <Tooltip title={commonStrings.CREATE_NEW_USER || 'Create New User'}>
               <Fab
                 color="primary"
                 aria-label="add user"

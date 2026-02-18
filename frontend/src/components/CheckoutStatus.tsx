@@ -34,13 +34,30 @@ const CheckoutStatus = (
   const [booking, setBooking] = useState<bookcarsTypes.Booking>()
   const [price, setPrice] = useState(0)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     const init = async () => {
-      const _booking = await BookingService.getBooking(bookingId)
-      setBooking(_booking)
-      setPrice(await PaymentService.convertPrice(_booking.price!))
-      setLoading(false)
+      try {
+        const _booking = await BookingService.getBooking(bookingId)
+
+        if (!_booking) {
+          setError(true)
+          setLoading(false)
+          return
+        }
+
+        setBooking(_booking)
+
+        if (_booking.price) {
+          setPrice(await PaymentService.convertPrice(_booking.price))
+        }
+      } catch (err) {
+        console.error('Error fetching booking:', err)
+        setError(true)
+      } finally {
+        setLoading(false)
+      }
     }
 
     if (bookingId) {
@@ -50,6 +67,19 @@ const CheckoutStatus = (
 
   if (loading) {
     return null
+  }
+
+  // Handle error state
+  if (error || !booking) {
+    return (
+      <div className={`checkout-status ${className || ''}`}>
+        <Toast
+          title={commonStrings.ERROR}
+          text={strings.ERROR}
+          status="error"
+        />
+      </div>
+    )
   }
 
   const _fr = language === 'fr'

@@ -99,8 +99,9 @@ const MyAppointments: React.FC = () => {
       setCancelDialogOpen(false)
       setSelectedAppointment(null)
       fetchAppointments()
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to cancel appointment')
+    } catch (err: unknown) {
+      const errorResponse = err as { response?: { data?: { error?: string } } }
+      setError(errorResponse.response?.data?.error || 'Failed to cancel appointment')
     } finally {
       setCancelling(false)
     }

@@ -46,8 +46,8 @@ const SecurityMonitoringDashboard: React.FC = () => {
     recentEvents,
     threatCount,
     blockedRequests,
+    securityScore,
     getThreatSummary,
-    getSecurityScore,
     clearEvents,
     startMonitoring,
     stopMonitoring
@@ -57,7 +57,6 @@ const SecurityMonitoringDashboard: React.FC = () => {
   const [detailsOpen, setDetailsOpen] = useState(false)
   const [selectedEvent, setSelectedEvent] = useState<any>(null)
 
-  const securityScore = getSecurityScore()
   const threatSummary = getThreatSummary()
 
   /**

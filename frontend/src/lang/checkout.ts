@@ -35,6 +35,7 @@ const strings = new LocalizedStrings({
     DAY: 'jour',
     RENTAL_CHECKLIST_TITLE: 'Tout sur votre location',
     RENTAL_CHECKLIST_ARRIVE_ON_TIME_TITLE: "Arrivez à l'heure",
+    PAYMENT_DISABLED: '💳 Le traitement des paiements est actuellement désactivé. Cette réservation sera traitée manuellement par l\'administrateur.',
   },
   en: {
     BOOKING_HEADING: 'Book now',
@@ -69,6 +70,7 @@ const strings = new LocalizedStrings({
     DAY: 'day',
     RENTAL_CHECKLIST_TITLE: 'Your rental checklist',
     RENTAL_CHECKLIST_ARRIVE_ON_TIME_TITLE: 'Arrive on time',
+    PAYMENT_DISABLED: '💳 Payment processing is currently disabled. This booking will be processed manually by the admin.',
   },
   es: {
     BOOKING_HEADING: 'Reservar ahora',
@@ -103,6 +105,7 @@ const strings = new LocalizedStrings({
     DAY: 'día',
     RENTAL_CHECKLIST_TITLE: 'Lo que no se te puede olvidar para el alquiler',
     RENTAL_CHECKLIST_ARRIVE_ON_TIME_TITLE: 'Sé puntual',
+    PAYMENT_DISABLED: '💳 El procesamiento de pagos está actualmente deshabilitado. Esta reserva será procesada manualmente por el administrador.',
   },
   ar: {
     CHECKOUT: 'الدفع',
@@ -145,6 +148,7 @@ const strings = new LocalizedStrings({
     DAY: 'يوم',
     RENTAL_CHECKLIST_TITLE: 'ما لا يجب أن تنساه للإيجار',
     RENTAL_CHECKLIST_ARRIVE_ON_TIME_TITLE: 'كن في الوقت المحدد',
+    PAYMENT_DISABLED: '💳 معالجة الدفع معطلة حالياً. سيتم معالجة هذا الحجز يدوياً من قبل المسؤول.',
   },
 })
 

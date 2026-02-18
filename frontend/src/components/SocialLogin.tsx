@@ -47,37 +47,44 @@ const SocialLogin = ({
   const { setUser, setUserLoaded } = useUserContext() as UserContextType
 
   const loginSuccess = async (socialSignInType: bookcarsTypes.SocialSignInType, accessToken: string, email: string, fullName: string, avatar?: string) => {
-    const data: bookcarsTypes.SignInPayload = {
-      socialSignInType,
-      accessToken,
-      email,
-      fullName,
-      avatar,
-      stayConnected: UserService.getStayConnected()
-    }
-
-    const res = await UserService.socialSignin(data)
-    if (res.status === 200) {
-      if (res.data.blacklisted) {
-        await UserService.signout(false)
-        if (onBlackListed) {
-          onBlackListed()
-        }
-      } else {
-        const user = await UserService.getUser(res.data._id)
-        setUser(user)
-        setUserLoaded(true)
-
-        if (redirectToHomepage) {
-          navigate('/')
-        }
-
-        if (reloadPage) {
-          navigate(0)
-        }
+    try {
+      const data: bookcarsTypes.SignInPayload = {
+        socialSignInType,
+        accessToken,
+        email,
+        fullName,
+        avatar,
+        stayConnected: UserService.getStayConnected()
       }
-    } else if (onSignInError) {
-      onSignInError()
+
+      const res = await UserService.socialSignin(data)
+      if (res.status === 200) {
+        if (res.data.blacklisted) {
+          await UserService.signout(false)
+          if (onBlackListed) {
+            onBlackListed()
+          }
+        } else {
+          const user = await UserService.getUser(res.data._id)
+          setUser(user)
+          setUserLoaded(true)
+
+          if (redirectToHomepage) {
+            navigate('/')
+          }
+
+          if (reloadPage) {
+            navigate(0)
+          }
+        }
+      } else if (onSignInError) {
+        onSignInError()
+      }
+    } catch (err) {
+      console.error('Social login error:', err)
+      if (onError) {
+        onError(err)
+      }
     }
   }
 

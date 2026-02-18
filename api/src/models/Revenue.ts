@@ -82,4 +82,9 @@ revenueSchema.index({ type: 1, date: -1 })
 
 const Revenue = model<env.Revenue>('Revenue', revenueSchema)
 
+// Create indexes manually and handle potential errors
+Revenue.syncIndexes().catch((err) => {
+  console.error('Error creating Revenue indexes:', err)
+})
+
 export default Revenue

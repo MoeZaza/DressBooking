@@ -68,7 +68,8 @@ const weddingPackageSchema = new Schema<IWeddingPackage>({
   },
   dresses: [{
     dressId: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: 'Dress',
       required: true
     },
     dressName: {

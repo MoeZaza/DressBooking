@@ -88,8 +88,39 @@ const UserList = ({
         }
 
         const data = await UserService.getUsers(payload, keyword || '', _page + 1, pageSize)
-        const _data = data && data.length > 0 ? data[0] : { pageInfo: { totalRecord: 0 }, resultData: [] }
-        if (!_data) {
+
+        // Handle multiple response formats: {docs: [...]}, [{resultData: [...]}], or direct array
+        let _data: { pageInfo: any[]; resultData: any[] } = { pageInfo: [{ totalRecords: 0 }], resultData: [] }
+
+        if (data) {
+          if (Array.isArray(data) && data.length > 0) {
+            if (data[0]?.resultData) {
+              // Convert ResultData<User> to expected format
+              const resultData = data[0] as bookcarsTypes.ResultData<bookcarsTypes.User>
+              _data = {
+                pageInfo: [resultData.pageInfo],
+                resultData: resultData.resultData
+              }
+            } else if ((data[0] as any)?.docs) {
+              _data = {
+                pageInfo: [{ totalRecords: (data[0] as any).totalDocs || 0 }],
+                resultData: (data[0] as any).docs || []
+              }
+            } else {
+              _data = {
+                pageInfo: [{ totalRecords: data.length }],
+                resultData: data
+              }
+            }
+          } else if ((data as any)?.docs) {
+            _data = {
+              pageInfo: [{ totalRecords: (data as any).totalDocs || 0 }],
+              resultData: (data as any).docs || []
+            }
+          }
+        }
+
+        if (!_data || !_data.resultData) {
           helper.error()
           return
         }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {
   Button,
   Avatar as MaterialAvatar,
@@ -45,6 +45,16 @@ const Avatar = ({
   const [error, setError] = useState(false)
   const [open, setOpen] = useState(false)
   const [user, setUser] = useState<bookcarsTypes.User>()
+  const uploadTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (uploadTimeoutRef.current) {
+        clearTimeout(uploadTimeoutRef.current)
+      }
+    }
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || !user) {
@@ -96,7 +106,7 @@ const Avatar = ({
   const handleUpload = () => {
     const upload = document.getElementById('upload') as HTMLInputElement
     upload.value = ''
-    setTimeout(() => {
+    uploadTimeoutRef.current = setTimeout(() => {
       upload.click()
     }, 0)
   }

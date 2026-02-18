@@ -147,9 +147,83 @@ const strings = new LocalizedStrings({
     SILHOUETTE: 'Silhouette',
     DESIGNER_NAME: 'Designer Name',
     FITTING_REQUIRED: 'Fitting Required',
+
+    // Season translations
+    SPRING: 'Spring',
+    SUMMER: 'Summer',
+    FALL: 'Fall',
+    WINTER: 'Winter',
+    ALL_SEASONS: 'All Season',
+
+    // Neckline translations
+    V_NECK: 'V-Neck',
+    ROUND_NECK: 'Round Neck',
+    OFF_SHOULDER: 'Off Shoulder',
+    HALTER: 'Halter',
+    STRAPLESS: 'Strapless',
+    ONE_SHOULDER: 'One Shoulder',
+    BOAT_NECK: 'Boat Neck',
+    SQUARE_NECK: 'Square Neck',
+    SWEETHEART: 'Sweetheart',
+    HIGH_NECK: 'High Neck',
+
+    // Sleeve translations
+    SLEEVELESS: 'Sleeveless',
+    SHORT_SLEEVE: 'Short Sleeve',
+    LONG_SLEEVE: 'Long Sleeve',
+    THREE_QUARTER: 'Three Quarter',
+    CAP_SLEEVE: 'Cap Sleeve',
+    BELL_SLEEVE: 'Bell Sleeve',
+
+    // Silhouette translations
+    A_LINE: 'A-Line',
+    BALL_GOWN: 'Ball Gown',
+    MERMAID: 'Mermaid',
+    SHEATH: 'Sheath',
+    FIT_AND_FLARE: 'Fit and Flare',
+    EMPIRE: 'Empire',
+    TRUMPET: 'Trumpet',
+    COLUMN: 'Column',
+
+    // Occasion translations
+    WEDDING_OCCASION: 'Wedding',
+    ENGAGEMENT: 'Engagement',
+    PROM_OCCASION: 'Prom',
+    GALA: 'Gala',
+    FORMAL_EVENT: 'Formal Event',
+    COCKTAIL_PARTY: 'Cocktail Party',
+    DINNER_PARTY: 'Dinner Party',
+    BRIDESMAID: 'Bridesmaid',
+
     // Missing strings for DepositFilter
     LESS_THAN_VALUE_2: `Less than ${isUS ? commonStrings.CURRENCY : ''}${env.DEPOSIT_FILTER_VALUE_2 || 500}${!isUS ? (` ${commonStrings.CURRENCY}`) : ''}`,
     LESS_THAN_VALUE_3: `Less than ${isUS ? commonStrings.CURRENCY : ''}${env.DEPOSIT_FILTER_VALUE_3 || 1000}${!isUS ? (` ${commonStrings.CURRENCY}`) : ''}`,
+
+    // Home page translations
+    WEDDING_DRESSES: 'Wedding Dresses',
+    PERFECT_FOR_SPECIAL_DAY: 'Perfect for your special day',
+    EVENING_DRESSES: 'Evening Dresses',
+    ELEGANT_FOR_OCCASIONS: 'Elegant for special occasions',
+    COCKTAIL_DRESSES: 'Cocktail Dresses',
+    PERFECT_FOR_PARTIES: 'Perfect for parties and events',
+    PROM_DRESSES: 'Prom Dresses',
+    MAKE_MEMORIES: 'Make your night unforgettable',
+    PER_DAY: 'per day',
+    VIEW_COLLECTION: 'View Collection',
+
+    // Appointments page
+    MY_FITTING_APPOINTMENTS: 'My Fitting Appointments',
+    CANCELLATION_FEE_WARNING: 'Please note that cancellations less than 24 hours before the appointment may incur a fee.',
+
+    // Dress details page
+    NO_IMAGES_AVAILABLE: 'No images available for this dress',
+
+    // Misc
+    UNNAMED_DRESS: 'Unnamed Dress',
+    IMAGE_REQUIRED: 'Image required',
+    TODAY: 'Today',
+    TOMORROW: 'Tomorrow',
+    YESTERDAY: 'Yesterday',
   },
   fr: {
     NEW_DRESS: 'Nouvelle robe',
@@ -286,6 +360,39 @@ const strings = new LocalizedStrings({
     // Missing strings for DepositFilter
     LESS_THAN_VALUE_2: `Moins de ${isUS ? commonStrings.CURRENCY : ''}${env.DEPOSIT_FILTER_VALUE_2 || 500}${!isUS ? (` ${commonStrings.CURRENCY}`) : ''}`,
     LESS_THAN_VALUE_3: `Moins de ${isUS ? commonStrings.CURRENCY : ''}${env.DEPOSIT_FILTER_VALUE_3 || 1000}${!isUS ? (` ${commonStrings.CURRENCY}`) : ''}`,
+
+    // Home page translations
+    WEDDING_DRESSES: 'Robes de Mariée',
+    PERFECT_FOR_SPECIAL_DAY: 'Parfaites pour votre jour spécial',
+    EVENING_DRESSES: 'Robes de Soirée',
+    ELEGANT_FOR_OCCASIONS: 'Élégantes pour les occasions spéciales',
+    COCKTAIL_DRESSES: 'Robes de Cocktail',
+    PERFECT_FOR_PARTIES: 'Parfaites pour les fêtes et événements',
+    PROM_DRESSES: 'Robes de Bal',
+    MAKE_MEMORIES: 'Rendez votre nuit inoubliable',
+    PER_DAY: 'par jour',
+    VIEW_COLLECTION: 'Voir la Collection',
+
+    // Appointments page
+    MY_FITTING_APPOINTMENTS: 'Mes Rendez-vous d\'Essayage',
+    UPCOMING_APPOINTMENTS: 'Rendez-vous à Venir',
+    NO_UPCOMING_APPOINTMENTS: 'Aucun rendez-vous à venir',
+    PAST_APPOINTMENTS: 'Rendez-vous Passés',
+    NO_PAST_APPOINTMENTS: 'Aucun rendez-vous passé',
+    CANCEL_APPOINTMENT: 'Annuler le Rendez-vous',
+    CANCEL_APPOINTMENT_CONFIRM: 'Êtes-vous sûr de vouloir annuler ce rendez-vous?',
+    CANCELLATION_FEE_WARNING: 'Veuillez noter que les annulations moins de 24 heures avant le rendez-vous peuvent entraîner des frais.',
+    CONFIRM_CANCEL: 'Confirmer l\'Annulation',
+
+    // Dress details page
+    NO_IMAGES_AVAILABLE: 'Aucune image disponible pour cette robe',
+
+    // Misc
+    UNNAMED_DRESS: 'Robe Sans Nom',
+    IMAGE_REQUIRED: 'Image requise',
+    TODAY: 'Aujourd\'hui',
+    TOMORROW: 'Demain',
+    YESTERDAY: 'Hier',
   },
   es: {
     NEW_DRESS: 'Nuevo vestido',
@@ -421,6 +528,39 @@ const strings = new LocalizedStrings({
     FITTING_REQUIRED: 'Prueba Requerida',
     LESS_THAN_VALUE_2: `Menos de ${isUS ? commonStrings.CURRENCY : ''}${env.DEPOSIT_FILTER_VALUE_2 || 500}${!isUS ? (` ${commonStrings.CURRENCY}`) : ''}`,
     LESS_THAN_VALUE_3: `Menos de ${isUS ? commonStrings.CURRENCY : ''}${env.DEPOSIT_FILTER_VALUE_3 || 1000}${!isUS ? (` ${commonStrings.CURRENCY}`) : ''}`,
+
+    // Home page translations
+    WEDDING_DRESSES: 'Vestidos de Novia',
+    PERFECT_FOR_SPECIAL_DAY: 'Perfectos para tu día especial',
+    EVENING_DRESSES: 'Vestidos de Noche',
+    ELEGANT_FOR_OCCASIONS: 'Elegantes para ocasiones especiales',
+    COCKTAIL_DRESSES: 'Vestidos de Cóctel',
+    PERFECT_FOR_PARTIES: 'Perfectos para fiestas y eventos',
+    PROM_DRESSES: 'Vestidos de Graduación',
+    MAKE_MEMORIES: 'Haz tu noche inolvidable',
+    PER_DAY: 'por día',
+    VIEW_COLLECTION: 'Ver Colección',
+
+    // Appointments page
+    MY_FITTING_APPOINTMENTS: 'Mis Citas de Prueba',
+    UPCOMING_APPOINTMENTS: 'Próximas Citas',
+    NO_UPCOMING_APPOINTMENTS: 'No hay citas próximas',
+    PAST_APPOINTMENTS: 'Citas Pasadas',
+    NO_PAST_APPOINTMENTS: 'No hay citas pasadas',
+    CANCEL_APPOINTMENT: 'Cancelar Cita',
+    CANCEL_APPOINTMENT_CONFIRM: '¿Estás seguro de que quieres cancelar esta cita?',
+    CANCELLATION_FEE_WARNING: 'Ten en cuenta que las cancelaciones menos de 24 horas antes de la cita pueden incurrir en una tarifa.',
+    CONFIRM_CANCEL: 'Confirmar Cancelación',
+
+    // Dress details page
+    NO_IMAGES_AVAILABLE: 'No hay imágenes disponibles para este vestido',
+
+    // Misc
+    UNNAMED_DRESS: 'Vestido Sin Nombre',
+    IMAGE_REQUIRED: 'Imagen requerida',
+    TODAY: 'Hoy',
+    TOMORROW: 'Mañana',
+    YESTERDAY: 'Ayer',
   },
   ar: {
     NEW_DRESS: 'فستان جديد',
@@ -654,6 +794,32 @@ const strings = new LocalizedStrings({
     // Missing strings for DepositFilter
     LESS_THAN_VALUE_2: `أقل من ${isUS ? commonStrings.CURRENCY : ''}${env.DEPOSIT_FILTER_VALUE_2 || 500}${!isUS ? (` ${commonStrings.CURRENCY}`) : ''}`,
     LESS_THAN_VALUE_3: `أقل من ${isUS ? commonStrings.CURRENCY : ''}${env.DEPOSIT_FILTER_VALUE_3 || 1000}${!isUS ? (` ${commonStrings.CURRENCY}`) : ''}`,
+
+    // Home page translations
+    WEDDING_DRESSES: 'فساتين الزفاف',
+    PERFECT_FOR_SPECIAL_DAY: 'مثالية ليومك المميز',
+    EVENING_DRESSES: 'فساتين السهرة',
+    ELEGANT_FOR_OCCASIONS: 'أنيقة للمناسبات الخاصة',
+    COCKTAIL_DRESSES: 'فساتين الكوكتيل',
+    PERFECT_FOR_PARTIES: 'مثالية للحفلات والمناسبات',
+    PROM_DRESSES: 'فساتين الحفل',
+    MAKE_MEMORIES: 'اجعلي ليلتك لا تُنسى',
+    PER_DAY: 'في اليوم',
+    VIEW_COLLECTION: 'عرض المجموعة',
+
+    // Appointments page
+    MY_FITTING_APPOINTMENTS: 'مواعيد القياس الخاصة بي',
+    CANCELLATION_FEE_WARNING: 'يرجى ملاحظة أن الإلغاء قبل أقل من 24 ساعة من الموعد قد يترتب عليه رسوم.',
+
+    // Dress details page
+    NO_IMAGES_AVAILABLE: 'لا توجد صور متاحة لهذا الفستان',
+
+    // Misc
+    UNNAMED_DRESS: 'فستان بدون اسم',
+    IMAGE_REQUIRED: 'الصورة مطلوبة',
+    TODAY: 'اليوم',
+    TOMORROW: 'غداً',
+    YESTERDAY: 'أمس',
   }
 })
 

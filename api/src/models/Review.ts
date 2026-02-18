@@ -1,4 +1,5 @@
 import { Schema, model, Model } from 'mongoose'
+import * as bookcarsTypes from ':bookcars-types'
 
 export interface IReview {
   _id?: string
@@ -161,8 +162,8 @@ reviewSchema.pre('save', async function(next) {
       return next(new Error('A review already exists for this booking'))
     }
 
-    // Auto-verify if booking is completed
-    if (booking.status === 'completed') {
+    // Auto-verify if booking is paid (completed payment)
+    if (booking.status === bookcarsTypes.BookingStatus.Paid) {
       (this as any).verified = true
     }
   }

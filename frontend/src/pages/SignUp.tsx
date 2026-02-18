@@ -27,7 +27,7 @@ import { useUserContext, UserContextType } from '@/context/UserContext'
 import { useRecaptchaContext, RecaptchaContextType } from '@/context/RecaptchaContext'
 import { useSecurityContext } from '@/context/SecurityContext'
 import { SecureTextField, SecureEmailField, SecurePhoneField, SecurePasswordField } from '@/components/SecureFormComponents'
-import { useFormSecurityMonitoring } from '@/hooks/useSecurityMonitoring'
+import { useFormSecurityMonitoring } from '@/hooks/useFormSecurityMonitoring'
 import ValidationMiddleware from '@/middleware/ValidationMiddleware'
 import { SecurityValidationSchemas } from '@/schemas/SecurityValidationSchemas'
 import Layout from '@/components/Layout'
@@ -205,7 +205,7 @@ const SignUp = () => {
                   setFormData(prev => ({ ...prev, fullName: sanitizedValue }))
                   setValue('fullName', sanitizedValue)
                   if (!isValid) {
-                    reportValidationFailure('fullName', ['Invalid name format or security threat'])
+                    reportValidationFailure('fullName', _value, 'Invalid name format or security threat')
                   }
                 }}
                 error={!!errors.fullName}
@@ -227,7 +227,7 @@ const SignUp = () => {
                   setFormData(prev => ({ ...prev, email: sanitizedValue }))
                   setValue('email', sanitizedValue)
                   if (!isValid) {
-                    reportValidationFailure('email', ['Invalid email format or security threat'])
+                    reportValidationFailure('email', _value, 'Invalid email format or security threat')
                   }
                 }}
                 error={!!errors.email}
@@ -249,7 +249,7 @@ const SignUp = () => {
                   setFormData(prev => ({ ...prev, phone: sanitizedValue }))
                   setValue('phone', sanitizedValue)
                   if (!isValid) {
-                    reportValidationFailure('phone', ['Invalid phone format or security threat'])
+                    reportValidationFailure('phone', _value, 'Invalid phone format or security threat')
                   }
                 }}
                 error={!!errors.phone}
@@ -289,7 +289,7 @@ const SignUp = () => {
                   setFormData(prev => ({ ...prev, password: sanitizedValue }))
                   setValue('password', sanitizedValue)
                   if (!isValid) {
-                    reportValidationFailure('password', ['Password does not meet security requirements'])
+                    reportValidationFailure('password', _value, 'Password does not meet security requirements')
                   }
                 }}
                 error={!!errors.password}
@@ -313,7 +313,7 @@ const SignUp = () => {
                   setFormData(prev => ({ ...prev, confirmPassword: sanitizedValue }))
                   setValue('confirmPassword', sanitizedValue)
                   if (!isValid) {
-                    reportValidationFailure('confirmPassword', ['Password confirmation does not meet security requirements'])
+                    reportValidationFailure('confirmPassword', _value, 'Password confirmation does not meet security requirements')
                   }
                 }}
                 error={!!errors.confirmPassword}

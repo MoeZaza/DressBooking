@@ -256,7 +256,11 @@ export const confirm = async (user: env.User, supplier: env.User, booking: env.B
     return false
   }
 
-  const locationName = (location.values as unknown as env.LocationValue[]).filter((value) => value.language === language)[0].value
+  const locationValues = location.values as unknown as env.LocationValue[]
+  const locationName = locationValues.find((value) => value.language === language)?.value || locationValues[0]?.value || 'Unknown Location'
+
+  // Safely get supplier name with null check
+  const supplierName = (dress.supplier as unknown as env.User)?.fullName || 'Unknown Supplier'
 
   let contractFile: string | null = null
   if (supplier.contracts && supplier.contracts.length > 0) {
@@ -275,11 +279,11 @@ export const confirm = async (user: env.User, supplier: env.User, booking: env.B
         ${i18n.t('HELLO')}${user.fullName},<br><br>
         ${!payLater ? `${i18n.t('BOOKING_CONFIRMED_PART1')} ${booking._id} ${i18n.t('BOOKING_CONFIRMED_PART2')}`
         + '<br><br>' : ''}
-        ${i18n.t('BOOKING_CONFIRMED_PART3')}${(dress.supplier as unknown as env.User).fullName}${i18n.t('BOOKING_CONFIRMED_PART4')}${locationName}${i18n.t('BOOKING_CONFIRMED_PART5')}`
+        ${i18n.t('BOOKING_CONFIRMED_PART3')}${supplierName}${i18n.t('BOOKING_CONFIRMED_PART4')}${locationName}${i18n.t('BOOKING_CONFIRMED_PART5')}`
       + `${from} ${i18n.t('BOOKING_CONFIRMED_PART6')}`
       + `${dress.name}${i18n.t('BOOKING_CONFIRMED_PART7')}`
       + `<br><br>${i18n.t('BOOKING_CONFIRMED_PART8')}<br><br>`
-      + `${i18n.t('BOOKING_CONFIRMED_PART9')}${(dress.supplier as unknown as env.User).fullName}${i18n.t('BOOKING_CONFIRMED_PART10')}${locationName}${i18n.t('BOOKING_CONFIRMED_PART11')}`
+      + `${i18n.t('BOOKING_CONFIRMED_PART9')}${supplierName}${i18n.t('BOOKING_CONFIRMED_PART10')}${locationName}${i18n.t('BOOKING_CONFIRMED_PART11')}`
       + `${to} ${i18n.t('BOOKING_CONFIRMED_PART12')}`
       + `<br><br>${i18n.t('BOOKING_CONFIRMED_PART13')}<br><br>${i18n.t('BOOKING_CONFIRMED_PART14')}${env.FRONTEND_HOST}<br><br>
         ${i18n.t('REGARDS')}<br>
@@ -444,8 +448,8 @@ export const checkout = asyncHandler(async (req: Request, res: Response) => {
         throw new BusinessLogicError(ErrorCode.RESOURCE_NOT_FOUND, 'Dress not found for booking', context)
       }
 
-      dress.rentals += 1
-      await dress.save()
+      // Use atomic increment to avoid race conditions
+      await Dress.findByIdAndUpdate(booking.dress, { $inc: { rentals: 1 } })
 
       // Create revenue record
       try {
@@ -719,7 +723,7 @@ export const update = async (req: Request, res: Response) => {
     }
 
     logger.error('[booking.update] Booking not found:', body.booking._id)
-    res.sendStatus(204)
+    res.sendStatus(404)
   } catch (err) {
     logger.error(`[booking.update] ${i18n.t('DB_ERROR')} ${JSON.stringify(req.body)}`, err)
     res.status(400).send(i18n.t('DB_ERROR') + err)
@@ -752,6 +756,7 @@ export const adminCreateBooking = async (req: Request, res: Response) => {
       fittingDate,
       alterationNotes,
       accessoriesIncluded,
+      notes,
     } = req.body
 
     // Validation
@@ -839,6 +844,7 @@ export const adminCreateBooking = async (req: Request, res: Response) => {
       fittingDate: fittingDate ? new Date(fittingDate) : undefined,
       alterationNotes: alterationNotes || '',
       accessoriesIncluded: accessoriesIncluded || [],
+      notes: notes || '',
     }
 
     const booking = new Booking(bookingData)
@@ -988,6 +994,9 @@ export const adminUpdateBooking = async (req: Request, res: Response) => {
     }
     if (accessoriesIncluded !== undefined) {
       booking.accessoriesIncluded = accessoriesIncluded
+    }
+    if (notes !== undefined) {
+      booking.notes = notes
     }
 
     await booking.save()
@@ -1308,6 +1317,7 @@ export const getAnalytics = async (req: Request, res: Response): Promise<void> =
     if (cachedAnalytics) {
       logger.info('Returning cached analytics data', { metadata: { cacheKey } })
       res.status(200).json(cachedAnalytics)
+      return
     }
 
     // Build date filter

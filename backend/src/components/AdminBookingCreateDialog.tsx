@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import {
   Dialog,
   DialogTitle,
@@ -79,26 +79,71 @@ const AdminBookingCreateDialog: React.FC<AdminBookingCreateDialogProps> = ({
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
 
+  // Ref for timeout cleanup
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
   const steps = ['Customer', 'Dress & Dates', 'Payment & Details']
 
   const loadInitialData = useCallback(async () => {
     try {
       setLoading(true)
-      
-      // Load customers
-      const customersData = await UserService.getUsers({ user: '', types: [bookcarsTypes.UserType.User] }, '', 1, 100)
-      setCustomers(customersData?.[0]?.resultData?.filter((user: any) => user.type === 'user') || [])
 
-      // Load dresses
-      const dressesData = await DressService.getDresses('', { size: ['100'] }, 1, 100)
+      // Load customers (users with type 'user')
+      const customersPayload: bookcarsTypes.GetUsersBody = {
+        user: '',
+        types: [bookcarsTypes.UserType.User]
+      }
+      const customersData = await UserService.getUsers(customersPayload, '', 1, 100)
+      // Handle both response formats: [{resultData: [...]}] and {docs: [...]}
+      const customersList = Array.isArray(customersData)
+        ? (customersData[0]?.resultData || [])
+        : ((customersData as any)?.docs || [])
+      setCustomers(customersList.filter((user: any) => user.type === 'user'))
+
+      // Load dresses with correct payload structure
+      const dressesPayload: bookcarsTypes.GetDressesPayload = {
+        suppliers: supplierId ? [supplierId] : [],
+        availability: [bookcarsTypes.Availablity.Available]
+      }
+      const dressesData = await DressService.getDresses('', dressesPayload, 1, 100)
+
+      // Handle both response formats: [{resultData: [...]}] and {docs: [...]} or direct array
+      let dressesList: any[] = []
+      if (Array.isArray(dressesData)) {
+        if (dressesData[0]?.resultData) {
+          dressesList = dressesData[0].resultData
+        } else if ((dressesData as any).docs) {
+          dressesList = (dressesData as any).docs
+        } else {
+          dressesList = dressesData
+        }
+      } else if ((dressesData as any)?.docs) {
+        dressesList = (dressesData as any).docs
+      }
+
+      // Filter by supplier if needed
       const filteredDresses = supplierId
-        ? dressesData?.[0]?.resultData?.filter((dress: any) => dress.supplier._id === supplierId) || []
-        : dressesData?.[0]?.resultData || []
+        ? dressesList.filter((dress: any) =>
+            dress.supplier && (dress.supplier._id === supplierId || dress.supplier === supplierId))
+        : dressesList
       setDresses(filteredDresses)
 
       // Load locations
       const locationsData = await LocationService.getLocations('', 1, 100)
-      setLocations(locationsData?.[0]?.resultData || [])
+      // Handle response format: [{resultData: [...], pageInfo: [...]}]
+      const locationsList = Array.isArray(locationsData)
+        ? (locationsData[0]?.resultData || [])
+        : ((locationsData as any)?.docs || [])
+      setLocations(locationsList)
 
     } catch (err: any) {
       console.error('Error loading data:', err)
@@ -187,15 +232,18 @@ const AdminBookingCreateDialog: React.FC<AdminBookingCreateDialogProps> = ({
 
       // Create new customer if needed
       if (formData.createNewCustomer) {
+        // Use selected booking location or first available location
+        const customerLocation = formData.location?._id || (locations.length > 0 ? locations[0]._id : '')
+
         const newCustomer: bookcarsTypes.CreateUserPayload = {
           fullName: formData.customerName,
           email: formData.customerEmail,
           phone: formData.customerPhone,
-          location: 'Jenin', // Default location
-          bio: '', // Default empty bio
+          location: customerLocation,
+          bio: '',
           type: 'user',
           verified: true,
-          language: 'ar',
+          language: 'en',
         }
         
         const createdCustomer = await UserService.create(newCustomer)
@@ -222,6 +270,7 @@ const AdminBookingCreateDialog: React.FC<AdminBookingCreateDialogProps> = ({
         fittingDate: formData.fittingDate,
         alterationNotes: formData.alterationNotes,
         accessoriesIncluded: formData.accessoriesIncluded,
+        notes: formData.notes,
       }
 
       const response = await fetch('/api/admin-create-booking', {
@@ -237,7 +286,7 @@ const AdminBookingCreateDialog: React.FC<AdminBookingCreateDialogProps> = ({
         const newBooking = await response.json()
         setSuccess('Booking created successfully!')
         onSave(newBooking)
-        setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
           setSuccess('')
           handleClose()
         }, 2000)
@@ -511,7 +560,16 @@ const AdminBookingCreateDialog: React.FC<AdminBookingCreateDialogProps> = ({
               rows={3}
               fullWidth
             />
-            
+
+            <TextField
+              label="Additional Notes"
+              value={formData.notes}
+              onChange={(e) => handleInputChange('notes', e.target.value)}
+              multiline
+              rows={2}
+              fullWidth
+            />
+
             <Box>
               <Typography variant="subtitle2" gutterBottom>
                 Accessories Included

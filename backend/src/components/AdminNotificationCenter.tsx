@@ -45,6 +45,7 @@ import { format } from 'date-fns'
 import * as bookcarsTypes from ':bookcars-types'
 import * as AdminNotificationService from '@/services/AdminNotificationService'
 import * as helper from '@/common/helper'
+import { strings as commonStrings } from '@/lang/common'
 
 interface AdminNotificationCenterProps {
   user?: bookcarsTypes.User
@@ -173,7 +174,7 @@ const AdminNotificationCenter: React.FC<AdminNotificationCenterProps> = ({ user,
   return (
     <Box className={className}>
       {/* Notification Bell */}
-      <Tooltip title="Admin Notifications">
+      <Tooltip title={commonStrings.ADMIN_NOTIFICATIONS}>
         <IconButton onClick={handleMenuOpen} color="inherit">
           <Badge badgeContent={unreadCount} color="error">
             {unreadCount > 0 ? <NotificationsActive /> : <Notifications />}
@@ -197,12 +198,12 @@ const AdminNotificationCenter: React.FC<AdminNotificationCenterProps> = ({ user,
               Admin Notifications ({unreadCount} unread)
             </Typography>
             <Box>
-              <Tooltip title="Refresh">
+              <Tooltip title={commonStrings.REFRESH}>
                 <IconButton size="small" onClick={fetchNotifications} disabled={loading}>
                   <Refresh />
                 </IconButton>
               </Tooltip>
-              <Tooltip title="Settings">
+              <Tooltip title={commonStrings.OPTIONS}>
                 <IconButton size="small" onClick={() => setSettingsOpen(true)}>
                   <Settings />
                 </IconButton>
@@ -292,7 +293,7 @@ const AdminNotificationCenter: React.FC<AdminNotificationCenterProps> = ({ user,
                   />
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
                     {!notification.isRead && (
-                      <Tooltip title="Mark as read">
+                      <Tooltip title={commonStrings.MARK_AS_READ}>
                         <IconButton
                           size="small"
                           onClick={() => handleMarkAsRead(notification._id!)}
@@ -301,7 +302,7 @@ const AdminNotificationCenter: React.FC<AdminNotificationCenterProps> = ({ user,
                         </IconButton>
                       </Tooltip>
                     )}
-                    <Tooltip title="Delete">
+                    <Tooltip title={commonStrings.DELETE}>
                       <IconButton
                         size="small"
                         onClick={() => handleDeleteNotification(notification._id!)}
@@ -320,7 +321,7 @@ const AdminNotificationCenter: React.FC<AdminNotificationCenterProps> = ({ user,
         {/* View All Button */}
         <Box sx={{ p: 1, borderTop: 1, borderColor: 'divider' }}>
           <Button fullWidth onClick={() => window.open('/admin/notifications', '_blank')}>
-            View All Notifications
+            {commonStrings.VIEW_ALL_NOTIFICATIONS}
           </Button>
         </Box>
       </Menu>
@@ -328,7 +329,7 @@ const AdminNotificationCenter: React.FC<AdminNotificationCenterProps> = ({ user,
       {/* Settings Dialog */}
       <Dialog open={settingsOpen} onClose={() => setSettingsOpen(false)} maxWidth="sm" fullWidth>
         <DialogTitle>
-          Notification Settings
+          {commonStrings.NOTIFICATION_SETTINGS}
           <IconButton
             sx={{ position: 'absolute', right: 8, top: 8 }}
             onClick={() => setSettingsOpen(false)}

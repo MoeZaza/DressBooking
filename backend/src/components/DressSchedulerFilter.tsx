@@ -50,7 +50,7 @@ const DressSchedulerFilter = ({
     if (!location && !keyword) {
       filter = null
     }
-    if (onSubmit) {
+    if (onSubmit && filter) {
       onSubmit(bookcarsHelper.clone(filter))
     }
   }

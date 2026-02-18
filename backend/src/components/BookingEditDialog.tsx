@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {
   Dialog,
   DialogTitle,
@@ -52,6 +52,18 @@ const BookingEditDialog: React.FC<BookingEditDialogProps> = ({
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+
+  // Ref for timeout cleanup
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     if (booking) {
@@ -153,7 +165,7 @@ const BookingEditDialog: React.FC<BookingEditDialogProps> = ({
         const updatedBooking = await response.json()
         setSuccess('Booking updated successfully!')
         onSave(updatedBooking)
-        setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
           setSuccess('')
           onClose()
         }, 2000)

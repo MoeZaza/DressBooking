@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from 'react-router-dom'
@@ -60,6 +60,16 @@ const SearchForm = ({
   const [minDate, setMinDate] = useState(_minDate)
   const [locationId, setLocationId] = useState('')
   const [locationObject, setLocationObject] = useState<bookcarsTypes.Location | undefined>(undefined)
+  const navTimeoutRef = useRef<number | null>(null)
+
+  // Cleanup navigation timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (navTimeoutRef.current) {
+        clearTimeout(navTimeoutRef.current)
+      }
+    }
+  }, [])
 
   // Calculate default dates
   const getDefaultFromDate = () => {
@@ -240,7 +250,7 @@ const SearchForm = ({
     const currentPath = window.location.pathname
     if (currentPath !== '/search') {
       // Navigate to search page with complete data including default dates
-      setTimeout(navigate, 0, '/search', {
+      navTimeoutRef.current = setTimeout(navigate, 0, '/search', {
         state: {
           keyword: searchData.keyword,
           from: searchData.from,

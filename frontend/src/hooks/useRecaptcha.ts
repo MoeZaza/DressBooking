@@ -46,18 +46,18 @@ const useReCaptcha = (): RecaptchaType => {
 
   useEffect(() => {
     if (!env.RECAPTCHA_ENABLED) {
-      return
+      return undefined
     }
     if (env.isSafari) {
-      return
+      return undefined
     }
     if (typeof window === 'undefined' || reCaptchaLoaded) {
-      return
+      return undefined
     }
     if (window.grecaptcha) {
       showBadge()
       setReCaptchaLoaded(true)
-      return
+      return undefined
     }
     let fired = false
     const loadRecaptchaScript = () => {
@@ -74,12 +74,27 @@ const useReCaptcha = (): RecaptchaType => {
       }
     }
 
-    window.addEventListener('mousemove', loadRecaptchaScript, { once: true })
-    window.addEventListener('touchstart', loadRecaptchaScript, { once: true })
+    const handleMouseMove = () => loadRecaptchaScript()
+    const handleTouchStart = () => loadRecaptchaScript()
+
+    window.addEventListener('mousemove', handleMouseMove, { once: true })
+    window.addEventListener('touchstart', handleTouchStart, { once: true })
+
+    // Cleanup function
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('touchstart', handleTouchStart)
+    }
   }, [reCaptchaLoaded])
 
   // Hide badge when unmount
-  useEffect(() => hideBadge, [])
+  useEffect(() => {
+    hideBadge()
+    return () => {
+      // Show badge again when component unmounts
+      showBadge()
+    }
+  }, [])
 
   // Get token
   const generateReCaptchaToken = (action: string = 'submit'): Promise<string> => new Promise((resolve, reject) => {

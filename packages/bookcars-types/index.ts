@@ -128,6 +128,7 @@ export enum BookingStatus {
   Deposit = 'deposit',
   Paid = 'paid',
   Reserved = 'reserved',
+  Completed = 'completed',
   Cancelled = 'cancelled',
 }
 
@@ -200,6 +201,16 @@ export interface Filter {
   to?: Date
   keyword?: string
   location?: string
+}
+
+export interface SearchFormData {
+  keyword?: string
+  from?: Date
+  to?: Date
+  location?: string | Location
+  dressType?: string
+  dressSize?: string
+  dressStyle?: string
 }
 
 export interface GetBookingsPayload {

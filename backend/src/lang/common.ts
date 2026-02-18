@@ -99,6 +99,90 @@ const strings = new LocalizedStrings({
     BLACKLISTED: 'Liste noire',
     BLACKLISTED_TOOLTIP: "Les utilisateurs mis sur liste noire n'ont plus accès à la plateforme.",
     FIELD_NOT_VALID: 'Veuillez respecter le format requis',
+
+    // Dashboard
+    REFRESH: 'Rafraîchir',
+    RESET_TO_DEFAULTS: 'Réinitialiser aux valeurs par défaut',
+    DEFAULT_ACCESSORY_FEE: 'Frais d\'accessoire par défaut',
+    USED_FOR_UNCONFIGURED_ACCESSORIES: 'Utilisé pour les accessoires non configurés ci-dessus',
+    START_DATE: 'Date de début',
+    END_DATE: 'Date de fin',
+    REVENUE: 'Revenus',
+    EXPENSES: 'Dépenses',
+    NET_PROFIT: 'Bénéfice net',
+    BOOKINGS: 'Réservations',
+    AVERAGE_BOOKING_VALUE: 'Valeur moyenne des réservations',
+    OVERVIEW: 'Aperçu',
+    CALENDAR: 'Calendrier',
+    LIST_VIEW: 'Vue liste',
+    ANALYTICS: 'Analytique',
+    REFRESH_DATA: 'Actualiser les données',
+    EXPORT_BOOKINGS: 'Exporter les réservations',
+    NET_CASH_FLOW: 'Flux de trésorerie net',
+
+    // Dashboard Access
+    SUPPLIER_DASHBOARD: 'Tableau de bord fournisseur',
+    ACCESS_DENIED_DASHBOARD: 'Accès refusé: Le tableau de bord nécessite des privilèges admin ou fournisseur',
+    LOADING_DASHBOARD: 'Chargement des données et analyses du tableau de bord...',
+
+    // Additional common
+    CUSTOMER: 'Client',
+    AMOUNT: 'Montant',
+    RENTAL_PERIOD: 'Période de location',
+
+    // Loading states
+    LOADING_USER_DATA: 'Chargement des données utilisateur...',
+    VERIFYING_AUTHENTICATION: 'Veuillez patienter pendant que nous vérifions votre authentification.',
+
+    // Actions
+    CREATE_NEW_DRESS: 'Créer une nouvelle robe',
+
+    // Bookings
+    BOOKING_MANAGEMENT_DASHBOARD: 'Tableau de bord de gestion des réservations',
+    TOTAL_REVENUE: 'Revenus totaux',
+    TOTAL_BOOKINGS: 'Total des réservations',
+    AVG_BOOKING_VALUE: 'Valeur moyenne des réservations',
+    AVAILABLE_DRESSES: 'Robes disponibles',
+    CREATE_NEW_BOOKING: 'Créer une nouvelle réservation',
+    CREATE_NEW_SUPPLIER: 'Créer un nouveau fournisseur',
+    CREATE_NEW_USER: 'Créer un nouvel utilisateur',
+    CREATE_NEW_LOCATION: 'Créer un nouvel emplacement',
+    NO_LOCATIONS_FOUND: 'Aucun emplacement trouvé. Créez votre premier emplacement pour commencer.',
+
+    // Notification Center
+    ADMIN_NOTIFICATIONS: 'Notifications Admin',
+    MARK_AS_READ: 'Marquer comme lu',
+    VIEW_ALL_NOTIFICATIONS: 'Voir toutes les notifications',
+    NOTIFICATION_SETTINGS: 'Paramètres de notification',
+
+    // Booking Form
+    PAYMENT_STATUS: 'Statut du paiement',
+    BOOKING_STATUS: 'Statut de la réservation',
+    PARTIAL: 'Partiel',
+    REFUNDED: 'Remboursé',
+    CONFIRMED: 'Confirmé',
+    COMPLETED: 'Terminé',
+    FITTING_REQUIRED: 'Essayage requis',
+    FITTING_DATE: 'Date d\'essayage',
+
+    // Wedding Packages
+    DEPOSIT_REQUIRED: 'Acompte',
+
+    // Actions
+    EXPORT: 'Exporter',
+    GENERATE: 'Générer',
+    SUCCESS: 'Succès',
+    FAILED: 'Échec',
+    ERROR: 'Erreur',
+    NO_DATA: 'Aucune donnée disponible',
+
+    // Charts
+    RECENT_BOOKINGS: 'Réservations récentes',
+    QUICK_STATS: 'Statistiques rapides',
+    REVENUE_TREND: 'Tendance des revenus (6 derniers mois)',
+    MONTHLY_BOOKING_TRENDS: 'Tendances mensuelles des réservations',
+    BOOKING_STATUS_DISTRIBUTION: 'Répartition des statuts de réservation',
+    CATEGORY_PERFORMANCE: 'Performance des catégories',
   },
   en: {
     GENERIC_ERROR: 'An unhandled error occurred.',
@@ -205,6 +289,90 @@ const strings = new LocalizedStrings({
     CLEAR_FILTERS: 'Clear Filters',
     HOME: 'Home',
     VIEW: 'View',
+
+    // Dashboard
+    REFRESH: 'Refresh',
+    RESET_TO_DEFAULTS: 'Reset to Defaults',
+    DEFAULT_ACCESSORY_FEE: 'Default Accessory Fee',
+    USED_FOR_UNCONFIGURED_ACCESSORIES: 'Used for accessories not specifically configured above',
+    START_DATE: 'Start Date',
+    END_DATE: 'End Date',
+    REVENUE: 'Revenue',
+    EXPENSES: 'Expenses',
+    NET_PROFIT: 'Net Profit',
+    BOOKINGS: 'Bookings',
+    AVERAGE_BOOKING_VALUE: 'Avg Booking Value',
+    OVERVIEW: 'Overview',
+    CALENDAR: 'Calendar',
+    LIST_VIEW: 'List View',
+    ANALYTICS: 'Analytics',
+    REFRESH_DATA: 'Refresh Data',
+    EXPORT_BOOKINGS: 'Export Bookings',
+    NET_CASH_FLOW: 'Net Cash Flow',
+
+    // Dashboard Access
+    SUPPLIER_DASHBOARD: 'Supplier Dashboard',
+    ACCESS_DENIED_DASHBOARD: 'Access denied: Dashboard requires admin or supplier privileges',
+    LOADING_DASHBOARD: 'Loading dashboard data and analytics...',
+
+    // Additional common
+    CUSTOMER: 'Customer',
+    AMOUNT: 'Amount',
+    RENTAL_PERIOD: 'Rental Period',
+
+    // Loading states
+    LOADING_USER_DATA: 'Loading user data...',
+    VERIFYING_AUTHENTICATION: 'Please wait while we verify your authentication.',
+
+    // Actions
+    CREATE_NEW_DRESS: 'Create New Dress',
+
+    // Bookings
+    BOOKING_MANAGEMENT_DASHBOARD: 'Booking Management Dashboard',
+    TOTAL_REVENUE: 'Total Revenue',
+    TOTAL_BOOKINGS: 'Total Bookings',
+    AVG_BOOKING_VALUE: 'Avg. Booking Value',
+    AVAILABLE_DRESSES: 'Available Dresses',
+    CREATE_NEW_BOOKING: 'Create New Booking',
+    CREATE_NEW_SUPPLIER: 'Create New Supplier',
+    CREATE_NEW_USER: 'Create New User',
+    CREATE_NEW_LOCATION: 'Create New Location',
+    NO_LOCATIONS_FOUND: 'No locations found. Create your first location to get started.',
+
+    // Notification Center
+    ADMIN_NOTIFICATIONS: 'Admin Notifications',
+    MARK_AS_READ: 'Mark as read',
+    VIEW_ALL_NOTIFICATIONS: 'View All Notifications',
+    NOTIFICATION_SETTINGS: 'Notification Settings',
+
+    // Booking Form
+    PAYMENT_STATUS: 'Payment Status',
+    BOOKING_STATUS: 'Booking Status',
+    PARTIAL: 'Partial',
+    REFUNDED: 'Refunded',
+    CONFIRMED: 'Confirmed',
+    COMPLETED: 'Completed',
+    FITTING_REQUIRED: 'Fitting Required',
+    FITTING_DATE: 'Fitting Date',
+
+    // Wedding Packages
+    DEPOSIT_REQUIRED: 'Deposit',
+
+    // Actions
+    EXPORT: 'Export',
+    GENERATE: 'Generate',
+    SUCCESS: 'Success',
+    FAILED: 'Failed',
+    ERROR: 'Error',
+    NO_DATA: 'No data available',
+
+    // Charts
+    RECENT_BOOKINGS: 'Recent Bookings',
+    QUICK_STATS: 'Quick Stats',
+    REVENUE_TREND: 'Revenue Trend (Last 6 Months)',
+    MONTHLY_BOOKING_TRENDS: 'Monthly Booking Trends',
+    BOOKING_STATUS_DISTRIBUTION: 'Booking Status Distribution',
+    CATEGORY_PERFORMANCE: 'Category Performance',
   },
   es: {
     GENERIC_ERROR: 'Se ha producido un error no controlado.',
@@ -289,6 +457,90 @@ const strings = new LocalizedStrings({
     BLACKLISTED: 'Lista negra',
     BLACKLISTED_TOOLTIP: 'Los usuarios en la lista negra ya no tienen acceso a la plataforma.',
     FIELD_NOT_VALID: 'Por favor respete el formato requerido',
+
+    // Dashboard
+    REFRESH: 'Actualizar',
+    RESET_TO_DEFAULTS: 'Restablecer valores predeterminados',
+    DEFAULT_ACCESSORY_FEE: 'Tarifa de accesorio predeterminada',
+    USED_FOR_UNCONFIGURED_ACCESSORIES: 'Usado para accesorios no configurados específicamente arriba',
+    START_DATE: 'Fecha de inicio',
+    END_DATE: 'Fecha de fin',
+    REVENUE: 'Ingresos',
+    EXPENSES: 'Gastos',
+    NET_PROFIT: 'Beneficio neto',
+    BOOKINGS: 'Reservas',
+    AVERAGE_BOOKING_VALUE: 'Valor promedio de reserva',
+    OVERVIEW: 'Resumen',
+    CALENDAR: 'Calendario',
+    LIST_VIEW: 'Vista de lista',
+    ANALYTICS: 'Analítica',
+    REFRESH_DATA: 'Actualizar datos',
+    EXPORT_BOOKINGS: 'Exportar reservas',
+    NET_CASH_FLOW: 'Flujo de caja neto',
+
+    // Dashboard Access
+    SUPPLIER_DASHBOARD: 'Panel de proveedor',
+    ACCESS_DENIED_DASHBOARD: 'Acceso denegado: El panel requiere privilegios de administrador o proveedor',
+    LOADING_DASHBOARD: 'Cargando datos y análisis del panel...',
+
+    // Additional common
+    CUSTOMER: 'Cliente',
+    AMOUNT: 'Cantidad',
+    RENTAL_PERIOD: 'Período de alquiler',
+
+    // Loading states
+    LOADING_USER_DATA: 'Cargando datos de usuario...',
+    VERIFYING_AUTHENTICATION: 'Por favor espere mientras verificamos su autenticación.',
+
+    // Actions
+    CREATE_NEW_DRESS: 'Crear nuevo vestido',
+
+    // Bookings
+    BOOKING_MANAGEMENT_DASHBOARD: 'Panel de gestión de reservas',
+    TOTAL_REVENUE: 'Ingresos totales',
+    TOTAL_BOOKINGS: 'Total de reservas',
+    AVG_BOOKING_VALUE: 'Valor promedio de reserva',
+    AVAILABLE_DRESSES: 'Vestidos disponibles',
+    CREATE_NEW_BOOKING: 'Crear nueva reserva',
+    CREATE_NEW_SUPPLIER: 'Crear nuevo proveedor',
+    CREATE_NEW_USER: 'Crear nuevo usuario',
+    CREATE_NEW_LOCATION: 'Crear nueva ubicación',
+    NO_LOCATIONS_FOUND: 'No se encontraron ubicaciones. Crea tu primera ubicación para comenzar.',
+
+    // Notification Center
+    ADMIN_NOTIFICATIONS: 'Notificaciones de Admin',
+    MARK_AS_READ: 'Marcar como leído',
+    VIEW_ALL_NOTIFICATIONS: 'Ver todas las notificaciones',
+    NOTIFICATION_SETTINGS: 'Configuración de notificaciones',
+
+    // Booking Form
+    PAYMENT_STATUS: 'Estado del pago',
+    BOOKING_STATUS: 'Estado de la reserva',
+    PARTIAL: 'Parcial',
+    REFUNDED: 'Reembolsado',
+    CONFIRMED: 'Confirmado',
+    COMPLETED: 'Completado',
+    FITTING_REQUIRED: 'Prueba requerida',
+    FITTING_DATE: 'Fecha de prueba',
+
+    // Wedding Packages
+    DEPOSIT_REQUIRED: 'Depósito',
+
+    // Actions
+    EXPORT: 'Exportar',
+    GENERATE: 'Generar',
+    SUCCESS: 'Éxito',
+    FAILED: 'Fallido',
+    ERROR: 'Error',
+    NO_DATA: 'Sin datos disponibles',
+
+    // Charts
+    RECENT_BOOKINGS: 'Reservas recientes',
+    QUICK_STATS: 'Estadísticas rápidas',
+    REVENUE_TREND: 'Tendencia de ingresos (últimos 6 meses)',
+    MONTHLY_BOOKING_TRENDS: 'Tendencias mensuales de reservas',
+    BOOKING_STATUS_DISTRIBUTION: 'Distribución de estados de reserva',
+    CATEGORY_PERFORMANCE: 'Rendimiento por categoría',
   },
   ar: {
     GENERIC_ERROR: 'حدث خطأ غير متوقع.',
@@ -395,6 +647,90 @@ const strings = new LocalizedStrings({
     CLEAR_FILTERS: 'مسح التصفية',
     HOME: 'الرئيسية',
     VIEW: 'عرض',
+
+    // Dashboard
+    REFRESH: 'تحديث',
+    RESET_TO_DEFAULTS: 'إعادة تعيين إلى الافتراضي',
+    DEFAULT_ACCESSORY_FEE: 'رسوم الإكسسوار الافتراضية',
+    USED_FOR_UNCONFIGURED_ACCESSORIES: 'يستخدم للإكسسوارات غير المكونة أعلاه',
+    START_DATE: 'تاريخ البدء',
+    END_DATE: 'تاريخ الانتهاء',
+    REVENUE: 'الإيرادات',
+    EXPENSES: 'المصروفات',
+    NET_PROFIT: 'صافي الربح',
+    BOOKINGS: 'الحجوزات',
+    AVERAGE_BOOKING_VALUE: 'متوسط قيمة الحجز',
+    OVERVIEW: 'نظرة عامة',
+    CALENDAR: 'التقويم',
+    LIST_VIEW: 'عرض القائمة',
+    ANALYTICS: 'التحليلات',
+    REFRESH_DATA: 'تحديث البيانات',
+    EXPORT_BOOKINGS: 'تصدير الحجوزات',
+    NET_CASH_FLOW: 'صافي التدفق النقدي',
+
+    // Dashboard Access
+    SUPPLIER_DASHBOARD: 'لوحة تحكم المورد',
+    ACCESS_DENIED_DASHBOARD: 'الوصول مرفوض: لوحة التحكم تتطلب صلاحيات المدير أو المورد',
+    LOADING_DASHBOARD: 'جاري تحميل بيانات وتحليلات لوحة التحكم...',
+
+    // Additional common
+    CUSTOMER: 'العميل',
+    AMOUNT: 'المبلغ',
+    RENTAL_PERIOD: 'فترة الإيجار',
+
+    // Loading states
+    LOADING_USER_DATA: 'جاري تحميل بيانات المستخدم...',
+    VERIFYING_AUTHENTICATION: 'يرجى الانتظار أثناء التحقق من مصادقتك.',
+
+    // Actions
+    CREATE_NEW_DRESS: 'إنشاء فستان جديد',
+
+    // Bookings
+    BOOKING_MANAGEMENT_DASHBOARD: 'لوحة إدارة الحجوزات',
+    TOTAL_REVENUE: 'إجمالي الإيرادات',
+    TOTAL_BOOKINGS: 'إجمالي الحجوزات',
+    AVG_BOOKING_VALUE: 'متوسط قيمة الحجز',
+    AVAILABLE_DRESSES: 'الفساتين المتاحة',
+    CREATE_NEW_BOOKING: 'إنشاء حجز جديد',
+    CREATE_NEW_SUPPLIER: 'إنشاء مورد جديد',
+    CREATE_NEW_USER: 'إنشاء مستخدم جديد',
+    CREATE_NEW_LOCATION: 'إنشاء موقع جديد',
+    NO_LOCATIONS_FOUND: 'لم يتم العثور على مواقع. أنشئ موقعك الأول للبدء.',
+
+    // Notification Center
+    ADMIN_NOTIFICATIONS: 'إشعارات المدير',
+    MARK_AS_READ: 'تحديد كمقروء',
+    VIEW_ALL_NOTIFICATIONS: 'عرض جميع الإشعارات',
+    NOTIFICATION_SETTINGS: 'إعدادات الإشعارات',
+
+    // Booking Form
+    PAYMENT_STATUS: 'حالة الدفع',
+    BOOKING_STATUS: 'حالة الحجز',
+    PARTIAL: 'جزئي',
+    REFUNDED: 'مسترد',
+    CONFIRMED: 'مؤكد',
+    COMPLETED: 'مكتمل',
+    FITTING_REQUIRED: 'القياس مطلوب',
+    FITTING_DATE: 'تاريخ القياس',
+
+    // Wedding Packages
+    DEPOSIT_REQUIRED: 'العربون',
+
+    // Actions
+    EXPORT: 'تصدير',
+    GENERATE: 'إنشاء',
+    SUCCESS: 'نجاح',
+    FAILED: 'فشل',
+    ERROR: 'خطأ',
+    NO_DATA: 'لا توجد بيانات متاحة',
+
+    // Charts
+    RECENT_BOOKINGS: 'الحجوزات الأخيرة',
+    QUICK_STATS: 'إحصائيات سريعة',
+    REVENUE_TREND: 'اتجاه الإيرادات (آخر 6 أشهر)',
+    MONTHLY_BOOKING_TRENDS: 'اتجاهات الحجوزات الشهرية',
+    BOOKING_STATUS_DISTRIBUTION: 'توزيع حالات الحجز',
+    CATEGORY_PERFORMANCE: 'أداء الفئات',
   },
 })
 

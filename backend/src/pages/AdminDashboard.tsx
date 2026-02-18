@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Container,
@@ -155,11 +155,23 @@ const AdminDashboard: React.FC = () => {
   const [error, setError] = useState('')
   const [lastFetch, setLastFetch] = useState<number>(0)
 
+  // Track mounted state to prevent state updates after unmount
+  const isMountedRef = useRef(true)
+  const abortControllerRef = useRef<AbortController | null>(null)
+
+  useEffect(() => {
+    isMountedRef.current = true
+    return () => {
+      isMountedRef.current = false
+      abortControllerRef.current?.abort()
+    }
+  }, [])
+
   // Check if user is admin or supplier
   const isAdmin = user && helper.admin(user)
   const isSupplier = user && helper.supplier(user)
   const dashboardTitle = isAdmin ? (headerStrings.ADMIN_DASHBOARD || 'Admin Dashboard') :
-                         isSupplier ? 'Supplier Dashboard' :
+                         isSupplier ? (commonStrings.SUPPLIER_DASHBOARD || 'Supplier Dashboard') :
                          (headerStrings.DASHBOARD || 'Dashboard')
 
   useEffect(() => {
@@ -180,12 +192,16 @@ const AdminDashboard: React.FC = () => {
       setUser(_user)
       // Verify user has proper access
       if (!helper.admin(_user) && !helper.supplier(_user)) {
-        setError('Access denied: Dashboard requires admin or supplier privileges')
+        setError(commonStrings.ACCESS_DENIED_DASHBOARD || 'Access denied: Dashboard requires admin or supplier privileges')
       }
     }
   }
 
   const fetchDashboardStats = async () => {
+    // Create new AbortController for this fetch
+    const controller = new AbortController()
+    abortControllerRef.current = controller
+
     try {
       // Implement aggressive caching to improve performance
       const now = Date.now()
@@ -205,10 +221,12 @@ const AdminDashboard: React.FC = () => {
         if (cacheAge < cacheTimeout) {
           console.log('Using localStorage cached dashboard data')
           try {
-            setStats(JSON.parse(cachedData))
-            setLastFetch(parseInt(cacheTimestamp))
-            setError('') // Clear error when using valid cache
-            setLoading(false)
+            if (isMountedRef.current) {
+              setStats(JSON.parse(cachedData))
+              setLastFetch(parseInt(cacheTimestamp))
+              setError('') // Clear error when using valid cache
+              setLoading(false)
+            }
             return
           } catch (parseErr) {
             console.error('Error parsing cached data:', parseErr)
@@ -231,8 +249,8 @@ const AdminDashboard: React.FC = () => {
         // Make all API calls in parallel for better performance
         const language = localStorage.getItem('language') || 'en'
         const [analyticsResponse, inventoryResponse, bookingsResponse] = await Promise.allSettled([
-          fetch('/api/analytics/dashboard', { headers }),
-          fetch('/api/inventory-stats', { headers }),
+          fetch('/api/analytics/dashboard', { headers, signal: controller.signal }),
+          fetch('/api/inventory-stats', { headers, signal: controller.signal }),
           fetch(`/api/bookings/1/10/${language}`, {
             method: 'POST',
             headers,
@@ -299,11 +317,22 @@ const AdminDashboard: React.FC = () => {
       // Clear any stale error from localStorage
       localStorage.removeItem('dashboard-error')
 
-      setStats(dashboardStats)
-      setLastFetch(timestamp)
-      setError('') // Clear error on successful load
+      // Check if component is still mounted before updating state
+      if (isMountedRef.current) {
+        setStats(dashboardStats)
+        setLastFetch(timestamp)
+        setError('') // Clear error on successful load
+      }
     } catch (err) {
+      // Don't show error if request was aborted (component unmounted)
+      if (err && typeof err === 'object' && 'name' in err && err.name === 'AbortError') {
+        return
+      }
+
       console.error('Error fetching dashboard stats:', err)
+
+      // Check if component is still mounted before updating state
+      if (!isMountedRef.current) return
 
       // Try to use fallback data from localStorage
       const cachedData = localStorage.getItem('dashboard-cache')
@@ -325,7 +354,9 @@ const AdminDashboard: React.FC = () => {
         setStats(fallbackData.emptyStats)
       }
     } finally {
-      setLoading(false)
+      if (isMountedRef.current) {
+        setLoading(false)
+      }
     }
   }
 
@@ -393,7 +424,7 @@ const AdminDashboard: React.FC = () => {
           <Box sx={{ mt: 4, textAlign: 'center' }}>
             <LinearProgress sx={{ mb: 2 }} />
             <Typography variant="body1">
-              Loading dashboard data and analytics...
+              {commonStrings.LOADING_DASHBOARD || 'Loading dashboard data and analytics...'}
             </Typography>
           </Box>
         </Container>
@@ -415,13 +446,13 @@ const AdminDashboard: React.FC = () => {
         <Box sx={{ mb: 3, display: 'flex', gap: 2, alignItems: 'center' }}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-              label="Start Date"
+              label={commonStrings.START_DATE || 'Start Date'}
               value={dateRange.startDate}
               onChange={(date) => date && setDateRange(prev => ({ ...prev, startDate: date }))}
               slotProps={{ textField: { size: 'small' } }}
             />
             <DatePicker
-              label="End Date"
+              label={commonStrings.END_DATE || 'End Date'}
               value={dateRange.endDate}
               onChange={(date) => date && setDateRange(prev => ({ ...prev, endDate: date }))}
               slotProps={{ textField: { size: 'small' } }}

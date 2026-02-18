@@ -342,7 +342,13 @@ export const getDresses = async (req: AuthenticatedRequest, res: Response): Prom
       })
     }
 
-    res.json(result)
+    // Transform response to match the expected format for frontend components
+    const response = [{
+      resultData: result.docs || [],
+      pageInfo: [{ totalRecords: result.totalDocs || 0 }]
+    }]
+
+    res.json(response)
   } catch (err: any) {
     console.error(`[dressController.getDresses] ${err}`)
     res.status(500).json({ error: err.message })
@@ -938,7 +944,14 @@ export const getBookingDresses = async (req: Request, res: Response): Promise<vo
     }
 
     const result = await Dress.paginate(query, options)
-    res.json(result)
+
+    // Transform response to match the expected format for frontend components
+    const response = [{
+      resultData: result.docs || [],
+      pageInfo: [{ totalRecords: result.totalDocs || 0 }]
+    }]
+
+    res.json(response)
   } catch (err: unknown) {
     console.error(`[dressController.getBookingDresses] ${err}`)
     res.status(500).json({ error: err instanceof Error ? err.message : 'Unknown error' })
@@ -1120,20 +1133,11 @@ export const getFrontendDresses = async (req: Request, res: Response): Promise<v
         .exec()
 
       const totalDocs = await Dress.countDocuments(query)
-      const totalPages = Math.ceil(totalDocs / size)
 
-      const result = {
-        docs: dresses,
-        totalDocs,
-        limit: size,
-        page,
-        totalPages,
-        hasNextPage: page < totalPages,
-        hasPrevPage: page > 1,
-        nextPage: page < totalPages ? page + 1 : null,
-        prevPage: page > 1 ? page - 1 : null,
-        pagingCounter: skip + 1
-      }
+      const result = [{
+        resultData: dresses,
+        pageInfo: [{ totalRecords: totalDocs }]
+      }]
 
       res.json(result)
     } else {
@@ -1194,24 +1198,13 @@ export const getFrontendDresses = async (req: Request, res: Response): Promise<v
         }
       ]
 
-      console.log('Debug: Aggregation pipeline:', JSON.stringify(aggregationPipeline, null, 2))
       const dresses = await Dress.aggregate(aggregationPipeline)
-      console.log('Debug: First dress from aggregation:', JSON.stringify(dresses[0], null, 2))
       const totalDocs = await Dress.countDocuments(query)
-      const totalPages = Math.ceil(totalDocs / size)
 
-      const result = {
-        docs: dresses,
-        totalDocs,
-        limit: size,
-        page,
-        totalPages,
-        hasNextPage: page < totalPages,
-        hasPrevPage: page > 1,
-        nextPage: page < totalPages ? page + 1 : null,
-        prevPage: page > 1 ? page - 1 : null,
-        pagingCounter: skip + 1
-      }
+      const result = [{
+        resultData: dresses,
+        pageInfo: [{ totalRecords: totalDocs }]
+      }]
 
       res.json(result)
     }

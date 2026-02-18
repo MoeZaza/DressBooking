@@ -64,7 +64,7 @@ const BookingFilter = ({
     }
 
     if (onSubmit) {
-      onSubmit(bookcarsHelper.clone(filter))
+      onSubmit(filter ? bookcarsHelper.clone(filter) : null)
     }
   }
 

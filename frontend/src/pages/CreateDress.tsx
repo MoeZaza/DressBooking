@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { 
   Container,
@@ -63,6 +63,18 @@ const CreateDress: React.FC = () => {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [user, setUser] = useState<any>(null)
+
+  // Ref for timeout cleanup
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     const currentUser = helper.getUser()
@@ -180,7 +192,7 @@ const CreateDress: React.FC = () => {
       }
 
       setSuccess(true)
-      setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
         navigate('/dresses')
       }, 2000)
     } catch (err) {
@@ -358,11 +370,11 @@ const CreateDress: React.FC = () => {
                       onChange={handleSelectChange}
                       label={strings.SEASON}
                     >
-                      <MenuItem value="spring">Spring</MenuItem>
-                      <MenuItem value="summer">Summer</MenuItem>
-                      <MenuItem value="fall">Fall</MenuItem>
-                      <MenuItem value="winter">Winter</MenuItem>
-                      <MenuItem value="all-season">All Season</MenuItem>
+                      <MenuItem value="spring">{strings.SPRING}</MenuItem>
+                      <MenuItem value="summer">{strings.SUMMER}</MenuItem>
+                      <MenuItem value="fall">{strings.FALL}</MenuItem>
+                      <MenuItem value="winter">{strings.WINTER}</MenuItem>
+                      <MenuItem value="all-season">{strings.ALL_SEASONS}</MenuItem>
                     </Select>
                   </FormControl>
                 </Box>
@@ -378,17 +390,17 @@ const CreateDress: React.FC = () => {
                       onChange={handleSelectChange}
                       label={strings.NECKLINE}
                     >
-                      <MenuItem value="v-neck">V-Neck</MenuItem>
-                      <MenuItem value="round-neck">Round Neck</MenuItem>
-                      <MenuItem value="off-shoulder">Off Shoulder</MenuItem>
-                      <MenuItem value="halter">Halter</MenuItem>
-                      <MenuItem value="strapless">Strapless</MenuItem>
-                      <MenuItem value="one-shoulder">One Shoulder</MenuItem>
-                      <MenuItem value="boat-neck">Boat Neck</MenuItem>
-                      <MenuItem value="square-neck">Square Neck</MenuItem>
-                      <MenuItem value="sweetheart">Sweetheart</MenuItem>
-                      <MenuItem value="high-neck">High Neck</MenuItem>
-                      <MenuItem value="other">Other</MenuItem>
+                      <MenuItem value="v-neck">{strings.V_NECK}</MenuItem>
+                      <MenuItem value="round-neck">{strings.ROUND_NECK}</MenuItem>
+                      <MenuItem value="off-shoulder">{strings.OFF_SHOULDER}</MenuItem>
+                      <MenuItem value="halter">{strings.HALTER}</MenuItem>
+                      <MenuItem value="strapless">{strings.STRAPLESS}</MenuItem>
+                      <MenuItem value="one-shoulder">{strings.ONE_SHOULDER}</MenuItem>
+                      <MenuItem value="boat-neck">{strings.BOAT_NECK}</MenuItem>
+                      <MenuItem value="square-neck">{strings.SQUARE_NECK}</MenuItem>
+                      <MenuItem value="sweetheart">{strings.SWEETHEART}</MenuItem>
+                      <MenuItem value="high-neck">{strings.HIGH_NECK}</MenuItem>
+                      <MenuItem value="other">{strings.OTHER}</MenuItem>
                     </Select>
                   </FormControl>
                 </Box>
@@ -402,13 +414,13 @@ const CreateDress: React.FC = () => {
                       onChange={handleSelectChange}
                       label={strings.SLEEVES}
                     >
-                      <MenuItem value="sleeveless">Sleeveless</MenuItem>
-                      <MenuItem value="short-sleeve">Short Sleeve</MenuItem>
-                      <MenuItem value="long-sleeve">Long Sleeve</MenuItem>
-                      <MenuItem value="three-quarter">Three Quarter</MenuItem>
-                      <MenuItem value="cap-sleeve">Cap Sleeve</MenuItem>
-                      <MenuItem value="bell-sleeve">Bell Sleeve</MenuItem>
-                      <MenuItem value="other">Other</MenuItem>
+                      <MenuItem value="sleeveless">{strings.SLEEVELESS}</MenuItem>
+                      <MenuItem value="short-sleeve">{strings.SHORT_SLEEVE}</MenuItem>
+                      <MenuItem value="long-sleeve">{strings.LONG_SLEEVE}</MenuItem>
+                      <MenuItem value="three-quarter">{strings.THREE_QUARTER}</MenuItem>
+                      <MenuItem value="cap-sleeve">{strings.CAP_SLEEVE}</MenuItem>
+                      <MenuItem value="bell-sleeve">{strings.BELL_SLEEVE}</MenuItem>
+                      <MenuItem value="other">{strings.OTHER}</MenuItem>
                     </Select>
                   </FormControl>
                 </Box>
@@ -424,15 +436,15 @@ const CreateDress: React.FC = () => {
                       onChange={handleSelectChange}
                       label={strings.SILHOUETTE}
                     >
-                      <MenuItem value="a-line">A-Line</MenuItem>
-                      <MenuItem value="ball-gown">Ball Gown</MenuItem>
-                      <MenuItem value="mermaid">Mermaid</MenuItem>
-                      <MenuItem value="sheath">Sheath</MenuItem>
-                      <MenuItem value="fit-and-flare">Fit and Flare</MenuItem>
-                      <MenuItem value="empire">Empire</MenuItem>
-                      <MenuItem value="trumpet">Trumpet</MenuItem>
-                      <MenuItem value="column">Column</MenuItem>
-                      <MenuItem value="other">Other</MenuItem>
+                      <MenuItem value="a-line">{strings.A_LINE}</MenuItem>
+                      <MenuItem value="ball-gown">{strings.BALL_GOWN}</MenuItem>
+                      <MenuItem value="mermaid">{strings.MERMAID}</MenuItem>
+                      <MenuItem value="sheath">{strings.SHEATH}</MenuItem>
+                      <MenuItem value="fit-and-flare">{strings.FIT_AND_FLARE}</MenuItem>
+                      <MenuItem value="empire">{strings.EMPIRE}</MenuItem>
+                      <MenuItem value="trumpet">{strings.TRUMPET}</MenuItem>
+                      <MenuItem value="column">{strings.COLUMN}</MenuItem>
+                      <MenuItem value="other">{strings.OTHER}</MenuItem>
                     </Select>
                   </FormControl>
                 </Box>

@@ -148,9 +148,15 @@ const ExpenseManagement: React.FC = () => {
 
   const fetchDresses = async () => {
     try {
-      const response = await DressService.getDresses('', { size: ['100'] }, 1, 100)
+      const payload: bookcarsTypes.GetDressesPayload = {
+        availability: [bookcarsTypes.Availablity.Available]
+      }
+      const response = await DressService.getDresses('', payload, 1, 100)
       if (Array.isArray(response) && response.length > 0 && response[0]) {
         setDresses(response[0].resultData || [])
+      } else if ((response as any)?.docs) {
+        // Handle mongoose-paginate-v2 format
+        setDresses((response as any).docs || [])
       }
     } catch (err) {
       console.error('Error fetching dresses:', err)

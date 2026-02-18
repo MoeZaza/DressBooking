@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 
 import Payment from '../models/Payment'
 import Booking from '../models/Booking'
+import * as helper from '../common/helper'
 
 
 /**
@@ -20,6 +21,23 @@ export const createPayment = async (req: Request, res: Response): Promise<void> 
       transactionId,
       notes,
     } = req.body
+
+    // Input validation
+    if (!booking || !helper.isValidObjectId(booking)) {
+      res.status(400).json({ error: 'Valid booking ID is required' })
+      return
+    }
+
+    if (typeof amount !== 'number' || amount <= 0) {
+      res.status(400).json({ error: 'Amount must be a positive number' })
+      return
+    }
+
+    const validPaymentMethods = ['credit_card', 'debit_card', 'cash', 'bank_transfer', 'paypal', 'stripe']
+    if (!paymentMethod || !validPaymentMethods.includes(paymentMethod)) {
+      res.status(400).json({ error: 'Valid payment method is required' })
+      return
+    }
 
     // Get the booking to calculate remaining amount
     const bookingDoc = await Booking.findById(booking)
@@ -282,9 +300,26 @@ export const processRefund = async (req: Request, res: Response): Promise<void> 
     const { id } = req.params
     const { refundAmount, reason } = req.body
 
+    // Input validation
+    if (typeof refundAmount !== 'number' || refundAmount <= 0) {
+      res.status(400).json({ error: 'Refund amount must be a positive number' })
+      return
+    }
+
+    if (!reason || typeof reason !== 'string' || reason.trim().length === 0) {
+      res.status(400).json({ error: 'Refund reason is required' })
+      return
+    }
+
     const payment = await Payment.findById(id)
     if (!payment) {
       res.status(404).json({ error: 'Payment not found' })
+      return
+    }
+
+    // Validate refund amount doesn't exceed payment amount
+    if (refundAmount > payment.amount) {
+      res.status(400).json({ error: 'Refund amount cannot exceed original payment amount' })
       return
     }
 

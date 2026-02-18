@@ -5,6 +5,7 @@ import { Add as AddIcon } from '@mui/icons-material'
 import * as bookcarsTypes from ':bookcars-types'
 import Layout from '@/components/Layout'
 import { strings } from '@/lang/locations'
+import { strings as commonStrings } from '@/lang/common'
 import { useLanguage } from '@/context/LanguageContext'
 import Search from '@/components/Search'
 import LocationList from '@/components/LocationList'
@@ -56,7 +57,7 @@ const Locations = () => {
 
             {rowCount === 0 && (
               <InfoBox
-                value="No locations found. Create your first location to get started."
+                value={commonStrings.NO_LOCATIONS_FOUND || 'No locations found. Create your first location to get started.'}
                 className="no-locations"
               />
             )}
@@ -71,7 +72,7 @@ const Locations = () => {
         </div>
 
         {/* Floating Action Button for Creating New Location */}
-        <Tooltip title="Create New Location">
+        <Tooltip title={commonStrings.CREATE_NEW_LOCATION || 'Create New Location'}>
           <Fab
             color="primary"
             aria-label="add location"

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Button,
@@ -22,6 +22,7 @@ import * as bookcarsHelper from ':bookcars-helper'
 import Layout from '@/components/Layout'
 import env from '@/config/env.config'
 import { strings } from '@/lang/bookings'
+import { strings as commonStrings } from '@/lang/common'
 import { useLanguage } from '@/context/LanguageContext'
 
 import * as helper from '@/common/helper'
@@ -50,6 +51,14 @@ const Bookings = () => {
   const [offset, setOffset] = useState(0)
 
   const [analytics, setAnalytics] = useState<any>(null)
+  const abortControllerRef = useRef<AbortController | null>(null)
+
+  // Cleanup abort controller on unmount
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort()
+    }
+  }, [])
 
 
   useEffect(() => {
@@ -75,8 +84,13 @@ const Bookings = () => {
 
   const loadAnalytics = async () => {
     if (admin) {
+      // Create new AbortController for this fetch
+      const controller = new AbortController()
+      abortControllerRef.current = controller
+
       try {
         const response = await fetch('/api/analytics', {
+          signal: controller.signal,
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
           },
@@ -86,6 +100,10 @@ const Bookings = () => {
           setAnalytics(data)
         }
       } catch (error) {
+        // Don't show error if request was aborted (component unmounted)
+        if (error && typeof error === 'object' && 'name' in error && error.name === 'AbortError') {
+          return
+        }
         console.error('Error loading analytics:', error)
       }
     }
@@ -120,7 +138,7 @@ const Bookings = () => {
         <div className="loading-container" style={{ padding: '20px', textAlign: 'center' }}>
           <CircularProgress />
           <Typography variant="body1" sx={{ mt: 2 }}>
-            Loading user data...
+            {commonStrings.LOADING_USER_DATA || 'Loading user data...'}
           </Typography>
         </div>
       ) : (
@@ -130,7 +148,7 @@ const Bookings = () => {
           {admin && analytics && (
             <Box sx={{ mb: 3 }}>
               <Typography variant="h5" gutterBottom>
-                Booking Management Dashboard
+                {commonStrings.BOOKING_MANAGEMENT_DASHBOARD || 'Booking Management Dashboard'}
               </Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
                 <Box sx={{ flex: '1 1 auto', minWidth: '300px' }}>
@@ -140,7 +158,7 @@ const Bookings = () => {
                         <MoneyIcon color="primary" sx={{ mr: 2 }} />
                         <Box>
                           <Typography color="textSecondary" gutterBottom>
-                            Total Revenue
+                            {commonStrings.TOTAL_REVENUE || 'Total Revenue'}
                           </Typography>
                           <Typography variant="h6">
                             ${analytics.totalRevenue?.toLocaleString() || 0}
@@ -157,7 +175,7 @@ const Bookings = () => {
                         <PeopleIcon color="primary" sx={{ mr: 2 }} />
                         <Box>
                           <Typography color="textSecondary" gutterBottom>
-                            Total Bookings
+                            {commonStrings.TOTAL_BOOKINGS || 'Total Bookings'}
                           </Typography>
                           <Typography variant="h6">
                             {analytics.totalBookings || 0}
@@ -174,7 +192,7 @@ const Bookings = () => {
                         <TrendingUpIcon color="primary" sx={{ mr: 2 }} />
                         <Box>
                           <Typography color="textSecondary" gutterBottom>
-                            Avg. Booking Value
+                            {commonStrings.AVG_BOOKING_VALUE || 'Avg. Booking Value'}
                           </Typography>
                           <Typography variant="h6">
                             ${analytics.averageBookingValue?.toFixed(2) || 0}
@@ -191,7 +209,7 @@ const Bookings = () => {
                         <AnalyticsIcon color="primary" sx={{ mr: 2 }} />
                         <Box>
                           <Typography color="textSecondary" gutterBottom>
-                            Available Dresses
+                            {commonStrings.AVAILABLE_DRESSES || 'Available Dresses'}
                           </Typography>
                           <Typography variant="h6">
                             {analytics.availableDresses || 0}
@@ -259,7 +277,7 @@ const Bookings = () => {
 
           {/* Floating Action Button for Quick Booking Creation */}
           {admin && (
-            <Tooltip title="Create New Booking">
+            <Tooltip title={commonStrings.CREATE_NEW_BOOKING || 'Create New Booking'}>
               <Fab
                 color="primary"
                 aria-label="add booking"

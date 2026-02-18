@@ -177,12 +177,17 @@ const UpdateUser = () => {
       setLoggedUser(_loggedUser)
     }
 
-    const _user = bookcarsHelper.clone(user)
-    _user.avatar = _avatar
+    if (user) {
+      const _user = bookcarsHelper.clone(user)
+      _user.avatar = _avatar
 
-    setLoading(false)
-    setUser(_user)
-    setAvatar(_avatar)
+      setLoading(false)
+      setUser(_user)
+      setAvatar(_avatar)
+    } else {
+      setLoading(false)
+      setAvatar(_avatar)
+    }
 
     if (_avatar !== null && type === bookcarsTypes.RecordType.Supplier) {
       setAvatarError(false)

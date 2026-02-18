@@ -45,6 +45,7 @@ const bookingSchema = new Schema<env.Booking>(
         bookcarsTypes.BookingStatus.Deposit,
         bookcarsTypes.BookingStatus.Paid,
         bookcarsTypes.BookingStatus.Reserved,
+        bookcarsTypes.BookingStatus.Completed,
         bookcarsTypes.BookingStatus.Cancelled,
       ],
       required: [true, "can't be blank"],
@@ -52,6 +53,9 @@ const bookingSchema = new Schema<env.Booking>(
     cancellation: {
       type: Boolean,
       default: false,
+    },
+    cancellationReason: {
+      type: String,
     },
     amendments: {
       type: Boolean,
@@ -121,6 +125,9 @@ const bookingSchema = new Schema<env.Booking>(
     accessoriesIncluded: [{
       type: String,
     }],
+    notes: {
+      type: String,
+    },
 
   },
   {

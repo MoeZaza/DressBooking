@@ -5,6 +5,7 @@ import { Refresh as RefreshIcon, Download as DownloadIcon, Add as AddIcon } from
 import * as bookcarsTypes from ':bookcars-types'
 import Layout from '@/components/Layout'
 import { strings } from '@/lang/suppliers'
+import { strings as commonStrings } from '@/lang/common'
 import { useLanguage } from '@/context/LanguageContext'
 import Search from '@/components/Search'
 import SupplierList from '@/components/SupplierList'
@@ -69,7 +70,7 @@ const Suppliers = () => {
 
           {/* Floating Action Button for Creating New Supplier */}
           {admin && (
-            <Tooltip title="Create New Supplier">
+            <Tooltip title={commonStrings.CREATE_NEW_SUPPLIER || 'Create New Supplier'}>
               <Fab
                 color="primary"
                 aria-label="add supplier"

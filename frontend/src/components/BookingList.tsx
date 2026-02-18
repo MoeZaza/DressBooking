@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   DataGrid,
@@ -88,6 +88,18 @@ const BookingList = ({
   const [cancelRequestSent, setCancelRequestSent] = useState(false)
   const [cancelRequestProcessing, setCancelRequestProcessing] = useState(false)
 
+  // Ref for timeout cleanup
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
   useEffect(() => {
     if (!env.isMobile) {
       setPage(paginationModel.page)
@@ -115,12 +127,34 @@ const BookingList = ({
           _page + 1,
           _pageSize,
         )
-        const _data = data && data.length > 0 ? data[0] : { pageInfo: { totalRecord: 0 }, resultData: [] }
-        if (!_data) {
+
+        // Handle multiple response formats: {docs: [...]}, [{resultData: [...]}], or direct array
+        let _data: { pageInfo: { totalRecords: number }; resultData: any[] } = { pageInfo: { totalRecords: 0 }, resultData: [] }
+
+        if (data) {
+          if (Array.isArray(data) && data.length > 0) {
+            if (data[0]?.resultData) {
+              _data = data[0]
+            } else {
+              // Handle direct array response
+              _data = {
+                pageInfo: { totalRecords: data.length },
+                resultData: data
+              }
+            }
+          } else if ((data as any)?.docs) {
+            _data = {
+              pageInfo: { totalRecords: (data as any).totalDocs || 0 },
+              resultData: (data as any).docs || []
+            }
+          }
+        }
+
+        if (!_data || !_data.resultData) {
           helper.error()
           return
         }
-        const totalRecords = Array.isArray(_data.pageInfo) && _data.pageInfo.length > 0 ? _data.pageInfo[0].totalRecords : 0
+        const totalRecords = _data.pageInfo?.totalRecords || 0
 
         for (const booking of _data.resultData) {
           booking.price = await PaymentService.convertPrice(booking.price!)
@@ -339,13 +373,19 @@ const BookingList = ({
           }
         }
       }
+
+      return () => {
+        if (element) {
+          element.onscroll = null
+        }
+      }
     }
   }, [page, fetch, loading])
 
   const handleCloseCancelBooking = () => {
     setOpenCancelDialog(false)
     if (cancelRequestSent) {
-      setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
         setCancelRequestSent(false)
       }, 500)
     }

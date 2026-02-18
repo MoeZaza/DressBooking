@@ -26,6 +26,10 @@ export const LazyDresses = lazy(() => import('../pages/Dresses'))
 export const LazyUsers = lazy(() => import('../pages/Users'))
 export const LazyLocations = lazy(() => import('../pages/Locations'))
 
+// Track preload timeouts for cleanup
+const preloadTimeouts: Array<ReturnType<typeof setTimeout>> = []
+let preloadTimeoutId: ReturnType<typeof setTimeout> | null = null
+
 // Bundle optimization utilities
 export const preloadComponent = (componentLoader: () => Promise<any>) => {
   // Preload component on idle
@@ -35,10 +39,21 @@ export const preloadComponent = (componentLoader: () => Promise<any>) => {
     })
   } else {
     // Fallback for browsers without requestIdleCallback
-    setTimeout(() => {
+    preloadTimeoutId = setTimeout(() => {
       componentLoader()
     }, 100)
+    preloadTimeouts.push(preloadTimeoutId)
   }
+}
+
+// Cleanup all preload timeouts
+export const cleanupPreloadTimeouts = () => {
+  preloadTimeouts.forEach(id => clearTimeout(id))
+  if (preloadTimeoutId !== null) {
+    clearTimeout(preloadTimeoutId)
+    preloadTimeoutId = null
+  }
+  preloadTimeouts.length = 0
 }
 
 // Preload critical components
@@ -49,6 +64,8 @@ export const preloadCriticalComponents = () => {
 }
 
 // Memory optimization utilities
+const cleanupIntervalRef = { current: null as ReturnType<typeof setInterval> | null }
+
 export const cleanupUnusedComponents = () => {
   // Clear any cached modules that are no longer needed
   if ('performance' in window && 'memory' in (window.performance as any)) {
@@ -59,6 +76,12 @@ export const cleanupUnusedComponents = () => {
         (window as any).gc()
       }
     }
+  }
+
+  // Cleanup interval if exists
+  if (cleanupIntervalRef.current !== null) {
+    clearInterval(cleanupIntervalRef.current)
+    cleanupIntervalRef.current = null
   }
 }
 
@@ -105,9 +128,14 @@ export const initializeBundleOptimizations = () => {
   }, 1000)
 
   // Set up periodic cleanup
-  setInterval(() => {
+  const cleanupIntervalId = setInterval(() => {
     cleanupUnusedComponents()
   }, 5 * 60 * 1000) // Every 5 minutes
+
+  // Return cleanup function
+  return () => {
+    clearInterval(cleanupIntervalId)
+  }
 }
 
 // Performance monitoring

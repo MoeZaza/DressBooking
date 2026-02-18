@@ -55,7 +55,9 @@ const CheckoutOptions = ({
   useEffect(() => {
     const fetchPrices = async () => {
       try {
-        const priceChangeRate = dress.supplier.priceChangeRate || 0
+        // Safely access priceChangeRate with null check
+        const supplier = dress.supplier as bookcarsTypes.User | undefined
+        const priceChangeRate = supplier?.priceChangeRate || 0
         setCancellationOption(await helper.getCancellationOption(dress.cancellation, language, priceChangeRate))
         setAmendmentsOption(await helper.getAmendmentsOption(dress.amendments, language, priceChangeRate))
       } catch (error) {
@@ -82,7 +84,8 @@ const CheckoutOptions = ({
         cancellation: _cancellation,
         amendments,
       }
-      const _price = await PaymentService.convertPrice(bookcarsHelper.calculateTotalPrice(dress, dress.supplier.priceChangeRate || 0, options))
+      const supplier = dress.supplier as bookcarsTypes.User | undefined
+      const _price = await PaymentService.convertPrice(bookcarsHelper.calculateTotalPrice(dress, supplier?.priceChangeRate || 0, options))
 
       setCancellation(_cancellation)
       onCancellationChange(_cancellation)
@@ -97,7 +100,8 @@ const CheckoutOptions = ({
         cancellation,
         amendments: _amendments,
       }
-      const _price = await PaymentService.convertPrice(bookcarsHelper.calculateTotalPrice(dress, dress.supplier.priceChangeRate || 0, options))
+      const supplier = dress.supplier as bookcarsTypes.User | undefined
+      const _price = await PaymentService.convertPrice(bookcarsHelper.calculateTotalPrice(dress, supplier?.priceChangeRate || 0, options))
 
       setAmendments(_amendments)
       onAmendmentsChange(_amendments)

@@ -131,10 +131,11 @@ const UpdateBooking: React.FC = () => {
             
             if (booking) {
               setBooking(booking)
-              setSupplier(typeof booking.supplier === 'string' ? booking.supplier : booking.supplier._id!)
-              setDress(typeof booking.dress === 'string' ? booking.dress : booking.dress!._id!)
-              setCustomer(typeof booking.customer === 'string' ? booking.customer : booking.customer!._id!)
-              setLocation(typeof booking.location === 'string' ? booking.location : booking.location._id!)
+              // Safely extract IDs with null checks
+              setSupplier(typeof booking.supplier === 'string' ? booking.supplier : (booking.supplier as bookcarsTypes.User)?._id || '')
+              setDress(typeof booking.dress === 'string' ? booking.dress : (booking.dress as bookcarsTypes.Dress)?._id || '')
+              setCustomer(typeof booking.customer === 'string' ? booking.customer : (booking.customer as bookcarsTypes.User)?._id || '')
+              setLocation(typeof booking.location === 'string' ? booking.location : (booking.location as bookcarsTypes.Location)?._id || '')
               setFrom(new Date(booking.from))
               setTo(new Date(booking.to))
               setStatus(booking.status)

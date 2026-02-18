@@ -11,6 +11,7 @@ import {
 } from '@mui/icons-material'
 import * as bookcarsTypes from ':bookcars-types'
 import { strings } from '@/lang/dresses'
+import { strings as commonStrings } from '@/lang/common'
 import { useLanguage } from '@/context/LanguageContext'
 import * as helper from '@/common/helper'
 import * as SupplierService from '@/services/SupplierService'
@@ -41,7 +42,6 @@ const Dresses = () => {
   const [availability, setAvailability] = useState('')
   const [rentalsCount, setRentalsCount] = useState('')
   const [keyword, setKeyword] = useState('')
-  const [reload, setReload] = useState(false)
   const [loading, setLoading] = useState(true)
   const [rowCount, setRowCount] = useState(0)
 
@@ -71,37 +71,30 @@ const Dresses = () => {
 
   const handleDressTypeFilterChange = (value: string) => {
     setDressType(value)
-    setReload(true)
   }
 
   const handleDressSizeFilterChange = (value: string) => {
     setDressSize(value)
-    setReload(true)
   }
 
   const handleDressStyleFilterChange = (value: string) => {
     setDressStyle(value)
-    setReload(true)
   }
 
   const handleDepositFilterChange = (value: number) => {
     setDeposit(value.toString())
-    setReload(true)
   }
 
   const handleAvailabilityFilterChange = (values: bookcarsTypes.Availablity[]) => {
     setAvailability(values.join(','))
-    setReload(true)
   }
 
   const handleRentalsCountFilterChange = (value: string) => {
     setRentalsCount(value)
-    setReload(true)
   }
 
   const handleSearch = (newKeyword: string) => {
     setKeyword(newKeyword)
-    setReload(true)
   }
 
   const handleDressListLoad = (data?: bookcarsTypes.Data<bookcarsTypes.Dress>) => {
@@ -118,9 +111,9 @@ const Dresses = () => {
     <Layout>
       {!user ? (
         <div className="loading-container" style={{ padding: '20px', textAlign: 'center', minHeight: '200px' }}>
-          <Typography variant="h6">Loading user data...</Typography>
+          <Typography variant="h6">{commonStrings.LOADING_USER_DATA || 'Loading user data...'}</Typography>
           <Typography variant="body2" sx={{ mt: 1 }}>
-            Please wait while we verify your authentication.
+            {commonStrings.VERIFYING_AUTHENTICATION || 'Please wait while we verify your authentication.'}
           </Typography>
         </div>
       ) : (
@@ -184,7 +177,7 @@ const Dresses = () => {
 
           {/* Floating Action Button for Creating New Dress */}
           {admin && (
-            <Tooltip title="Create New Dress">
+            <Tooltip title={commonStrings.CREATE_NEW_DRESS || 'Create New Dress'}>
               <Fab
                 color="primary"
                 aria-label="add dress"
